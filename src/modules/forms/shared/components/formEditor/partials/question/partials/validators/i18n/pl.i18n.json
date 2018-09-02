@@ -1,0 +1,19 @@
+{
+    "number": "Liczba",
+    "text": "Tekst",
+    "regex": "Wyrażenie regularne",
+    "expression": "Wyrażenie",
+    "gt": "Większe niż",
+    "gte": "Większe lub równe",
+    "lt": "Mniejsze niż",
+    "lte": "Mniejsze lub równe",
+    "eq": "Równe",
+    "ne": "Różne",
+    "contains": "Zawiera",
+    "notContains": "Nie zawiera",
+    "isEmail": "Adres e-mail",
+    "isURL": "URL",
+    "matches": "Spełnia",
+    "notMatches": "Nie spełnia",
+    "customErrorMessage": "Niestandardowy tekst błędu"
+}

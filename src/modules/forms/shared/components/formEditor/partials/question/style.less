@@ -1,0 +1,43 @@
+& {
+    font-size: 0.9rem;
+}
+
+.answer-editor {
+    margin-bottom: 35px;
+}
+
+.question-input {
+    font-size: 1.2em;
+}
+
+.divider {
+    border-left: 1px solid #ddd;
+    height: 30px;
+}
+
+.question-toolbar {
+    margin: -16px;
+    border-top: 1px solid #ddd;
+    padding: 0;
+    max-width: inherit;
+}
+
+&:hover {
+    drag-handle.item-drag-handle {
+        visibility: visible !important;
+    }
+}
+
+.basic-settings {
+    md-input-container {
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .basic-settings {
+        > *, .expand-menu, md-menu {
+            width: 100%;
+        }
+    }
+}

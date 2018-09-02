@@ -1,0 +1,22 @@
+& {
+    background: #fff;
+    z-index: 60;
+    display: none;
+    position: fixed;
+}
+
+@media screen and (max-width: 599px) {
+    & {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #f0f0f0;
+        height: 50px;
+
+        > div {
+            height: 100%;
+        }
+    }
+}

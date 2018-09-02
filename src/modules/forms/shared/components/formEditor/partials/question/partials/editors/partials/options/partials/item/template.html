@@ -1,0 +1,11 @@
+<div layout="row" layout-align="start center">
+    <form-editor.drag-handle ng-class="{hidden: question.options.length <= 1}" class="editing-ui vertical" as-sortable-item-handle></form-editor.drag-handle>
+    <md-icon ng-if="question.type === 'radioButtonList'"><i class="material-icons">radio_button_unchecked</i></md-icon>
+    <md-icon ng-if="question.type === 'checkBoxList'"><i class="material-icons">check_box_outline_blank</i></md-icon>
+    <md-input-container md-no-float flex>
+        <input ng-model="option.name" placeholder="Option" ng-focus="setEditingItem(item, $event)" ng-keyup="handleKeyUp($event)">
+    </md-input-container>
+    <md-button class="md-icon-button editing-ui" ng-click="deleteOption(option)" ng-if="question.options.length > 1" tabindex="-1">
+        <md-icon md-menu-origin><i class="material-icons">close</i></md-icon>
+    </md-button>
+</div>

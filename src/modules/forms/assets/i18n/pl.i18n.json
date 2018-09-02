@@ -1,0 +1,68 @@
+{
+"formEditor.editingMenu": {
+    "createNewQuestion": "Utwórz nowe pytanie",
+    "createNewHeading": "Utwórz nowy nagłówek",
+    "createNewSection": "Utwórz nową sekcję"
+},
+"formEditor.question": {
+    "answerValidation": "Weryfikacja odpowiedzi"
+},
+"formEditor.question.editors.longText": {
+    "longTextContent": "Tekst długiej odpowiedzi"
+},
+"formEditor.question.editors.shortText": {
+    "shortTextContent": "Tekst krótkiej odpowiedzi"
+},
+"formEditor.question.typeSelectMenu": {
+    "radioButtons": "Pojedyńczy wybór",
+    "checkBoxes": "Wielokrotny wybór",
+    "shortText": "Krótki tekst",
+    "longText": "Długi tekst"
+},
+"formEditor.question.validators": {
+    "number": "Liczba",
+    "text": "Tekst",
+    "regex": "Wyrażenie regularne",
+    "expression": "Wyrażenie",
+    "gt": "Większe niż",
+    "gte": "Większe lub równe",
+    "lt": "Mniejsze niż",
+    "lte": "Mniejsze lub równe",
+    "eq": "Równe",
+    "ne": "Różne",
+    "contains": "Zawiera",
+    "notContains": "Nie zawiera",
+    "isEmail": "Adres e-mail",
+    "isURL": "URL",
+    "matches": "Spełnia",
+    "notMatches": "Nie spełnia",
+    "customErrorMessage": "Niestandardowy tekst błędu"
+},
+"": {
+    "edit": "Edycja",
+    "responses": "Odpowiedzi",
+    "report": "Raport",
+    "required": "Wymagane",
+    "response": "Odpowiedź",
+    "of": "z",
+    "send": "Wyślij",
+    "share": "Udostępnij",
+    "remove": "Usuń",
+    "validator": {
+        "required": "To pole jest wymagane!",
+        "isURL": "Podaj poprawny adres URL",
+        "isEmail": "Podaj poprawny adres e-mail",
+        "gt": "Wartość powinna być liczbą większa od {{param}}",
+        "gte": "Wartość powinna być liczbą większa lub równą {{param}}",
+        "lt": "Wartość powinna być liczbą mniejszą od {{param}}",
+        "lte": "Wartość powinna być liczbą mniejszą lub równą {{param}}",
+        "eq": "Wartość powinna być równa {{param}}",
+        "ne": "Wartość powinna być różna od {{param}}",
+        "contains": "Wartość powinna zawierać \"{{param}}\"",
+        "notContains": "Wartość nie powinna zawierać \"{{param}}\"",
+        "matches": "Wartość powinna spełniać wyrażenie regularne {{param}}",
+        "notMatches": "Wartość nie powinna spełniać wyrażenie regularne {{param}}"
+    }
+}
+
+}

@@ -1,0 +1,8 @@
+<div class="placeholder" layout="row" layout-align="start center">
+    <form-editor.drag-handle class="editing-ui" as-sortable-item-handle style="visibility: hidden"></form-editor.drag-handle>
+        <md-icon ng-if="question.type === 'radioButtonList'"><i class="material-icons">radio_button_unchecked</i></md-icon>
+    <md-icon ng-if="question.type === 'checkBoxList'"><i class="material-icons">check_box_outline_blank</i></md-icon>
+    <md-input-container md-no-float flex>
+        <a ng-click="addNewOption($event)">Add new option</a>
+    </md-input-container>
+</div>

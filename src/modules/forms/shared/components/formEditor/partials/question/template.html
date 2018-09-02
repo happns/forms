@@ -1,0 +1,50 @@
+<div class="editable" ng-class="{ 'editing': editingItem === item, 'last': $last }" ng-click="setEditingItem(item, $event)">
+    <div layout="row" layout-align="center center">
+        <:..drag-handle class="item-drag-handle editing-ui" as-sortable-item-handle ng-mousedown="setEditingItem(item, $event)"></:..drag-handle>
+    </div>
+    <div class="basic-settings" layout="column" layout-gt-sm="row" layout-align="start center">
+        <md-input-container md-no-float class="question-input" flex>
+            <input ng-model="question.ask" placeholder="Question" ng-focus="setEditingItem(item, $event)">
+        </md-input-container>
+        <:type-select-menu class="editing-ui"></:type-select-menu>
+    </div>
+
+    <div  class="answer-editor">
+        <:editors.radio-button-list ng-if="question.type === 'radioButtonList'"></:editors.radio-button-list>
+        <:editors.check-box-list ng-if="question.type === 'checkBoxList'"></:editors.check-box-list>
+        <:editors.short-text ng-if="question.type === 'shortText'"></:editors.short-text>
+        <:editors.long-text ng-if="question.type === 'longText'"></:editors.long-text>
+    </div>
+
+    <div class="editing-ui" ng-if="question.validation" flex>
+        <:validators flex></:validators>
+    </div>
+
+    <div layout="row" class="question-toolbar editing-ui" layout-align="end center" layout-padding>
+        <md-button class="md-icon-button" ng-click="copyItem(item)">
+            <md-icon><i class="material-icons">content_copy</i></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" ng-click="deleteItem(item)">
+            <md-icon><i class="material-icons">delete</i></md-icon>
+        </md-button>
+        <div class="divider"></div>
+        <md-switch ng-model="question.required">
+            <span translate=".required">Required</span>
+        </md-switch>
+        <md-menu>
+            <md-button class="md-icon-button" ng-click="$mdMenu.open($event)">
+                <md-icon><i class="material-icons">more_vert</i></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button ng-click="toggleValidation(question)">
+                        <md-icon>
+                            <i class="material-icons" ng-if="question.validation">checked</i>
+                        </md-icon>
+                        <span translate=":answerValidation">Answer validation</span>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</div>

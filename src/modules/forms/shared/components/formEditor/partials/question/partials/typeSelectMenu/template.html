@@ -1,0 +1,29 @@
+<div layout-align="center center" layout="row">
+        <md-select ng-model="question.type">
+            <md-option value="shortText">
+                <md-icon style="margin-right: 10px;">
+                    <i class="material-icons">short_text</i>
+                </md-icon>
+                <span translate=":shortText">Short text</span>
+            </md-option>
+            <md-option value="longText">
+                <md-icon style="margin-right: 10px;">
+                    <i class="material-icons">view_headline</i>
+                </md-icon>
+                <span translate=":longText">Long text</span>
+            </md-option>
+            <md-divider></md-divider>
+            <md-option value="radioButtonList">
+                <md-icon style="margin-right: 10px;">
+                    <i class="material-icons">radio_button_checked</i>
+                </md-icon>
+                <span translate=":radioButtons">Radio buttons</span>
+            </md-option>
+            <md-option value="checkBoxList">
+                <md-icon style="margin-right: 10px;">
+                    <i class="material-icons">check_box</i>
+                </md-icon>
+                <span translate=":checkBoxes">Check boxes</span>
+            </md-option>
+        </md-select>
+</div>

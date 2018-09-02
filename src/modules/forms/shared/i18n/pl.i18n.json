@@ -1,0 +1,26 @@
+{
+    "edit": "Edycja",
+    "responses": "Odpowiedzi",
+    "report": "Raport",
+    "required": "Wymagane",
+    "response": "Odpowiedź",
+    "of": "z",
+    "send": "Wyślij",
+    "share": "Udostępnij",
+    "remove": "Usuń",
+    "validator": {
+        "required": "To pole jest wymagane!",
+        "isURL": "Podaj poprawny adres URL",
+        "isEmail": "Podaj poprawny adres e-mail",
+        "gt": "Wartość powinna być liczbą większa od {{param}}",
+        "gte": "Wartość powinna być liczbą większa lub równą {{param}}",
+        "lt": "Wartość powinna być liczbą mniejszą od {{param}}",
+        "lte": "Wartość powinna być liczbą mniejszą lub równą {{param}}",
+        "eq": "Wartość powinna być równa {{param}}",
+        "ne": "Wartość powinna być różna od {{param}}",
+        "contains": "Wartość powinna zawierać \"{{param}}\"",
+        "notContains": "Wartość nie powinna zawierać \"{{param}}\"",
+        "matches": "Wartość powinna spełniać wyrażenie regularne {{param}}",
+        "notMatches": "Wartość nie powinna spełniać wyrażenie regularne {{param}}"
+    }
+}

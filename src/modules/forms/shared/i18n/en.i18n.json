@@ -1,0 +1,16 @@
+{
+    "validator": {
+        "isEmail": "Enter correct e-mail address",
+        "isURL": "Provide a valid URL",
+        "gt": "The value should be greater than {{param}}",
+        "gte": "The value should be greater or equal {{param}}",
+        "lt": "The value should be lower than {{param}}",
+        "lte": "The value should be lower or equal {{param}}",
+        "eq": "The value should equal {{param}}",
+        "ne": "The value should not equal {{param}}",
+        "contains": "The value should contain the following \"{{param}}\"",
+        "notContains": "The value should not contain the following \"{{param}}\"",
+        "matches": "The value should match the following regular expression {{param}}",
+        "notMatches": "The value should not match the following regular expression {{param}}"
+    }
+}

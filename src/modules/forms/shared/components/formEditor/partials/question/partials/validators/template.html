@@ -1,0 +1,35 @@
+<div layout="row" layout-align="start start" flex>
+    <md-select ng-model="validator.group">
+        <md-option value="number"><span translate=":number">Number</span></md-option>
+        <md-option value="text"><span translate=":text">Text</span></md-option>
+        <md-option value="regex"><span translate=":regex">Regular expression</span></md-option>
+      </md-select>
+
+      <md-select ng-model="validator.name">
+        <md-option ng-repeat="v in getValidatorsForGroup(validator.group)" ng-value="v[1]"><span translate=":{{v[0][1]}}"></span></md-option>
+      </md-select>
+
+      <md-input-container ng-if="hasParam('number')" flex>
+        <label><span translate=":number">Number</span></label>
+        <input ng-model="validator.param" type="number">
+      </md-input-container>
+
+      <md-input-container ng-if="hasParam('text')" flex>
+        <label>
+            <span ng-if="validator.group !== 'regex'" translate=":text">Text</span>
+            <span ng-if="validator.group === 'regex'" translate=":expression">Expression</span>
+        </label>
+        <input ng-model="validator.param">
+      </md-input-container>
+
+      <md-input-container flex>
+        <label translate=":customErrorMessage">Custom error message</label>
+        <input ng-model="validator.message">
+      </md-input-container>
+
+      <md-button class="md-icon-button remove-validator-button" ng-click="toggleValidation(question)">
+          <md-icon>
+              <i class="material-icons">close</i>
+          </md-icon>
+      </md-button>
+</div>

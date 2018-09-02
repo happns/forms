@@ -1,0 +1,19 @@
+{
+    "number": "Number",
+    "text": "Text",
+    "regex": "Regular expression",
+    "expression": "Expression",
+    "gt": "Greater than",
+    "gte": "Greater than or equal",
+    "lt": "Less than",
+    "lte": "Less than or equal",
+    "eq": "Equal",
+    "ne": "Not equal",
+    "contains": "Contains",
+    "notContains": "Not contains",
+    "isEmail": "Email address",
+    "isURL": "URL",
+    "matches": "Matches",
+    "notMatches": "Doesn't match",
+    "customErrorMessage": "Custom error message"
+}

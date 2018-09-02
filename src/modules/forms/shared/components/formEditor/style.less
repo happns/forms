@@ -1,0 +1,76 @@
+& {
+    background: #efefef;
+    .md-open-menu-container.md-active, .md-open-menu-container.md-leave {
+        transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .md-open-menu-container.md-active > md-menu-content > * {
+        transition: none;
+    }
+    md-menu-item > .md-button {
+        display: flex;
+        &.active {
+            background-color: rgba(158, 158, 158, 0.2);
+        }
+    }
+    .editable {
+        outline: none;
+    }
+    @media screen and (max-width: 599px) {
+        .editable:not(.editing) {
+            input {
+                // prevent from auto show the keyboard on mobile when input is touched
+                pointer-events: none;
+            }
+        }
+    }
+}
+
+md-toolbar md-icon i {
+    color: white;
+}
+
+md-content.page {
+    width: 800px;
+    max-width: 100%;
+    min-height: 500px !important;
+    background-color: #fff;
+    z-index: 50;
+    padding: 0;
+    overflow: hidden;
+}
+
+.edit-pane {
+    position: relative;
+}
+
+editing-menu {
+    position: absolute;
+    transition-duration: 0.5s;
+}
+
+.editable:not(.editing) {
+    input {
+        border: 0;
+    }
+    .editing-ui {
+        display: none;
+    }
+    .as-sortable-item-handle.editing-ui {
+        display: block;
+        visibility: hidden;
+    }
+}
+
+.as-sortable-item {
+    touch-action: auto;
+}
+
+.as-sortable-placeholder {
+    background-color: #eee;
+}
+
+.locked {
+    drag-handle {
+        display: none !important;
+    }
+}
