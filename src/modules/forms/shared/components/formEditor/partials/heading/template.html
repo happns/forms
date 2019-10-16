@@ -1,6 +1,6 @@
-<div layout="column" class="editable" ng-class="{ 'editing': editingItem === heading, 'locked': item.settings.locked }" ng-click="setEditingItem(item, $event)">
+<div layout="column" class="editable" ng-class="{ 'editing': editingItem === heading, 'locked': item.settings.locked }" ng-click="setEditingItem(item, section, $event)">
     <div layout="row" layout-align="center center">
-        <drag-handle class="item-drag-handle editing-ui" as-sortable-item-handle ng-mousedown="setEditingItem(item, $event)"></drag-handle>
+        <:..drag-handle class="item-drag-handle editing-ui" as-sortable-item-handle ng-mousedown="setEditingItem(item, section, $event)"></:..drag-handle>
     </div>
     <md-input-container class="big" md-no-float>
         <input ng-model="heading.title" ng-focus="setEditingItem(heading, $event)" placeholder="Title">

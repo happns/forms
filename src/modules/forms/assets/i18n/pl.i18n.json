@@ -14,7 +14,7 @@
     "shortTextContent": "Tekst krótkiej odpowiedzi"
 },
 "formEditor.question.typeSelectMenu": {
-    "radioButtons": "Pojedyńczy wybór",
+    "radioButtons": "Pojedynczy wybór",
     "checkBoxes": "Wielokrotny wybór",
     "shortText": "Krótki tekst",
     "longText": "Długi tekst"

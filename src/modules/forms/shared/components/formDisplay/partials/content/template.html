@@ -1,0 +1,8 @@
+<div ng-repeat="item in form.items">
+    <:heading ng-init="heading=item" ng-if="item.type === 'heading'">
+    </:heading>
+    <:question ng-init="question=item.question" ng-if="item.type === 'question'">
+    </:question>
+    <form-display.content ng-init="form=item" ng-if="item.type === 'section'">
+    </form-display.content>
+</div>

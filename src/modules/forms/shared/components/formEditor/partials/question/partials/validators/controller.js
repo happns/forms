@@ -10,21 +10,21 @@ export default function ($scope) {
         [['text', 'contains'], 'contains'],
         [['text', 'notContains'], 'notContains'],
         [['text', 'isEmail'], 'isEmail'],
-        [['text', 'isURL'], 'isURL'],
+        [['text', 'isURL'], 'isURL', { require_tld: false }],
         [['regex', 'matches'], 'matches'],
         [['regex', 'notMatches'], 'notMatches']
     ];
 
-    const hasTextParam = [ 'contains', 'notContains', 'matches', 'notMatches' ];
-    const hasNumberParam = [ 'gt', 'gte', 'lt', 'lte', 'eq', 'ne' ];
+    const hasTextParam = ['contains', 'notContains', 'matches', 'notMatches'];
+    const hasNumberParam = ['gt', 'gte', 'lt', 'lte', 'eq', 'ne'];
 
     const defaultValidator = {
         group: validatorMap[0][0][0],
-        name: validatorMap[0][0][1]        
+        name: validatorMap[0][0][1]
     };
 
     if ($scope.question.validation) {
-        $scope.question.validation.items = $scope.question.validation.items || [ defaultValidator ];
+        $scope.question.validation.items = $scope.question.validation.items || [defaultValidator];
 
         var item = $scope.question.validation.items[0];
 
@@ -62,10 +62,14 @@ export default function ($scope) {
 
         delete $scope.validator.param;
 
-        $scope.validator.name = validatorMap.filter(x => x[0][0] === group)[0][1];        
+        const validatorItem =  validatorMap.filter(x => x[0][0] === group)[0];
+        $scope.validator.name = validatorItem[1];
     });
 
     $scope.$watch('validator', validator => {
-        $scope.question.validation.items = [ { name: validator.name, param: validator.param, message: validator.message }];
+        const validatorItem =  validatorMap.filter(x => x[1] === validator.name)[0];
+        let param = validator.param || validatorItem[2];
+
+        $scope.question.validation.items = [{ name: validator.name, param, message: validator.message }];
     }, true);
 }

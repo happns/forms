@@ -1,0 +1,5 @@
+<md-radio-group ng-model="question.answer" ng-required="question.required" name="{{question.ask}}" ng-disabled="disabled">
+
+    <md-radio-button ng-repeat="option in question.options" value="{{option.name}}" class="md-primary">{{option.name}}</md-radio-button>
+
+</md-radio-group>

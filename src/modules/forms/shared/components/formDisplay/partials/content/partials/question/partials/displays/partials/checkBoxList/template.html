@@ -1,0 +1,5 @@
+<div layout="column">
+    <md-checkbox ng-repeat="option in question.options" ng-checked="exists(option, question.answer)" ng-click="toggle(option, question.answer)"  class="md-primary" ng-disabled="disabled">
+        {{option.name}}
+    </md-checkbox>
+</div>

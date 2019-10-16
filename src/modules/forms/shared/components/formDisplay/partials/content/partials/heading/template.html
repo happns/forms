@@ -1,0 +1,4 @@
+<h2>{{item.title}}</h2>
+<span ng-bind-html="item.description | linky"></span>
+
+<p class="required-info" ng-if="$index === 0">* <span translate=".required">Required</span></p>

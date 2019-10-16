@@ -1,0 +1,10 @@
+<div ng-repeat="property in getProperties()">
+    <div layout="row" layout-align="start center">
+        <span class="title">{{property.title}}</span>
+        <md-input-container flex>
+            <input ng-model="property.value">
+        </md-input-container>
+    </div>
+
+    <div ui-ace></div>
+</div>

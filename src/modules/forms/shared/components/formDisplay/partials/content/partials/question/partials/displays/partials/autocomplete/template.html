@@ -1,0 +1,17 @@
+<div layout="column">
+    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in querySearch(searchText)">
+        <md-item-template>
+            <span class="item-title">
+                <md-icon md-svg-icon="img/icons/octicon-repo.svg"></md-icon>
+            </span>
+            <span class="item-metadata">
+                <span>
+                    <strong>{{item.title}}</strong>
+                </span>
+                <span>
+                    <strong>{{item.description}}</strong>
+                </span>
+            </span>
+        </md-item-template>
+    </md-autocomplete>
+</div>

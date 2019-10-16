@@ -1,6 +1,6 @@
-<div class="editable" ng-class="{ 'editing': editingItem === item, 'last': $last }" ng-click="setEditingItem(item, $event)">
+<div class="editable" ng-class="{ 'editing': editingItem === item, 'last': $last }" ng-click="setEditingItem(item, section, $event);">
     <div layout="row" layout-align="center center">
-        <:..drag-handle class="item-drag-handle editing-ui" as-sortable-item-handle ng-mousedown="setEditingItem(item, $event)"></:..drag-handle>
+        <:..drag-handle class="item-drag-handle editing-ui" as-sortable-item-handle ng-mousedown="setEditingItem(item, section, $event)"></:..drag-handle>
     </div>
     <div class="basic-settings" layout="column" layout-gt-sm="row" layout-align="start center">
         <md-input-container md-no-float class="question-input" flex>
@@ -9,11 +9,12 @@
         <:type-select-menu class="editing-ui"></:type-select-menu>
     </div>
 
-    <div  class="answer-editor">
+    <div class="answer-editor">
         <:editors.radio-button-list ng-if="question.type === 'radioButtonList'"></:editors.radio-button-list>
         <:editors.check-box-list ng-if="question.type === 'checkBoxList'"></:editors.check-box-list>
         <:editors.short-text ng-if="question.type === 'shortText'"></:editors.short-text>
         <:editors.long-text ng-if="question.type === 'longText'"></:editors.long-text>
+        <:editors.autocomplete ng-if="question.type === 'autocomplete'"></:editors.autocomplete>
     </div>
 
     <div class="editing-ui" ng-if="question.validation" flex>

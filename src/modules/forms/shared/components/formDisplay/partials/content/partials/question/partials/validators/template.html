@@ -1,0 +1,7 @@
+<ng-messages for="ngForm[question.ask].$error" role="alert" ng-if="!disabled && (!ngForm[question.ask].$pristine || ngForm.$submitted)">
+    <ng-message when="required" translate=".validator.required">This item is required</ng-message>
+    <ng-message ng-repeat="validator in question.validation.items" when="{{validator.name}}">
+        <span ng-if="!validator.message" translate=".validator.{{validator.name}}" translate-values="{ param: validator.param }"></span>
+        <span ng-if="validator.message">{{validator.message}}</span>
+    </ng-message>
+</ng-messages>
