@@ -15,6 +15,13 @@ Include the module script in your application, and refrence it in your AngularJS
 
 ## Development
 
+Install the dependencies:
+
+```sh
+bower install
+npm install
+```
+
 Build the module just once:
 
 ```sh
