@@ -31,6 +31,7 @@ if (CONF_STANDALONE) {
 
     require('ace-builds/src-min-noconflict/ace');
     require('angular-ui-ace/ui-ace');
+    require('validator-js/validator');
 }
 
 var dependencies = ['ngMaterial', 'ngAnimate', 'ngMessages', 'ngSanitize', 'as.sortable', 'pascalprecht.translate', 'ui.ace']
