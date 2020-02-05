@@ -1293,7 +1293,7 @@
 /* 15 */
 /***/ (function(module, exports) {
 
-	module.exports = "<h2>{{item.title}}</h2>\r\n<span ng-bind-html=\"item.description | linky\"></span>\r\n\r\n<p class=\"required-info\" ng-if=\"$index === 0\">* <span translate=\".required\">Required</span></p>";
+	module.exports = "<h2>{{item.title}}</h2>\r\n<span ng-bind-html=\"item.description.indexOf('data:text/html') === 0 ? item.description.replace('data:text/html,', '') : (item.description | linky)\"></span>\r\n\r\n<p class=\"required-info\" ng-if=\"$index === 0\">* <span translate=\".required\">Required</span></p>";
 
 /***/ }),
 /* 16 */

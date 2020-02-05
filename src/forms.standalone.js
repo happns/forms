@@ -1293,7 +1293,7 @@
 /* 15 */
 /***/ (function(module, exports) {
 
-	module.exports = "<h2>{{item.title}}</h2>\r\n<span ng-bind-html=\"item.description | linky\"></span>\r\n\r\n<p class=\"required-info\" ng-if=\"$index === 0\">* <span translate=\".required\">Required</span></p>";
+	module.exports = "<h2>{{item.title}}</h2>\r\n<span ng-bind-html=\"item.description.indexOf('data:text/html') === 0 ? item.description.replace('data:text/html,', '') : (item.description | linky)\"></span>\r\n\r\n<p class=\"required-info\" ng-if=\"$index === 0\">* <span translate=\".required\">Required</span></p>";
 
 /***/ }),
 /* 16 */
@@ -56923,9 +56923,9 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	/*!
-	 * angular-translate - v2.18.1 - 2018-05-19
+	 * angular-translate - v2.18.2 - 2020-01-04
 	 * 
-	 * Copyright (c) 2018 The angular-translate team, Pascal Precht; Licensed MIT
+	 * Copyright (c) 2020 The angular-translate team, Pascal Precht; Licensed MIT
 	 */
 	(function (root, factory) {
 	  if (true) {
@@ -57116,6 +57116,9 @@
 	     *
 	     * @param {string} name A name of the part to add
 	     * @param {int} [priority=0] Sets the load priority of this part.
+	     * @param {string|function} urlTemplate Either a string containing an url pattern (with
+	     *                                        '{part}' and '{lang}') or a function(part, lang)
+	     *                                        returning a string.
 	     *
 	     * @returns {object} $translatePartialLoaderProvider, so this method is chainable
 	     * @throws {TypeError} The method could throw a **TypeError** if you pass the param
@@ -57777,7 +57780,7 @@
 	        };
 	    }Date.now || (Date.now = function () {
 	        return new Date().getTime();
-	    });var _ = "\t\n\x0B\f\r \xA0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF";if (!String.prototype.trim || _.trim()) {
+	    });var _ = "\t\n\x0B\f\r \xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF";if (!String.prototype.trim) {
 	        _ = "[" + _ + "]";var D = new RegExp("^" + _ + _ + "*"),
 	            P = new RegExp(_ + _ + "*$");String.prototype.trim = function () {
 	            return String(this).replace(D, "").replace(P, "");
@@ -57898,43 +57901,48 @@
 	    };
 	}), ace.define("ace/lib/event", ["require", "exports", "module", "ace/lib/keys", "ace/lib/useragent"], function (e, t, n) {
 	    "use strict";
-	    function a(e, t, n) {
-	        var a = u(t);if (!i.isMac && s) {
-	            t.getModifierState && (t.getModifierState("OS") || t.getModifierState("Win")) && (a |= 8);if (s.altGr) {
-	                if ((3 & a) == 3) return;s.altGr = 0;
+	    function a() {
+	        u = !1;try {
+	            document.createComment("").addEventListener("test", function () {}, { get passive() {
+	                    u = { passive: !1 };
+	                } });
+	        } catch (e) {}
+	    }function f() {
+	        return u == undefined && a(), u;
+	    }function c(e, t, n) {
+	        var u = l(t);if (!i.isMac && s) {
+	            t.getModifierState && (t.getModifierState("OS") || t.getModifierState("Win")) && (u |= 8);if (s.altGr) {
+	                if ((3 & u) == 3) return;s.altGr = 0;
 	            }if (n === 18 || n === 17) {
-	                var f = "location" in t ? t.location : t.keyLocation;if (n === 17 && f === 1) s[n] == 1 && (o = t.timeStamp);else if (n === 18 && a === 3 && f === 2) {
-	                    var l = t.timeStamp - o;l < 50 && (s.altGr = !0);
+	                var a = "location" in t ? t.location : t.keyLocation;if (n === 17 && a === 1) s[n] == 1 && (o = t.timeStamp);else if (n === 18 && u === 3 && a === 2) {
+	                    var f = t.timeStamp - o;f < 50 && (s.altGr = !0);
 	                }
 	            }
-	        }n in r.MODIFIER_KEYS && (n = -1);if (!a && n === 13) {
-	            var f = "location" in t ? t.location : t.keyLocation;if (f === 3) {
-	                e(t, a, -n);if (t.defaultPrevented) return;
+	        }n in r.MODIFIER_KEYS && (n = -1);if (!u && n === 13) {
+	            var a = "location" in t ? t.location : t.keyLocation;if (a === 3) {
+	                e(t, u, -n);if (t.defaultPrevented) return;
 	            }
-	        }if (i.isChromeOS && a & 8) {
-	            e(t, a, n);if (t.defaultPrevented) return;a &= -9;
-	        }return !!a || n in r.FUNCTION_KEYS || n in r.PRINTABLE_KEYS ? e(t, a, n) : !1;
-	    }function f() {
+	        }if (i.isChromeOS && u & 8) {
+	            e(t, u, n);if (t.defaultPrevented) return;u &= -9;
+	        }return !!u || n in r.FUNCTION_KEYS || n in r.PRINTABLE_KEYS ? e(t, u, n) : !1;
+	    }function h() {
 	        s = Object.create(null);
 	    }var r = e("./keys"),
 	        i = e("./useragent"),
 	        s = null,
-	        o = 0;t.addListener = function (e, t, n) {
-	        if (e.addEventListener) return e.addEventListener(t, n, !1);if (e.attachEvent) {
-	            var r = function r() {
-	                n.call(e, window.event);
-	            };n._wrapper = r, e.attachEvent("on" + t, r);
-	        }
+	        o = 0,
+	        u;t.addListener = function (e, t, n) {
+	        return e.addEventListener(t, n, f());
 	    }, t.removeListener = function (e, t, n) {
-	        if (e.removeEventListener) return e.removeEventListener(t, n, !1);e.detachEvent && e.detachEvent("on" + t, n._wrapper || n);
+	        return e.removeEventListener(t, n, f());
 	    }, t.stopEvent = function (e) {
 	        return t.stopPropagation(e), t.preventDefault(e), !1;
 	    }, t.stopPropagation = function (e) {
-	        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = !0;
+	        e.stopPropagation && e.stopPropagation();
 	    }, t.preventDefault = function (e) {
-	        e.preventDefault ? e.preventDefault() : e.returnValue = !1;
+	        e.preventDefault && e.preventDefault();
 	    }, t.getButton = function (e) {
-	        return e.type == "dblclick" ? 0 : e.type == "contextmenu" || i.isMac && e.ctrlKey && !e.altKey && !e.shiftKey ? 2 : e.preventDefault ? e.button : { 1: 0, 2: 2, 4: 1 }[e.button];
+	        return e.type == "dblclick" ? 0 : e.type == "contextmenu" || i.isMac && e.ctrlKey && !e.altKey && !e.shiftKey ? 2 : e.button;
 	    }, t.capture = function (e, n, r) {
 	        function i(e) {
 	            n && n(e), r && r(e), t.removeListener(document, "mousemove", n, !0), t.removeListener(document, "mouseup", i, !0), t.removeListener(document, "dragstart", i, !0);
@@ -57956,42 +57964,36 @@
 	                    f = null;
 	                }, n[o - 1] || 600), o == 1 && (u = e.clientX, a = e.clientY);
 	            }e._clicks = o, r[s]("mousedown", e);if (o > 4) o = 0;else if (o > 1) return r[s](l[o], e);
-	        }function h(e) {
-	            o = 2, f && clearTimeout(f), f = setTimeout(function () {
-	                f = null;
-	            }, n[o - 1] || 600), r[s]("mousedown", e), r[s](l[o], e);
 	        }var o = 0,
 	            u,
 	            a,
 	            f,
 	            l = { 2: "dblclick", 3: "tripleclick", 4: "quadclick" };Array.isArray(e) || (e = [e]), e.forEach(function (e) {
-	            t.addListener(e, "mousedown", c), i.isOldIE && t.addListener(e, "dblclick", h);
+	            t.addListener(e, "mousedown", c);
 	        });
-	    };var u = !i.isMac || !i.isOpera || "KeyboardEvent" in window ? function (e) {
+	    };var l = function l(e) {
 	        return 0 | (e.ctrlKey ? 1 : 0) | (e.altKey ? 2 : 0) | (e.shiftKey ? 4 : 0) | (e.metaKey ? 8 : 0);
-	    } : function (e) {
-	        return 0 | (e.metaKey ? 1 : 0) | (e.altKey ? 2 : 0) | (e.shiftKey ? 4 : 0) | (e.ctrlKey ? 8 : 0);
 	    };t.getModifierString = function (e) {
-	        return r.KEY_MODS[u(e)];
+	        return r.KEY_MODS[l(e)];
 	    }, t.addCommandKeyListener = function (e, n) {
 	        var r = t.addListener;if (i.isOldGecko || i.isOpera && !("KeyboardEvent" in window)) {
 	            var o = null;r(e, "keydown", function (e) {
 	                o = e.keyCode;
 	            }), r(e, "keypress", function (e) {
-	                return a(n, e, o);
+	                return c(n, e, o);
 	            });
 	        } else {
 	            var u = null;r(e, "keydown", function (e) {
-	                s[e.keyCode] = (s[e.keyCode] || 0) + 1;var t = a(n, e, e.keyCode);return u = e.defaultPrevented, t;
+	                s[e.keyCode] = (s[e.keyCode] || 0) + 1;var t = c(n, e, e.keyCode);return u = e.defaultPrevented, t;
 	            }), r(e, "keypress", function (e) {
 	                u && (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey) && (t.stopEvent(e), u = null);
 	            }), r(e, "keyup", function (e) {
 	                s[e.keyCode] = null;
-	            }), s || (f(), r(window, "focus", f));
+	            }), s || (h(), r(window, "focus", h));
 	        }
 	    };if ((typeof window === "undefined" ? "undefined" : _typeof(window)) == "object" && window.postMessage && !i.isOldIE) {
-	        var l = 1;t.nextTick = function (e, n) {
-	            n = n || window;var r = "zero-timeout-message-" + l++,
+	        var p = 1;t.nextTick = function (e, n) {
+	            n = n || window;var r = "zero-timeout-message-" + p++,
 	                i = function i(s) {
 	                s.data == r && (t.stopPropagation(s), t.removeListener(n, "message", i), e());
 	            };t.addListener(n, "message", i), n.postMessage(r, "*");
@@ -58181,15 +58183,15 @@
 	        d = i.isIOS,
 	        v = d ? /\s/ : /\n/,
 	        m = function m(e, t) {
-	        function z() {
+	        function W() {
 	            S = !0, n.blur(), n.focus(), S = !1;
-	        }function X(e) {
-	            e.keyCode == 27 && n.value.length < n.selectionStart && (y || (x = n.value), T = N = -1, L()), W();
-	        }function $() {
-	            clearTimeout(V), V = setTimeout(function () {
+	        }function V(e) {
+	            e.keyCode == 27 && n.value.length < n.selectionStart && (y || (x = n.value), T = N = -1, A()), X();
+	        }function J() {
+	            clearTimeout($), $ = setTimeout(function () {
 	                w && (n.style.cssText = w, w = ""), t.renderer.$isMousePressed = !1, t.renderer.$keepTextAreaAtCursor && t.renderer.$moveTextAreaToCursor();
 	            }, 0);
-	        }function K(e, t, n) {
+	        }function Q(e, t, n) {
 	            var r = null,
 	                i = !1;n.addEventListener("keydown", function (e) {
 	                r && clearTimeout(r), i = !0;
@@ -58204,7 +58206,7 @@
 	                    u = 0;if (r == 0) o = h.up;else if (r == 1) o = h.home;else if (s > N && x[s] == "\n") o = h.end;else if (r < T && x[r - 1] == " ") o = h.left, u = p.option;else if (r < T || r == T && N != T && r == s) o = h.left;else if (s > N && x.slice(0, s).split("\n").length > 2) o = h.down;else if (s > N && x[s - 1] == " ") o = h.right, u = p.option;else if (s > N || s == N && N != T && r == s) o = h.right;r !== s && (u |= p.shift);if (o) {
 	                    var a = t.onCommandKey({}, u, o);if (!a && t.commands) {
 	                        o = h.keyCodeToString(o);var f = t.commands.findKeyCommand(u, o);f && t.execCommand(f);
-	                    }T = r, N = s, L("");
+	                    }T = r, N = s, A("");
 	                }
 	            };document.addEventListener("selectionchange", s), t.on("destroy", function () {
 	                document.removeEventListener("selectionchange", s);
@@ -58217,14 +58219,15 @@
 	            S = !1,
 	            x = "",
 	            T = 0,
-	            N = 0;try {
-	            var C = document.activeElement === n;
-	        } catch (k) {}r.addListener(n, "blur", function (e) {
-	            if (S) return;t.onBlur(e), C = !1;
+	            N = 0,
+	            C = 0;try {
+	            var k = document.activeElement === n;
+	        } catch (L) {}r.addListener(n, "blur", function (e) {
+	            if (S) return;t.onBlur(e), k = !1;
 	        }), r.addListener(n, "focus", function (e) {
-	            if (S) return;C = !0;if (i.isEdge) try {
+	            if (S) return;k = !0;if (i.isEdge) try {
 	                if (!document.hasFocus()) return;
-	            } catch (e) {}t.onFocus(e), i.isEdge ? setTimeout(L) : L();
+	            } catch (e) {}t.onFocus(e), i.isEdge ? setTimeout(A) : A();
 	        }), this.$focusScroll = !1, this.focus = function () {
 	            if (w || l || this.$focusScroll == "browser") return n.focus({ preventScroll: !0 });var e = n.style.top;n.style.position = "fixed", n.style.top = "0px";try {
 	                var t = n.getBoundingClientRect().top != 0;
@@ -58242,14 +58245,14 @@
 	        }, this.blur = function () {
 	            n.blur();
 	        }, this.isFocused = function () {
-	            return C;
+	            return k;
 	        }, t.on("beforeEndOperation", function () {
-	            if (t.curOp && t.curOp.command.name == "insertstring") return;y && (x = n.value = "", U()), L();
-	        });var L = d ? function (e) {
-	            if (!C || m && !e || b) return;e || (e = "");var r = "\n ab" + e + "cde fg\n";r != n.value && (n.value = x = r);var i = 4,
+	            if (t.curOp && t.curOp.command.name == "insertstring") return;y && (x = n.value = "", z()), A();
+	        });var A = d ? function (e) {
+	            if (!k || m && !e || b) return;e || (e = "");var r = "\n ab" + e + "cde fg\n";r != n.value && (n.value = x = r);var i = 4,
 	                s = 4 + (e.length || (t.selection.isEmpty() ? 0 : 1));(T != i || N != s) && n.setSelectionRange(i, s), T = i, N = s;
 	        } : function () {
-	            if (y || b) return;if (!C && !_) return;y = !0;var e = t.selection,
+	            if (y || b) return;if (!k && !D) return;y = !0;var e = t.selection,
 	                r = e.getRange(),
 	                i = e.cursor.row,
 	                s = r.start.column,
@@ -58258,22 +58261,22 @@
 	                var a = t.session.getLine(i - 1);s = r.start.row < i - 1 ? 0 : s, o += a.length + 1, u = a + "\n" + u;
 	            } else if (r.end.row != i) {
 	                var f = t.session.getLine(i + 1);o = r.end.row > i + 1 ? f.length : o, o += u.length + 1, u = u + "\n" + f;
-	            }u.length > c && (s < c && o < c ? u = u.slice(0, c) : (u = "\n", s = 0, o = 1));var l = u + "\n\n";l != x && (n.value = x = l, T = N = l.length), _ && (T = n.selectionStart, N = n.selectionEnd);if (N != o || T != s || n.selectionEnd != N) try {
+	            }u.length > c && (s < c && o < c ? u = u.slice(0, c) : (u = "\n", s = 0, o = 1));var l = u + "\n\n";l != x && (n.value = x = l, T = N = l.length), D && (T = n.selectionStart, N = n.selectionEnd);if (N != o || T != s || n.selectionEnd != N) try {
 	                n.setSelectionRange(s, o), T = s, N = o;
 	            } catch (h) {}y = !1;
-	        };C && t.onFocus();var A = function A(e) {
+	        };k && t.onFocus();var O = function O(e) {
 	            return e.selectionStart === 0 && e.selectionEnd >= x.length && e.value === x && x && e.selectionEnd !== N;
 	        },
-	            O = function O(e) {
-	            if (y) return;m ? m = !1 : A(n) && (t.selectAll(), L());
+	            M = function M(e) {
+	            if (y) return;m ? m = !1 : O(n) && (t.selectAll(), A());
 	        },
-	            M = null;this.setInputHandler = function (e) {
-	            M = e;
+	            _ = null;this.setInputHandler = function (e) {
+	            _ = e;
 	        }, this.getInputHandler = function () {
-	            return M;
-	        };var _ = !1,
-	            D = function D(e, r) {
-	            _ && (_ = !1);if (g) return L(), e && t.onPaste(e), g = !1, "";var i = n.selectionStart,
+	            return _;
+	        };var D = !1,
+	            P = function P(e, r) {
+	            D && (D = !1);if (g) return A(), e && t.onPaste(e), g = !1, "";var i = n.selectionStart,
 	                s = n.selectionEnd,
 	                o = T,
 	                u = x.length - N,
@@ -58284,60 +58287,60 @@
 	                c++, o--;
 	            }a = a.slice(c), c = 1;while (u > 0 && x.length - c > T - 1 && x[x.length - c] == e[e.length - c]) {
 	                c++, u--;
-	            }f -= c - 1, l -= c - 1;var h = a.length - c + 1;return h < 0 && (o = -h, h = 0), a = a.slice(0, h), !r && f == a.length && !o && !u && !l ? "" : (b = !0, a && !o && !u && !f && !l || E ? t.onTextInput(a) : t.onTextInput(a, { extendLeft: o, extendRight: u, restoreStart: f, restoreEnd: l }), b = !1, x = e, T = i, N = s, a);
+	            }f -= c - 1, l -= c - 1;var h = a.length - c + 1;return h < 0 && (o = -h, h = 0), a = a.slice(0, h), !r && !a && !f && !o && !u && !l ? "" : (b = !0, a && !o && !u && !f && !l || E ? t.onTextInput(a) : t.onTextInput(a, { extendLeft: o, extendRight: u, restoreStart: f, restoreEnd: l }), b = !1, x = e, T = i, N = s, C = l, a);
 	        },
-	            P = function P(e) {
-	            if (y) return R();if (e && e.inputType) {
+	            H = function H(e) {
+	            if (y) return U();if (e && e.inputType) {
 	                if (e.inputType == "historyUndo") return t.execCommand("undo");if (e.inputType == "historyRedo") return t.execCommand("redo");
 	            }var r = n.value,
-	                i = D(r, !0);(r.length > c + 100 || v.test(i)) && L();
+	                i = P(r, !0);(r.length > c + 100 || v.test(i)) && A();
 	        },
-	            H = function H(e, t, n) {
+	            B = function B(e, t, n) {
 	            var r = e.clipboardData || window.clipboardData;if (!r || a) return;var i = f || n ? "Text" : "text/plain";try {
 	                return t ? r.setData(i, t) !== !1 : r.getData(i);
 	            } catch (e) {
-	                if (!n) return H(e, t, !0);
+	                if (!n) return B(e, t, !0);
 	            }
 	        },
-	            B = function B(e, i) {
-	            var s = t.getCopyText();if (!s) return r.preventDefault(e);H(e, s) ? (d && (L(s), m = s, setTimeout(function () {
+	            j = function j(e, i) {
+	            var s = t.getCopyText();if (!s) return r.preventDefault(e);B(e, s) ? (d && (A(s), m = s, setTimeout(function () {
 	                m = !1;
 	            }, 10)), i ? t.onCut() : t.onCopy(), r.preventDefault(e)) : (m = !0, n.value = s, n.select(), setTimeout(function () {
-	                m = !1, L(), i ? t.onCut() : t.onCopy();
+	                m = !1, A(), i ? t.onCut() : t.onCopy();
 	            }));
 	        },
-	            j = function j(e) {
-	            B(e, !0);
-	        },
 	            F = function F(e) {
-	            B(e, !1);
+	            j(e, !0);
 	        },
 	            I = function I(e) {
-	            var s = H(e);if (u.pasteCancelled()) return;typeof s == "string" ? (s && t.onPaste(s, e), i.isIE && setTimeout(L), r.preventDefault(e)) : (n.value = "", g = !0);
-	        };r.addCommandKeyListener(n, t.onCommandKey.bind(t)), r.addListener(n, "select", O), r.addListener(n, "input", P), r.addListener(n, "cut", j), r.addListener(n, "copy", F), r.addListener(n, "paste", I), (!("oncut" in n) || !("oncopy" in n) || !("onpaste" in n)) && r.addListener(e, "keydown", function (e) {
-	            if (i.isMac && !e.metaKey || !e.ctrlKey) return;switch (e.keyCode) {case 67:
-	                    F(e);break;case 86:
-	                    I(e);break;case 88:
-	                    j(e);}
-	        });var q = function q(e) {
-	            if (y || !t.onCompositionStart || t.$readOnly) return;y = {};if (E) return;setTimeout(R, 0), t.on("mousedown", z);var r = t.getSelectionRange();r.end.row = r.start.row, r.end.column = r.start.column, y.markerRange = r, y.selectionStart = T, t.onCompositionStart(y), y.useTextareaForIME ? (n.value = "", x = "", T = 0, N = 0) : (n.msGetInputContext && (y.context = n.msGetInputContext()), n.getInputContext && (y.context = n.getInputContext()));
+	            j(e, !1);
 	        },
-	            R = function R() {
-	            if (!y || !t.onCompositionUpdate || t.$readOnly) return;if (E) return z();if (y.useTextareaForIME) t.onCompositionUpdate(n.value);else {
-	                var e = n.value;D(e), y.markerRange && (y.context && (y.markerRange.start.column = y.selectionStart = y.context.compositionStartOffset), y.markerRange.end.column = y.markerRange.start.column + N - y.selectionStart);
+	            q = function q(e) {
+	            var s = B(e);if (u.pasteCancelled()) return;typeof s == "string" ? (s && t.onPaste(s, e), i.isIE && setTimeout(A), r.preventDefault(e)) : (n.value = "", g = !0);
+	        };r.addCommandKeyListener(n, t.onCommandKey.bind(t)), r.addListener(n, "select", M), r.addListener(n, "input", H), r.addListener(n, "cut", F), r.addListener(n, "copy", I), r.addListener(n, "paste", q), (!("oncut" in n) || !("oncopy" in n) || !("onpaste" in n)) && r.addListener(e, "keydown", function (e) {
+	            if (i.isMac && !e.metaKey || !e.ctrlKey) return;switch (e.keyCode) {case 67:
+	                    I(e);break;case 86:
+	                    q(e);break;case 88:
+	                    F(e);}
+	        });var R = function R(e) {
+	            if (y || !t.onCompositionStart || t.$readOnly) return;y = {};if (E) return;setTimeout(U, 0), t.on("mousedown", W);var r = t.getSelectionRange();r.end.row = r.start.row, r.end.column = r.start.column, y.markerRange = r, y.selectionStart = T, t.onCompositionStart(y), y.useTextareaForIME ? (n.value = "", x = "", T = 0, N = 0) : (n.msGetInputContext && (y.context = n.msGetInputContext()), n.getInputContext && (y.context = n.getInputContext()));
+	        },
+	            U = function U() {
+	            if (!y || !t.onCompositionUpdate || t.$readOnly) return;if (E) return W();if (y.useTextareaForIME) t.onCompositionUpdate(n.value);else {
+	                var e = n.value;P(e), y.markerRange && (y.context && (y.markerRange.start.column = y.selectionStart = y.context.compositionStartOffset), y.markerRange.end.column = y.markerRange.start.column + N - y.selectionStart + C);
 	            }
 	        },
-	            U = function U(e) {
-	            if (!t.onCompositionEnd || t.$readOnly) return;y = !1, t.onCompositionEnd(), t.off("mousedown", z), e && P();
+	            z = function z(e) {
+	            if (!t.onCompositionEnd || t.$readOnly) return;y = !1, t.onCompositionEnd(), t.off("mousedown", W), e && H();
 	        },
-	            W = o.delayedCall(R, 50).schedule.bind(null, null);r.addListener(n, "compositionstart", q), r.addListener(n, "compositionupdate", R), r.addListener(n, "keyup", X), r.addListener(n, "keydown", W), r.addListener(n, "compositionend", U), this.getElement = function () {
+	            X = o.delayedCall(U, 50).schedule.bind(null, null);r.addListener(n, "compositionstart", R), r.addListener(n, "compositionupdate", U), r.addListener(n, "keyup", V), r.addListener(n, "keydown", X), r.addListener(n, "compositionend", z), this.getElement = function () {
 	            return n;
 	        }, this.setCommandMode = function (e) {
 	            E = e, n.readOnly = !1;
 	        }, this.setReadOnly = function (e) {
 	            E || (n.readOnly = e);
 	        }, this.setCopyWithEmptySelection = function (e) {}, this.onContextMenu = function (e) {
-	            _ = !0, L(), t._emit("nativecontextmenu", { target: t, domEvent: e }), this.moveToMouse(e, !0);
+	            D = !0, A(), t._emit("nativecontextmenu", { target: t, domEvent: e }), this.moveToMouse(e, !0);
 	        }, this.moveToMouse = function (e, o) {
 	            w || (w = n.style.cssText), n.style.cssText = (o ? "z-index:100000;" : "") + (i.isIE ? "opacity:0.1;" : "") + "text-indent: -" + (T + N) * t.renderer.characterWidth * .5 + "px;";var u = t.container.getBoundingClientRect(),
 	                a = s.computedStyle(t.container),
@@ -58346,13 +58349,13 @@
 	                c = u.bottom - f - n.clientHeight - 2,
 	                h = function h(e) {
 	                s.translate(n, e.clientX - l - 2, Math.min(e.clientY - f - 2, c));
-	            };h(e);if (e.type != "mousedown") return;t.renderer.$isMousePressed = !0, clearTimeout(V), i.isWin && r.capture(t.container, h, $);
-	        }, this.onContextMenuClose = $;var V,
-	            J = function J(e) {
-	            t.textInput.onContextMenu(e), $();
-	        };r.addListener(n, "mouseup", J), r.addListener(n, "mousedown", function (e) {
-	            e.preventDefault(), $();
-	        }), r.addListener(t.renderer.scroller, "contextmenu", J), r.addListener(n, "contextmenu", J), d && K(e, t, n);
+	            };h(e);if (e.type != "mousedown") return;t.renderer.$isMousePressed = !0, clearTimeout($), i.isWin && r.capture(t.container, h, J);
+	        }, this.onContextMenuClose = J;var $,
+	            K = function K(e) {
+	            t.textInput.onContextMenu(e), J();
+	        };r.addListener(n, "mouseup", K), r.addListener(n, "mousedown", function (e) {
+	            e.preventDefault(), J();
+	        }), r.addListener(t.renderer.scroller, "contextmenu", K), r.addListener(n, "contextmenu", K), d && Q(e, t, n);
 	    };t.TextInput = m;
 	}), ace.define("ace/mouse/default_handlers", ["require", "exports", "module", "ace/lib/useragent"], function (e, t, n) {
 	    "use strict";
@@ -58649,88 +58652,89 @@
 	            }
 	        };
 	    }).call(f.prototype), t.DragdropHandler = f;
-	}), ace.define("ace/mouse/touch_handler", ["require", "exports", "module", "ace/mouse/mouse_event", "ace/lib/dom"], function (e, t, n) {
+	}), ace.define("ace/mouse/touch_handler", ["require", "exports", "module", "ace/mouse/mouse_event", "ace/lib/event", "ace/lib/dom"], function (e, t, n) {
 	    "use strict";
 	    var r = e("./mouse_event").MouseEvent,
-	        i = e("../lib/dom");t.addTouchListeners = function (e, t) {
-	        function y() {
+	        i = e("../lib/event"),
+	        s = e("../lib/dom");t.addTouchListeners = function (e, t) {
+	        function b() {
 	            var e = window.navigator && window.navigator.clipboard,
 	                r = !1,
-	                s = function s() {
+	                i = function i() {
 	                var n = t.getCopyText(),
-	                    s = t.session.getUndoManager().hasUndo();g.replaceChild(i.buildDom(r ? ["span", !n && ["span", { "class": "ace_mobile-button", action: "selectall" }, "Select All"], n && ["span", { "class": "ace_mobile-button", action: "copy" }, "Copy"], n && ["span", { "class": "ace_mobile-button", action: "cut" }, "Cut"], e && ["span", { "class": "ace_mobile-button", action: "paste" }, "Paste"], s && ["span", { "class": "ace_mobile-button", action: "undo" }, "Undo"], ["span", { "class": "ace_mobile-button", action: "find" }, "Find"], ["span", { "class": "ace_mobile-button", action: "openCommandPallete" }, "Pallete"]] : ["span"]), g.firstChild);
+	                    i = t.session.getUndoManager().hasUndo();y.replaceChild(s.buildDom(r ? ["span", !n && ["span", { "class": "ace_mobile-button", action: "selectall" }, "Select All"], n && ["span", { "class": "ace_mobile-button", action: "copy" }, "Copy"], n && ["span", { "class": "ace_mobile-button", action: "cut" }, "Cut"], e && ["span", { "class": "ace_mobile-button", action: "paste" }, "Paste"], i && ["span", { "class": "ace_mobile-button", action: "undo" }, "Undo"], ["span", { "class": "ace_mobile-button", action: "find" }, "Find"], ["span", { "class": "ace_mobile-button", action: "openCommandPallete" }, "Pallete"]] : ["span"]), y.firstChild);
 	            },
 	                o = function o(n) {
-	                var i = n.target.getAttribute("action");if (i == "more" || !r) return r = !r, s();if (i == "paste") e.readText().then(function (e) {
-	                    t.execCommand(i, e);
-	                });else if (i) {
-	                    if (i == "cut" || i == "copy") e ? e.writeText(t.getCopyText()) : document.execCommand("copy");t.execCommand(i);
-	                }g.firstChild.style.display = "none", r = !1, i != "openCommandPallete" && t.focus();
-	            };g = i.buildDom(["div", { "class": "ace_mobile-menu", ontouchstart: function ontouchstart(e) {
+	                var s = n.target.getAttribute("action");if (s == "more" || !r) return r = !r, i();if (s == "paste") e.readText().then(function (e) {
+	                    t.execCommand(s, e);
+	                });else if (s) {
+	                    if (s == "cut" || s == "copy") e ? e.writeText(t.getCopyText()) : document.execCommand("copy");t.execCommand(s);
+	                }y.firstChild.style.display = "none", r = !1, s != "openCommandPallete" && t.focus();
+	            };y = s.buildDom(["div", { "class": "ace_mobile-menu", ontouchstart: function ontouchstart(e) {
 	                    n = "menu", e.stopPropagation(), e.preventDefault(), t.textInput.focus();
 	                }, ontouchend: function ontouchend(e) {
 	                    e.stopPropagation(), e.preventDefault(), o(e);
 	                }, onclick: o }, ["span"], ["span", { "class": "ace_mobile-button", action: "more" }, "..."]], t.container);
-	        }function b() {
-	            g || y();var e = t.selection.cursor,
+	        }function w() {
+	            y || b();var e = t.selection.cursor,
 	                n = t.renderer.textToScreenCoordinates(e.row, e.column),
-	                r = t.container.getBoundingClientRect();g.style.top = n.pageY - r.top - 3 + "px", g.style.right = "10px", g.style.display = "", g.firstChild.style.display = "none", t.on("input", w);
-	        }function w(e) {
-	            g && (g.style.display = "none"), t.off("input", w);
-	        }function E() {
-	            f = null, clearTimeout(f);var e = t.selection.getRange(),
-	                r = e.contains(h.row, h.column);if (e.isEmpty() || !r) t.selection.moveToPosition(h), t.selection.selectWord();n = "wait", b();
+	                r = t.container.getBoundingClientRect();y.style.top = n.pageY - r.top - 3 + "px", y.style.right = "10px", y.style.display = "", y.firstChild.style.display = "none", t.on("input", E);
+	        }function E(e) {
+	            y && (y.style.display = "none"), t.off("input", E);
 	        }function S() {
-	            f = null, clearTimeout(f), t.selection.moveToPosition(h);var e = p >= 2 ? t.selection.getLineRange(h.row) : t.session.getBracketRange(h);e && !e.isEmpty() ? t.selection.setRange(e) : t.selection.selectWord(), n = "wait";
+	            l = null, clearTimeout(l);var e = t.selection.getRange(),
+	                r = e.contains(p.row, p.column);if (e.isEmpty() || !r) t.selection.moveToPosition(p), t.selection.selectWord();n = "wait", w();
 	        }function x() {
-	            c += 60, l = setInterval(function () {
-	                c-- <= 0 && (clearInterval(l), l = null), Math.abs(d) < .01 && (d = 0), Math.abs(v) < .01 && (v = 0), c < 20 && (d = .9 * d), c < 20 && (v = .9 * v);var e = t.session.getScrollTop();t.renderer.scrollBy(10 * d, 10 * v), e == t.session.getScrollTop() && (c = 0);
+	            l = null, clearTimeout(l), t.selection.moveToPosition(p);var e = d >= 2 ? t.selection.getLineRange(p.row) : t.session.getBracketRange(p);e && !e.isEmpty() ? t.selection.setRange(e) : t.selection.selectWord(), n = "wait";
+	        }function T() {
+	            h += 60, c = setInterval(function () {
+	                h-- <= 0 && (clearInterval(c), c = null), Math.abs(v) < .01 && (v = 0), Math.abs(m) < .01 && (m = 0), h < 20 && (v = .9 * v), h < 20 && (m = .9 * m);var e = t.session.getScrollTop();t.renderer.scrollBy(10 * v, 10 * m), e == t.session.getScrollTop() && (h = 0);
 	            }, 10);
 	        }var n = "scroll",
-	            s,
 	            o,
 	            u,
 	            a,
 	            f,
 	            l,
-	            c = 0,
-	            h,
-	            p = 0,
+	            c,
+	            h = 0,
+	            p,
 	            d = 0,
 	            v = 0,
-	            m,
-	            g;e.addEventListener("contextmenu", function (e) {
-	            if (!m) return;var n = t.textInput.getElement();n.focus();
-	        }), e.addEventListener("touchstart", function (e) {
-	            var i = e.touches;if (f || i.length > 1) {
-	                clearTimeout(f), f = null, u = -1, n = "zoom";return;
-	            }m = t.$mouseHandler.isMousePressed = !0;var l = t.renderer.layerConfig.lineHeight,
-	                g = t.renderer.layerConfig.lineHeight,
-	                y = e.timeStamp;a = y;var b = i[0],
+	            m = 0,
+	            g,
+	            y;i.addListener(e, "contextmenu", function (e) {
+	            if (!g) return;var n = t.textInput.getElement();n.focus();
+	        }), i.addListener(e, "touchstart", function (e) {
+	            var i = e.touches;if (l || i.length > 1) {
+	                clearTimeout(l), l = null, a = -1, n = "zoom";return;
+	            }g = t.$mouseHandler.isMousePressed = !0;var s = t.renderer.layerConfig.lineHeight,
+	                c = t.renderer.layerConfig.lineHeight,
+	                y = e.timeStamp;f = y;var b = i[0],
 	                w = b.clientX,
-	                x = b.clientY;Math.abs(s - w) + Math.abs(o - x) > l && (u = -1), s = e.clientX = w, o = e.clientY = x, d = v = 0;var T = new r(e, t);h = T.getDocumentPosition();if (y - u < 500 && i.length == 1 && !c) p++, e.preventDefault(), e.button = 0, S();else {
-	                p = 0;var N = t.selection.cursor,
+	                E = b.clientY;Math.abs(o - w) + Math.abs(u - E) > s && (a = -1), o = e.clientX = w, u = e.clientY = E, v = m = 0;var T = new r(e, t);p = T.getDocumentPosition();if (y - a < 500 && i.length == 1 && !h) d++, e.preventDefault(), e.button = 0, x();else {
+	                d = 0;var N = t.selection.cursor,
 	                    C = t.selection.isEmpty() ? N : t.selection.anchor,
 	                    k = t.renderer.$cursorLayer.getPixelPosition(N, !0),
 	                    L = t.renderer.$cursorLayer.getPixelPosition(C, !0),
 	                    A = t.renderer.scroller.getBoundingClientRect(),
 	                    O = function O(e, t) {
-	                    return e /= g, t = t / l - .75, e * e + t * t;
+	                    return e /= c, t = t / s - .75, e * e + t * t;
 	                };if (e.clientX < A.left) {
 	                    n = "zoom";return;
 	                }var M = O(e.clientX - A.left - k.left, e.clientY - A.top - k.top),
-	                    _ = O(e.clientX - A.left - L.left, e.clientY - A.top - L.top);M < 3.5 && _ < 3.5 && (n = M > _ ? "cursor" : "anchor"), _ < 3.5 ? n = "anchor" : M < 3.5 ? n = "cursor" : n = "scroll", f = setTimeout(E, 450);
-	            }u = y;
-	        }), e.addEventListener("touchend", function (e) {
-	            m = t.$mouseHandler.isMousePressed = !1, l && clearInterval(l), n == "zoom" ? (n = "", c = 0) : f ? (t.selection.moveToPosition(h), c = 0, b()) : n == "scroll" ? (x(), e.preventDefault(), w()) : b(), clearTimeout(f), f = null;
-	        }), e.addEventListener("touchmove", function (e) {
-	            f && (clearTimeout(f), f = null);var i = e.touches;if (i.length > 1 || n == "zoom") return;var u = i[0],
-	                l = s - u.clientX,
-	                c = o - u.clientY;if (n == "wait") {
-	                if (!(l * l + c * c > 4)) return e.preventDefault();n = "cursor";
-	            }s = u.clientX, o = u.clientY, e.clientX = u.clientX, e.clientY = u.clientY;var h = e.timeStamp,
-	                p = h - a;a = h;if (n == "scroll") {
-	                var m = new r(e, t);m.speed = 1, m.wheelX = l, m.wheelY = c, 10 * Math.abs(l) < Math.abs(c) && (l = 0), 10 * Math.abs(c) < Math.abs(l) && (c = 0), p != 0 && (d = l / p, v = c / p), t._emit("mousewheel", m), m.propagationStopped || (d = v = 0);
+	                    _ = O(e.clientX - A.left - L.left, e.clientY - A.top - L.top);M < 3.5 && _ < 3.5 && (n = M > _ ? "cursor" : "anchor"), _ < 3.5 ? n = "anchor" : M < 3.5 ? n = "cursor" : n = "scroll", l = setTimeout(S, 450);
+	            }a = y;
+	        }), i.addListener(e, "touchend", function (e) {
+	            g = t.$mouseHandler.isMousePressed = !1, c && clearInterval(c), n == "zoom" ? (n = "", h = 0) : l ? (t.selection.moveToPosition(p), h = 0, w()) : n == "scroll" ? (T(), e.preventDefault(), E()) : w(), clearTimeout(l), l = null;
+	        }), i.addListener(e, "touchmove", function (e) {
+	            l && (clearTimeout(l), l = null);var i = e.touches;if (i.length > 1 || n == "zoom") return;var s = i[0],
+	                a = o - s.clientX,
+	                c = u - s.clientY;if (n == "wait") {
+	                if (!(a * a + c * c > 4)) return e.preventDefault();n = "cursor";
+	            }o = s.clientX, u = s.clientY, e.clientX = s.clientX, e.clientY = s.clientY;var h = e.timeStamp,
+	                p = h - f;f = h;if (n == "scroll") {
+	                var d = new r(e, t);d.speed = 1, d.wheelX = a, d.wheelY = c, 10 * Math.abs(a) < Math.abs(c) && (a = 0), 10 * Math.abs(c) < Math.abs(a) && (c = 0), p != 0 && (v = a / p, m = c / p), t._emit("mousewheel", d), d.propagationStopped || (v = m = 0);
 	            } else {
 	                var g = new r(e, t),
 	                    y = g.getDocumentPosition();n == "cursor" ? t.selection.moveCursorToPosition(y) : n == "anchor" && t.selection.setSelectionAnchor(y.row, y.column), t.renderer.scrollCursorIntoView(y), e.preventDefault();
@@ -58890,7 +58894,7 @@
 	        };if (!t.get("packaged")) return a();s.loadScript(t.moduleUrl(n, o), a), _f();
 	    };var _f = function f() {
 	        !a.basePath && !a.workerPath && !a.modePath && !a.themePath && !Object.keys(a.$moduleUrls).length && (console.error("Unable to infer path to ace from script src,", "use ace.config.set('basePath', 'path') to enable dynamic loading of modes and themes", "or with webpack use ace/webpack-resolver"), _f = function f() {});
-	    };t.init = l, t.version = "1.4.6";
+	    };t.init = l, t.version = "1.4.8";
 	}), ace.define("ace/mouse/mouse_handler", ["require", "exports", "module", "ace/lib/event", "ace/lib/useragent", "ace/mouse/default_handlers", "ace/mouse/default_gutter_handler", "ace/mouse/mouse_event", "ace/mouse/dragdrop_handler", "ace/mouse/touch_handler", "ace/config"], function (e, t, n) {
 	    "use strict";
 	    var r = e("../lib/event"),
@@ -59260,7 +59264,7 @@
 	            var n = t ? e.end : e.start,
 	                r = t ? e.start : e.end;this.$setSelection(n.row, n.column, r.row, r.column);
 	        }, this.$setSelection = function (e, t, n, r) {
-	            var i = this.$isEmpty,
+	            if (this.$silent) return;var i = this.$isEmpty,
 	                s = this.inMultiSelectMode;this.$silent = !0, this.$cursorChanged = this.$anchorChanged = !1, this.anchor.setPosition(e, t), this.cursor.setPosition(n, r), this.$isEmpty = !o.comparePoints(this.anchor, this.cursor), this.$silent = !1, this.$cursorChanged && this._emit("changeCursor"), (this.$cursorChanged || this.$anchorChanged || i != this.$isEmpty || s) && this._emit("changeSelection");
 	        }, this.$moveSelection = function (e) {
 	            var t = this.lead;this.$isEmpty && this.setSelectionAnchor(t.row, t.column), e.call(this);
@@ -59409,7 +59413,9 @@
 	            this.session.$selectLongWords ? this.moveCursorLongWordLeft() : this.moveCursorShortWordLeft();
 	        }, this.moveCursorBy = function (e, t) {
 	            var n = this.session.documentToScreenPosition(this.lead.row, this.lead.column),
-	                r;t === 0 && (e !== 0 && (this.session.$bidiHandler.isBidiRow(n.row, this.lead.row) ? (r = this.session.$bidiHandler.getPosLeft(n.column), n.column = Math.round(r / this.session.$bidiHandler.charWidths[0])) : r = n.column * this.session.$bidiHandler.charWidths[0]), this.$desiredColumn ? n.column = this.$desiredColumn : this.$desiredColumn = n.column);var i = this.session.screenToDocumentPosition(n.row + e, n.column, r);e !== 0 && t === 0 && i.row === this.lead.row && i.column === this.lead.column && this.session.lineWidgets && this.session.lineWidgets[i.row] && (i.row > 0 || e > 0) && i.row++, this.moveCursorTo(i.row, i.column + t, t === 0);
+	                r;t === 0 && (e !== 0 && (this.session.$bidiHandler.isBidiRow(n.row, this.lead.row) ? (r = this.session.$bidiHandler.getPosLeft(n.column), n.column = Math.round(r / this.session.$bidiHandler.charWidths[0])) : r = n.column * this.session.$bidiHandler.charWidths[0]), this.$desiredColumn ? n.column = this.$desiredColumn : this.$desiredColumn = n.column);if (e != 0 && this.session.lineWidgets && this.session.lineWidgets[this.lead.row]) {
+	                var i = this.session.lineWidgets[this.lead.row];e < 0 ? e -= i.rowsAbove || 0 : e > 0 && (e += i.rowCount - (i.rowsAbove || 0));
+	            }var s = this.session.screenToDocumentPosition(n.row + e, n.column, r);e !== 0 && t === 0 && s.row === this.lead.row && s.column === this.lead.column, this.moveCursorTo(s.row, s.column + t, t === 0);
 	        }, this.moveCursorToPosition = function (e) {
 	            this.moveCursorTo(e.row, e.column);
 	        }, this.moveCursorTo = function (e, t, n) {
@@ -60595,6 +60601,11 @@
 	            } else {
 	                var u = this.$findOpeningBracket(o[2], e);if (!u) return null;r = i.fromPoints(u, e), n || (r.start.column++, r.end.column--), r.cursor = r.start;
 	            }return r;
+	        }, this.getMatchingBracketRanges = function (e) {
+	            var t = this.getLine(e.row),
+	                n = t.charAt(e.column - 1),
+	                r = n && n.match(/([\(\[\{])|([\)\]\}])/);r || (n = t.charAt(e.column), e = { row: e.row, column: e.column + 1 }, r = n && n.match(/([\(\[\{])|([\)\]\}])/));if (!r) return null;var s = new i(e.row, e.column - 1, e.row, e.column),
+	                o = r[1] ? this.$findClosingBracket(r[1], e) : this.$findOpeningBracket(r[2], e);if (!o) return [s];var u = new i(o.row, o.column, o.row, o.column + 1);return [s, u];
 	        }, this.$brackets = { ")": "(", "(": ")", "]": "[", "[": "]", "{": "}", "}": "{", "<": ">", ">": "<" }, this.$findOpeningBracket = function (e, t, n) {
 	            var i = this.$brackets[e],
 	                s = 1,
@@ -61057,7 +61068,7 @@
 	                r = e.charCodeAt(i), r == 9 ? n += this.getScreenTabSize(n) : r >= 4352 && m(r) ? n += 2 : n += 1;if (n > t) break;
 	            }return [n, i];
 	        }, this.lineWidgets = null, this.getRowLength = function (e) {
-	            if (this.lineWidgets) var t = this.lineWidgets[e] && this.lineWidgets[e].rowCount || 0;else t = 0;return !this.$useWrapMode || !this.$wrapData[e] ? 1 + t : this.$wrapData[e].length + 1 + t;
+	            var t = 1;return this.lineWidgets && (t += this.lineWidgets[e] && this.lineWidgets[e].rowCount || 0), !this.$useWrapMode || !this.$wrapData[e] ? t : this.$wrapData[e].length + t;
 	        }, this.getRowLineCount = function (e) {
 	            return !this.$useWrapMode || !this.$wrapData[e] ? 1 : this.$wrapData[e].length + 1;
 	        }, this.getRowWrapIndent = function (e) {
@@ -61120,7 +61131,7 @@
 	                        r++, g++;
 	                    }d = d.substring(m[g - 1] || 0, d.length), v = g > 0 ? m.indent : 0;
 	                }
-	            }return { row: r, column: v + this.$getStringScreenWidth(d)[0] };
+	            }return this.lineWidgets && this.lineWidgets[u] && this.lineWidgets[u].rowsAbove && (r += this.lineWidgets[u].rowsAbove), { row: r, column: v + this.$getStringScreenWidth(d)[0] };
 	        }, this.documentToScreenColumn = function (e, t) {
 	            return this.documentToScreenPosition(e, t).column;
 	        }, this.documentToScreenRow = function (e, t) {
@@ -61625,7 +61636,11 @@
 	            }e.exitMultiSelectMode(), e.clearSelection();for (var o = 0; o < i.length; o++) {
 	                e.selection.addRange(i[o], !1);
 	            }
-	        }, readOnly: !0, scrollIntoView: "none" }, { name: "openCommandPallete", description: "Open command pallete", bindKey: o("F1", "F1"), exec: function exec(e) {
+	        }, readOnly: !0, scrollIntoView: "none" }, { name: "addLineAfter", exec: function exec(e) {
+	            e.selection.clearSelection(), e.navigateLineEnd(), e.insert("\n");
+	        }, multiSelectAction: "forEach", scrollIntoView: "cursor" }, { name: "addLineBefore", exec: function exec(e) {
+	            e.selection.clearSelection();var t = e.getCursorPosition();e.selection.moveTo(t.row - 1, Number.MAX_VALUE), e.insert("\n"), t.row === 0 && e.navigateUp();
+	        }, multiSelectAction: "forEach", scrollIntoView: "cursor" }, { name: "openCommandPallete", description: "Open command pallete", bindKey: o("F1", "F1"), exec: function exec(e) {
 	            e.prompt({ $type: "commands" });
 	        }, readOnly: !0 }, { name: "modeSelect", description: "Change language mode...", bindKey: o(null, null), exec: function exec(e) {
 	            e.prompt({ $type: "modes" });
@@ -61719,8 +61734,12 @@
 	        }, this.setFontSize = function (e) {
 	            this.setOption("fontSize", e);
 	        }, this.$highlightBrackets = function () {
-	            this.session.$bracketHighlight && (this.session.removeMarker(this.session.$bracketHighlight), this.session.$bracketHighlight = null);if (this.$highlightPending) return;var e = this;this.$highlightPending = !0, setTimeout(function () {
-	                e.$highlightPending = !1;var t = e.session;if (!t || !t.bgTokenizer) return;var n = t.findMatchingBracket(e.getCursorPosition());if (n) var r = new p(n.row, n.column, n.row, n.column + 1);else if (t.$mode.getMatching) var r = t.$mode.getMatching(e.session);r && (t.$bracketHighlight = t.addMarker(r, "ace_bracket", "text"));
+	            if (this.$highlightPending) return;var e = this;this.$highlightPending = !0, setTimeout(function () {
+	                e.$highlightPending = !1;var t = e.session;if (!t || !t.bgTokenizer) return;t.$bracketHighlight && (t.$bracketHighlight.markerIds.forEach(function (e) {
+	                    t.removeMarker(e);
+	                }), t.$bracketHighlight = null);var n = t.getMatchingBracketRanges(e.getCursorPosition());!n && t.$mode.getMatching && (n = t.$mode.getMatching(e.session));if (!n) return;var r = "ace_bracket";Array.isArray(n) ? n.length == 1 && (r = "ace_error_bracket") : n = [n], n.length == 2 && (p.comparePoints(n[0].end, n[1].start) == 0 ? n = [p.fromPoints(n[0].start, n[1].end)] : p.comparePoints(n[0].start, n[1].end) == 0 && (n = [p.fromPoints(n[1].start, n[0].end)])), t.$bracketHighlight = { ranges: n, markerIds: n.map(function (e) {
+	                        return t.addMarker(e, r, "text");
+	                    }) };
 	            }, 50);
 	        }, this.$highlightTags = function () {
 	            if (this.$highlightTagPending) return;var e = this;this.$highlightTagPending = !0, setTimeout(function () {
@@ -62023,7 +62042,7 @@
 	                        l = new p(t, s.start, t, s.end);this.session.replace(l, f), this.moveCursorTo(t, Math.max(s.start + 1, n + f.length - s.value.length));
 	                }
 	            } else this.toggleWord();
-	        }, this.$toggleWordPairs = [["first", "last"], ["true", "false"], ["yes", "no"], ["width", "height"], ["top", "bottom"], ["right", "left"], ["on", "off"], ["x", "y"], ["get", "set"], ["max", "min"], ["horizontal", "vertical"], ["show", "hide"], ["add", "remove"], ["up", "down"], ["before", "after"], ["even", "odd"], ["inside", "outside"], ["next", "previous"], ["increase", "decrease"], ["attach", "detach"], ["&&", "||"], ["==", "!="]], this.toggleWord = function () {
+	        }, this.$toggleWordPairs = [["first", "last"], ["true", "false"], ["yes", "no"], ["width", "height"], ["top", "bottom"], ["right", "left"], ["on", "off"], ["x", "y"], ["get", "set"], ["max", "min"], ["horizontal", "vertical"], ["show", "hide"], ["add", "remove"], ["up", "down"], ["before", "after"], ["even", "odd"], ["in", "out"], ["inside", "outside"], ["next", "previous"], ["increase", "decrease"], ["attach", "detach"], ["&&", "||"], ["==", "!="]], this.toggleWord = function () {
 	            var e = this.selection.getCursor().row,
 	                t = this.selection.getCursor().column;this.selection.selectWord();var n = this.getSelectedText(),
 	                r = this.selection.getWordRange().start.column,
@@ -62230,7 +62249,7 @@
 	        }, this.redo = function () {
 	            this.session.getUndoManager().redo(this.session), this.renderer.scrollCursorIntoView(null, .5);
 	        }, this.destroy = function () {
-	            this.renderer.destroy(), this._signal("destroy", this), this.session && this.session.destroy();
+	            this.renderer.destroy(), this._signal("destroy", this), this.session && this.session.destroy(), this._$emitInputEvent && this._$emitInputEvent.cancel(), this.session = null;
 	        }, this.setAutoScrollEditorIntoView = function (e) {
 	            if (!e) return;var t,
 	                n = this,
@@ -62288,6 +62307,12 @@
 	                this.renderer.$gutterLayer.setShowLineNumbers(e), this.renderer.$loop.schedule(this.renderer.CHANGE_GUTTER), e && this.$relativeLineNumbers ? E.attach(this) : E.detach(this);
 	            }, initialValue: !0 }, relativeLineNumbers: { set: function set(e) {
 	                this.$showLineNumbers && e ? E.attach(this) : E.detach(this);
+	            } }, placeholder: { set: function set(e) {
+	                this.$updatePlaceholder || (this.$updatePlaceholder = function () {
+	                    var e = this.renderer.$composition || this.getValue();if (e && this.renderer.placeholderNode) this.renderer.off("afterRender", this.$updatePlaceholder), i.removeCssClass(this.container, "ace_hasPlaceholder"), this.renderer.placeholderNode.remove(), this.renderer.placeholderNode = null;else if (!e && !this.renderer.placeholderNode) {
+	                        this.renderer.on("afterRender", this.$updatePlaceholder), i.addCssClass(this.container, "ace_hasPlaceholder");var t = i.createElement("div");t.className = "ace_placeholder", t.textContent = this.$placeholder || "", this.renderer.placeholderNode = t, this.renderer.content.appendChild(this.renderer.placeholderNode);
+	                    }
+	                }.bind(this), this.on("input", this.$updatePlaceholder)), this.$updatePlaceholder();
 	            } }, hScrollBarAlwaysVisible: "renderer", vScrollBarAlwaysVisible: "renderer", highlightGutterLine: "renderer", animatedScroll: "renderer", showInvisibles: "renderer", showPrintMargin: "renderer", printMarginColumn: "renderer", printMargin: "renderer", fadeFoldWidgets: "renderer", showFoldWidgets: "renderer", displayIndentGuides: "renderer", showGutter: "renderer", fontSize: "renderer", fontFamily: "renderer", maxLines: "renderer", minLines: "renderer", scrollPastEnd: "renderer", fixedWidthGutter: "renderer", theme: "renderer", hasCssTransforms: "renderer", maxPixelHeight: "renderer", useTextareaForIME: "renderer", scrollSpeed: "$mouseHandler", dragDelay: "$mouseHandler", dragEnabled: "$mouseHandler", focusTimeout: "$mouseHandler", tooltipFollowsMouse: "$mouseHandler", firstLineNumber: "session", overwrite: "session", newLineMode: "session", useWorker: "session", useSoftTabs: "session", navigateWithinSoftTabs: "session", tabSize: "session", wrap: "session", indentedSoftWrap: "session", foldStyle: "session", mode: "session" });var E = { getText: function getText(e, t) {
 	            return (Math.abs(e.selection.lead.row - t) || t + 1 + (t < 9 ? "\xB7" : "")) + "";
 	        }, getWidth: function getWidth(e, t, n) {
@@ -62396,7 +62421,7 @@
 	        this.addSession = function (e) {
 	            this.$session = e;
 	        }, this.add = function (e, t, n) {
-	            if (this.$fromUndo) return;if (e == this.$lastDelta) return;if (t === !1 || !this.lastDeltas) this.lastDeltas = [], this.$undoStack.push(this.lastDeltas), e.id = this.$rev = ++this.$maxRev;if (e.action == "remove" || e.action == "insert") this.$lastDelta = e;this.lastDeltas.push(e);
+	            if (this.$fromUndo) return;if (e == this.$lastDelta) return;this.$keepRedoStack || (this.$redoStack.length = 0);if (t === !1 || !this.lastDeltas) this.lastDeltas = [], this.$undoStack.push(this.lastDeltas), e.id = this.$rev = ++this.$maxRev;if (e.action == "remove" || e.action == "insert") this.$lastDelta = e;this.lastDeltas.push(e);
 	        }, this.addSelection = function (e, t) {
 	            this.selections.push({ value: e, rev: t || this.$rev });
 	        }, this.startNewGroup = function () {
@@ -62423,16 +62448,23 @@
 	            t == null && (t = this.$rev + 1);
 	        }, this.getChangedLines = function (e, t) {
 	            t == null && (t = this.$rev + 1);
+	        }, this.validateDeltaBoundaries = function (e, t, n) {
+	            return e ? e.every(function (e) {
+	                var r = e.action;n && e.action === "insert" && (r = "remove"), n && e.action === "remove" && (r = "insert");switch (r) {case "insert":
+	                        return e.start.row <= t;case "remove":
+	                        return e.start.row < t && e.end.row < t;default:
+	                        return !0;}
+	            }) : !1;
 	        }, this.undo = function (e, t) {
 	            this.lastDeltas = null;var n = this.$undoStack;if (!i(n, n.length)) return;e || (e = this.$session), this.$redoStackBaseRev !== this.$rev && this.$redoStack.length && (this.$redoStack = []), this.$fromUndo = !0;var r = n.pop(),
-	                s = null;return r && r.length && (s = e.undoChanges(r, t), this.$redoStack.push(r), this.$syncRev()), this.$fromUndo = !1, s;
+	                s = null;return this.validateDeltaBoundaries(r, e.getLength(), !0) && (s = e.undoChanges(r, t), this.$redoStack.push(r), this.$syncRev()), this.$fromUndo = !1, s;
 	        }, this.redo = function (e, t) {
 	            this.lastDeltas = null, e || (e = this.$session), this.$fromUndo = !0;if (this.$redoStackBaseRev != this.$rev) {
 	                var n = this.getDeltas(this.$redoStackBaseRev, this.$rev + 1);w(this.$redoStack, n), this.$redoStackBaseRev = this.$rev, this.$redoStack.forEach(function (e) {
 	                    e[0].id = ++this.$maxRev;
 	                }, this);
 	            }var r = this.$redoStack.pop(),
-	                i = null;return r && (i = e.redoChanges(r, t), this.$undoStack.push(r), this.$syncRev()), this.$fromUndo = !1, i;
+	                i = null;return this.validateDeltaBoundaries(r, e.getLength(), !1) && (i = e.redoChanges(r, t), this.$undoStack.push(r), this.$syncRev()), this.$fromUndo = !1, i;
 	        }, this.$syncRev = function () {
 	            var e = this.$undoStack,
 	                t = e[e.length - 1],
@@ -62468,7 +62500,7 @@
 	                i = Math.floor(r / this.canvasHeight),
 	                s = n.documentToScreenRow(e, 0) * t.lineHeight;return s - i * this.canvasHeight;
 	        }, this.computeLineHeight = function (e, t, n) {
-	            return t.lineHeight * n.getRowLength(e);
+	            return t.lineHeight * n.getRowLineCount(e);
 	        }, this.getLength = function () {
 	            return this.cells.length;
 	        }, this.get = function (e) {
@@ -63082,7 +63114,7 @@
 	        h = e("./renderloop").RenderLoop,
 	        p = e("./layer/font_metrics").FontMetrics,
 	        d = e("./lib/event_emitter").EventEmitter,
-	        v = '.ace_br1 {border-top-left-radius    : 3px;}.ace_br2 {border-top-right-radius   : 3px;}.ace_br3 {border-top-left-radius    : 3px; border-top-right-radius:    3px;}.ace_br4 {border-bottom-right-radius: 3px;}.ace_br5 {border-top-left-radius    : 3px; border-bottom-right-radius: 3px;}.ace_br6 {border-top-right-radius   : 3px; border-bottom-right-radius: 3px;}.ace_br7 {border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px;}.ace_br8 {border-bottom-left-radius : 3px;}.ace_br9 {border-top-left-radius    : 3px; border-bottom-left-radius:  3px;}.ace_br10{border-top-right-radius   : 3px; border-bottom-left-radius:  3px;}.ace_br11{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-left-radius:  3px;}.ace_br12{border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br13{border-top-left-radius    : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br14{border-top-right-radius   : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br15{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;}.ace_editor {position: relative;overflow: hidden;font: 12px/normal \'Monaco\', \'Menlo\', \'Ubuntu Mono\', \'Consolas\', \'source-code-pro\', monospace;direction: ltr;text-align: left;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}.ace_scroller {position: absolute;overflow: hidden;top: 0;bottom: 0;background-color: inherit;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;cursor: text;}.ace_content {position: absolute;box-sizing: border-box;min-width: 100%;contain: style size layout;}.ace_dragging .ace_scroller:before{position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: \'\';background: rgba(250, 250, 250, 0.01);z-index: 1000;}.ace_dragging.ace_dark .ace_scroller:before{background: rgba(0, 0, 0, 0.01);}.ace_selecting, .ace_selecting * {cursor: text !important;}.ace_gutter {position: absolute;overflow : hidden;width: auto;top: 0;bottom: 0;left: 0;cursor: default;z-index: 4;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;contain: style size layout;}.ace_gutter-active-line {position: absolute;left: 0;right: 0;}.ace_scroller.ace_scroll-left {box-shadow: 17px 0 16px -16px rgba(0, 0, 0, 0.4) inset;}.ace_gutter-cell {position: absolute;top: 0;left: 0;right: 0;padding-left: 19px;padding-right: 6px;background-repeat: no-repeat;}.ace_gutter-cell.ace_error {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABOFBMVEX/////////QRswFAb/Ui4wFAYwFAYwFAaWGAfDRymzOSH/PxswFAb/SiUwFAYwFAbUPRvjQiDllog5HhHdRybsTi3/Tyv9Tir+Syj/UC3////XurebMBIwFAb/RSHbPx/gUzfdwL3kzMivKBAwFAbbvbnhPx66NhowFAYwFAaZJg8wFAaxKBDZurf/RB6mMxb/SCMwFAYwFAbxQB3+RB4wFAb/Qhy4Oh+4QifbNRcwFAYwFAYwFAb/QRzdNhgwFAYwFAbav7v/Uy7oaE68MBK5LxLewr/r2NXewLswFAaxJw4wFAbkPRy2PyYwFAaxKhLm1tMwFAazPiQwFAaUGAb/QBrfOx3bvrv/VC/maE4wFAbRPBq6MRO8Qynew8Dp2tjfwb0wFAbx6eju5+by6uns4uH9/f36+vr/GkHjAAAAYnRSTlMAGt+64rnWu/bo8eAA4InH3+DwoN7j4eLi4xP99Nfg4+b+/u9B/eDs1MD1mO7+4PHg2MXa347g7vDizMLN4eG+Pv7i5evs/v79yu7S3/DV7/498Yv24eH+4ufQ3Ozu/v7+y13sRqwAAADLSURBVHjaZc/XDsFgGIBhtDrshlitmk2IrbHFqL2pvXf/+78DPokj7+Fz9qpU/9UXJIlhmPaTaQ6QPaz0mm+5gwkgovcV6GZzd5JtCQwgsxoHOvJO15kleRLAnMgHFIESUEPmawB9ngmelTtipwwfASilxOLyiV5UVUyVAfbG0cCPHig+GBkzAENHS0AstVF6bacZIOzgLmxsHbt2OecNgJC83JERmePUYq8ARGkJx6XtFsdddBQgZE2nPR6CICZhawjA4Fb/chv+399kfR+MMMDGOQAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: 2px center;}.ace_gutter-cell.ace_warning {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEX///8AAAD///8AAAAAAABPSzb/5sAAAAB/blH/73z/ulkAAAAAAAD85pkAAAAAAAACAgP/vGz/rkDerGbGrV7/pkQICAf////e0IsAAAD/oED/qTvhrnUAAAD/yHD/njcAAADuv2r/nz//oTj/p064oGf/zHAAAAA9Nir/tFIAAAD/tlTiuWf/tkIAAACynXEAAAAAAAAtIRW7zBpBAAAAM3RSTlMAABR1m7RXO8Ln31Z36zT+neXe5OzooRDfn+TZ4p3h2hTf4t3k3ucyrN1K5+Xaks52Sfs9CXgrAAAAjklEQVR42o3PbQ+CIBQFYEwboPhSYgoYunIqqLn6/z8uYdH8Vmdnu9vz4WwXgN/xTPRD2+sgOcZjsge/whXZgUaYYvT8QnuJaUrjrHUQreGczuEafQCO/SJTufTbroWsPgsllVhq3wJEk2jUSzX3CUEDJC84707djRc5MTAQxoLgupWRwW6UB5fS++NV8AbOZgnsC7BpEAAAAABJRU5ErkJggg==");background-position: 2px center;}.ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAJ0Uk5TAAB2k804AAAAPklEQVQY02NgIB68QuO3tiLznjAwpKTgNyDbMegwisCHZUETUZV0ZqOquBpXj2rtnpSJT1AEnnRmL2OgGgAAIKkRQap2htgAAAAASUVORK5CYII=");background-position: 2px center;}.ace_dark .ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEUAAAChoaGAgIAqKiq+vr6tra1ZWVmUlJSbm5s8PDxubm56enrdgzg3AAAAAXRSTlMAQObYZgAAAClJREFUeNpjYMAPdsMYHegyJZFQBlsUlMFVCWUYKkAZMxZAGdxlDMQBAG+TBP4B6RyJAAAAAElFTkSuQmCC");}.ace_scrollbar {contain: strict;position: absolute;right: 0;bottom: 0;z-index: 6;}.ace_scrollbar-inner {position: absolute;cursor: text;left: 0;top: 0;}.ace_scrollbar-v{overflow-x: hidden;overflow-y: scroll;top: 0;}.ace_scrollbar-h {overflow-x: scroll;overflow-y: hidden;left: 0;}.ace_print-margin {position: absolute;height: 100%;}.ace_text-input {position: absolute;z-index: 0;width: 0.5em;height: 1em;opacity: 0;background: transparent;-moz-appearance: none;appearance: none;border: none;resize: none;outline: none;overflow: hidden;font: inherit;padding: 0 1px;margin: 0 -1px;contain: strict;-ms-user-select: text;-moz-user-select: text;-webkit-user-select: text;user-select: text;white-space: pre!important;}.ace_text-input.ace_composition {background: transparent;color: inherit;z-index: 1000;opacity: 1;}.ace_composition_placeholder { color: transparent }.ace_composition_marker { border-bottom: 1px solid;position: absolute;border-radius: 0;margin-top: 1px;}[ace_nocontext=true] {transform: none!important;filter: none!important;perspective: none!important;clip-path: none!important;mask : none!important;contain: none!important;perspective: none!important;mix-blend-mode: initial!important;z-index: auto;}.ace_layer {z-index: 1;position: absolute;overflow: hidden;word-wrap: normal;white-space: pre;height: 100%;width: 100%;box-sizing: border-box;pointer-events: none;}.ace_gutter-layer {position: relative;width: auto;text-align: right;pointer-events: auto;height: 1000000px;contain: style size layout;}.ace_text-layer {font: inherit !important;position: absolute;height: 1000000px;width: 1000000px;contain: style size layout;}.ace_text-layer > .ace_line, .ace_text-layer > .ace_line_group {contain: style size layout;position: absolute;top: 0;left: 0;right: 0;}.ace_hidpi .ace_text-layer,.ace_hidpi .ace_gutter-layer,.ace_hidpi .ace_content,.ace_hidpi .ace_gutter {contain: strict;will-change: transform;}.ace_hidpi .ace_text-layer > .ace_line, .ace_hidpi .ace_text-layer > .ace_line_group {contain: strict;}.ace_cjk {display: inline-block;text-align: center;}.ace_cursor-layer {z-index: 4;}.ace_cursor {z-index: 4;position: absolute;box-sizing: border-box;border-left: 2px solid;transform: translatez(0);}.ace_multiselect .ace_cursor {border-left-width: 1px;}.ace_slim-cursors .ace_cursor {border-left-width: 1px;}.ace_overwrite-cursors .ace_cursor {border-left-width: 0;border-bottom: 1px solid;}.ace_hidden-cursors .ace_cursor {opacity: 0.2;}.ace_smooth-blinking .ace_cursor {transition: opacity 0.18s;}.ace_animate-blinking .ace_cursor {animation-duration: 1000ms;animation-timing-function: step-end;animation-name: blink-ace-animate;animation-iteration-count: infinite;}.ace_animate-blinking.ace_smooth-blinking .ace_cursor {animation-duration: 1000ms;animation-timing-function: ease-in-out;animation-name: blink-ace-animate-smooth;}@keyframes blink-ace-animate {from, to { opacity: 1; }60% { opacity: 0; }}@keyframes blink-ace-animate-smooth {from, to { opacity: 1; }45% { opacity: 1; }60% { opacity: 0; }85% { opacity: 0; }}.ace_marker-layer .ace_step, .ace_marker-layer .ace_stack {position: absolute;z-index: 3;}.ace_marker-layer .ace_selection {position: absolute;z-index: 5;}.ace_marker-layer .ace_bracket {position: absolute;z-index: 6;}.ace_marker-layer .ace_active-line {position: absolute;z-index: 2;}.ace_marker-layer .ace_selected-word {position: absolute;z-index: 4;box-sizing: border-box;}.ace_line .ace_fold {box-sizing: border-box;display: inline-block;height: 11px;margin-top: -2px;vertical-align: middle;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi+P//fxgTAwPDBxDxD078RSX+YeEyDFMCIMAAI3INmXiwf2YAAAAASUVORK5CYII=");background-repeat: no-repeat, repeat-x;background-position: center center, top left;color: transparent;border: 1px solid black;border-radius: 2px;cursor: pointer;pointer-events: auto;}.ace_dark .ace_fold {}.ace_fold:hover{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi+P//fz4TAwPDZxDxD5X4i5fLMEwJgAADAEPVDbjNw87ZAAAAAElFTkSuQmCC");}.ace_tooltip {background-color: #FFF;background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));border: 1px solid gray;border-radius: 1px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);color: black;max-width: 100%;padding: 3px 4px;position: fixed;z-index: 999999;box-sizing: border-box;cursor: default;white-space: pre;word-wrap: break-word;line-height: normal;font-style: normal;font-weight: normal;letter-spacing: normal;pointer-events: none;}.ace_folding-enabled > .ace_gutter-cell {padding-right: 13px;}.ace_fold-widget {box-sizing: border-box;margin: 0 -12px 0 1px;display: none;width: 11px;vertical-align: top;background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: center;border-radius: 3px;border: 1px solid transparent;cursor: pointer;}.ace_folding-enabled .ace_fold-widget {display: inline-block;   }.ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42m3HwQkAMAhD0YzsRchFKI7sAikeWkrxwScEB0nh5e7KTPWimZki4tYfVbX+MNl4pyZXejUO1QAAAABJRU5ErkJggg==");}.ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAGCAYAAAAG5SQMAAAAOUlEQVR42jXKwQkAMAgDwKwqKD4EwQ26sSOkVWjgIIHAzPiCgaqiqnJHZnKICBERHN194O5b9vbLuAVRL+l0YWnZAAAAAElFTkSuQmCCXA==");}.ace_fold-widget:hover {border: 1px solid rgba(0, 0, 0, 0.3);background-color: rgba(255, 255, 255, 0.2);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);}.ace_fold-widget:active {border: 1px solid rgba(0, 0, 0, 0.4);background-color: rgba(0, 0, 0, 0.05);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);}.ace_dark .ace_fold-widget {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2P4//8/AzoGEQ7oGCaLLAhWiSwB146BAQCSTPYocqT0AAAAAElFTkSuQmCC");}.ace_dark .ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQIW2P4//8/AxQ7wNjIAjDMgC4AxjCVKBirIAAF0kz2rlhxpAAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAAHElEQVQIW2P4//+/AxAzgDADlOOAznHAKgPWAwARji8UIDTfQQAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget:hover {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);background-color: rgba(255, 255, 255, 0.1);}.ace_dark .ace_fold-widget:active {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);}.ace_inline_button {border: 1px solid lightgray;display: inline-block;margin: -1px 8px;padding: 0 5px;pointer-events: auto;cursor: pointer;}.ace_inline_button:hover {border-color: gray;background: rgba(200,200,200,0.2);display: inline-block;pointer-events: auto;}.ace_fold-widget.ace_invalid {background-color: #FFB4B4;border-color: #DE5555;}.ace_fade-fold-widgets .ace_fold-widget {transition: opacity 0.4s ease 0.05s;opacity: 0;}.ace_fade-fold-widgets:hover .ace_fold-widget {transition: opacity 0.05s ease 0.05s;opacity:1;}.ace_underline {text-decoration: underline;}.ace_bold {font-weight: bold;}.ace_nobold .ace_bold {font-weight: normal;}.ace_italic {font-style: italic;}.ace_error-marker {background-color: rgba(255, 0, 0,0.2);position: absolute;z-index: 9;}.ace_highlight-marker {background-color: rgba(255, 255, 0,0.2);position: absolute;z-index: 8;}.ace_mobile-menu {position: absolute;line-height: 1.5;border-radius: 4px;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;background: white;box-shadow: 1px 3px 2px grey;border: 1px solid #dcdcdc;color: black;}.ace_dark > .ace_mobile-menu {background: #333;color: #ccc;box-shadow: 1px 3px 2px grey;border: 1px solid #444;}.ace_mobile-button {padding: 2px;cursor: pointer;overflow: hidden;}.ace_mobile-button:hover {background-color: #eee;opacity:1;}.ace_mobile-button:active {background-color: #ddd;}',
+	        v = '.ace_br1 {border-top-left-radius    : 3px;}.ace_br2 {border-top-right-radius   : 3px;}.ace_br3 {border-top-left-radius    : 3px; border-top-right-radius:    3px;}.ace_br4 {border-bottom-right-radius: 3px;}.ace_br5 {border-top-left-radius    : 3px; border-bottom-right-radius: 3px;}.ace_br6 {border-top-right-radius   : 3px; border-bottom-right-radius: 3px;}.ace_br7 {border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px;}.ace_br8 {border-bottom-left-radius : 3px;}.ace_br9 {border-top-left-radius    : 3px; border-bottom-left-radius:  3px;}.ace_br10{border-top-right-radius   : 3px; border-bottom-left-radius:  3px;}.ace_br11{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-left-radius:  3px;}.ace_br12{border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br13{border-top-left-radius    : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br14{border-top-right-radius   : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br15{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;}.ace_editor {position: relative;overflow: hidden;font: 12px/normal \'Monaco\', \'Menlo\', \'Ubuntu Mono\', \'Consolas\', \'source-code-pro\', monospace;direction: ltr;text-align: left;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}.ace_scroller {position: absolute;overflow: hidden;top: 0;bottom: 0;background-color: inherit;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;cursor: text;}.ace_content {position: absolute;box-sizing: border-box;min-width: 100%;contain: style size layout;font-variant-ligatures: no-common-ligatures;}.ace_dragging .ace_scroller:before{position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: \'\';background: rgba(250, 250, 250, 0.01);z-index: 1000;}.ace_dragging.ace_dark .ace_scroller:before{background: rgba(0, 0, 0, 0.01);}.ace_selecting, .ace_selecting * {cursor: text !important;}.ace_gutter {position: absolute;overflow : hidden;width: auto;top: 0;bottom: 0;left: 0;cursor: default;z-index: 4;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;contain: style size layout;}.ace_gutter-active-line {position: absolute;left: 0;right: 0;}.ace_scroller.ace_scroll-left {box-shadow: 17px 0 16px -16px rgba(0, 0, 0, 0.4) inset;}.ace_gutter-cell {position: absolute;top: 0;left: 0;right: 0;padding-left: 19px;padding-right: 6px;background-repeat: no-repeat;}.ace_gutter-cell.ace_error {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABOFBMVEX/////////QRswFAb/Ui4wFAYwFAYwFAaWGAfDRymzOSH/PxswFAb/SiUwFAYwFAbUPRvjQiDllog5HhHdRybsTi3/Tyv9Tir+Syj/UC3////XurebMBIwFAb/RSHbPx/gUzfdwL3kzMivKBAwFAbbvbnhPx66NhowFAYwFAaZJg8wFAaxKBDZurf/RB6mMxb/SCMwFAYwFAbxQB3+RB4wFAb/Qhy4Oh+4QifbNRcwFAYwFAYwFAb/QRzdNhgwFAYwFAbav7v/Uy7oaE68MBK5LxLewr/r2NXewLswFAaxJw4wFAbkPRy2PyYwFAaxKhLm1tMwFAazPiQwFAaUGAb/QBrfOx3bvrv/VC/maE4wFAbRPBq6MRO8Qynew8Dp2tjfwb0wFAbx6eju5+by6uns4uH9/f36+vr/GkHjAAAAYnRSTlMAGt+64rnWu/bo8eAA4InH3+DwoN7j4eLi4xP99Nfg4+b+/u9B/eDs1MD1mO7+4PHg2MXa347g7vDizMLN4eG+Pv7i5evs/v79yu7S3/DV7/498Yv24eH+4ufQ3Ozu/v7+y13sRqwAAADLSURBVHjaZc/XDsFgGIBhtDrshlitmk2IrbHFqL2pvXf/+78DPokj7+Fz9qpU/9UXJIlhmPaTaQ6QPaz0mm+5gwkgovcV6GZzd5JtCQwgsxoHOvJO15kleRLAnMgHFIESUEPmawB9ngmelTtipwwfASilxOLyiV5UVUyVAfbG0cCPHig+GBkzAENHS0AstVF6bacZIOzgLmxsHbt2OecNgJC83JERmePUYq8ARGkJx6XtFsdddBQgZE2nPR6CICZhawjA4Fb/chv+399kfR+MMMDGOQAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: 2px center;}.ace_gutter-cell.ace_warning {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEX///8AAAD///8AAAAAAABPSzb/5sAAAAB/blH/73z/ulkAAAAAAAD85pkAAAAAAAACAgP/vGz/rkDerGbGrV7/pkQICAf////e0IsAAAD/oED/qTvhrnUAAAD/yHD/njcAAADuv2r/nz//oTj/p064oGf/zHAAAAA9Nir/tFIAAAD/tlTiuWf/tkIAAACynXEAAAAAAAAtIRW7zBpBAAAAM3RSTlMAABR1m7RXO8Ln31Z36zT+neXe5OzooRDfn+TZ4p3h2hTf4t3k3ucyrN1K5+Xaks52Sfs9CXgrAAAAjklEQVR42o3PbQ+CIBQFYEwboPhSYgoYunIqqLn6/z8uYdH8Vmdnu9vz4WwXgN/xTPRD2+sgOcZjsge/whXZgUaYYvT8QnuJaUrjrHUQreGczuEafQCO/SJTufTbroWsPgsllVhq3wJEk2jUSzX3CUEDJC84707djRc5MTAQxoLgupWRwW6UB5fS++NV8AbOZgnsC7BpEAAAAABJRU5ErkJggg==");background-position: 2px center;}.ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAJ0Uk5TAAB2k804AAAAPklEQVQY02NgIB68QuO3tiLznjAwpKTgNyDbMegwisCHZUETUZV0ZqOquBpXj2rtnpSJT1AEnnRmL2OgGgAAIKkRQap2htgAAAAASUVORK5CYII=");background-position: 2px center;}.ace_dark .ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEUAAAChoaGAgIAqKiq+vr6tra1ZWVmUlJSbm5s8PDxubm56enrdgzg3AAAAAXRSTlMAQObYZgAAAClJREFUeNpjYMAPdsMYHegyJZFQBlsUlMFVCWUYKkAZMxZAGdxlDMQBAG+TBP4B6RyJAAAAAElFTkSuQmCC");}.ace_scrollbar {contain: strict;position: absolute;right: 0;bottom: 0;z-index: 6;}.ace_scrollbar-inner {position: absolute;cursor: text;left: 0;top: 0;}.ace_scrollbar-v{overflow-x: hidden;overflow-y: scroll;top: 0;}.ace_scrollbar-h {overflow-x: scroll;overflow-y: hidden;left: 0;}.ace_print-margin {position: absolute;height: 100%;}.ace_text-input {position: absolute;z-index: 0;width: 0.5em;height: 1em;opacity: 0;background: transparent;-moz-appearance: none;appearance: none;border: none;resize: none;outline: none;overflow: hidden;font: inherit;padding: 0 1px;margin: 0 -1px;contain: strict;-ms-user-select: text;-moz-user-select: text;-webkit-user-select: text;user-select: text;white-space: pre!important;}.ace_text-input.ace_composition {background: transparent;color: inherit;z-index: 1000;opacity: 1;}.ace_composition_placeholder { color: transparent }.ace_composition_marker { border-bottom: 1px solid;position: absolute;border-radius: 0;margin-top: 1px;}[ace_nocontext=true] {transform: none!important;filter: none!important;clip-path: none!important;mask : none!important;contain: none!important;perspective: none!important;mix-blend-mode: initial!important;z-index: auto;}.ace_layer {z-index: 1;position: absolute;overflow: hidden;word-wrap: normal;white-space: pre;height: 100%;width: 100%;box-sizing: border-box;pointer-events: none;}.ace_gutter-layer {position: relative;width: auto;text-align: right;pointer-events: auto;height: 1000000px;contain: style size layout;}.ace_text-layer {font: inherit !important;position: absolute;height: 1000000px;width: 1000000px;contain: style size layout;}.ace_text-layer > .ace_line, .ace_text-layer > .ace_line_group {contain: style size layout;position: absolute;top: 0;left: 0;right: 0;}.ace_hidpi .ace_text-layer,.ace_hidpi .ace_gutter-layer,.ace_hidpi .ace_content,.ace_hidpi .ace_gutter {contain: strict;will-change: transform;}.ace_hidpi .ace_text-layer > .ace_line, .ace_hidpi .ace_text-layer > .ace_line_group {contain: strict;}.ace_cjk {display: inline-block;text-align: center;}.ace_cursor-layer {z-index: 4;}.ace_cursor {z-index: 4;position: absolute;box-sizing: border-box;border-left: 2px solid;transform: translatez(0);}.ace_multiselect .ace_cursor {border-left-width: 1px;}.ace_slim-cursors .ace_cursor {border-left-width: 1px;}.ace_overwrite-cursors .ace_cursor {border-left-width: 0;border-bottom: 1px solid;}.ace_hidden-cursors .ace_cursor {opacity: 0.2;}.ace_hasPlaceholder .ace_hidden-cursors .ace_cursor {opacity: 0;}.ace_smooth-blinking .ace_cursor {transition: opacity 0.18s;}.ace_animate-blinking .ace_cursor {animation-duration: 1000ms;animation-timing-function: step-end;animation-name: blink-ace-animate;animation-iteration-count: infinite;}.ace_animate-blinking.ace_smooth-blinking .ace_cursor {animation-duration: 1000ms;animation-timing-function: ease-in-out;animation-name: blink-ace-animate-smooth;}@keyframes blink-ace-animate {from, to { opacity: 1; }60% { opacity: 0; }}@keyframes blink-ace-animate-smooth {from, to { opacity: 1; }45% { opacity: 1; }60% { opacity: 0; }85% { opacity: 0; }}.ace_marker-layer .ace_step, .ace_marker-layer .ace_stack {position: absolute;z-index: 3;}.ace_marker-layer .ace_selection {position: absolute;z-index: 5;}.ace_marker-layer .ace_bracket {position: absolute;z-index: 6;}.ace_marker-layer .ace_error_bracket {position: absolute;border-bottom: 1px solid #DE5555;border-radius: 0;}.ace_marker-layer .ace_active-line {position: absolute;z-index: 2;}.ace_marker-layer .ace_selected-word {position: absolute;z-index: 4;box-sizing: border-box;}.ace_line .ace_fold {box-sizing: border-box;display: inline-block;height: 11px;margin-top: -2px;vertical-align: middle;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi+P//fxgTAwPDBxDxD078RSX+YeEyDFMCIMAAI3INmXiwf2YAAAAASUVORK5CYII=");background-repeat: no-repeat, repeat-x;background-position: center center, top left;color: transparent;border: 1px solid black;border-radius: 2px;cursor: pointer;pointer-events: auto;}.ace_dark .ace_fold {}.ace_fold:hover{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi+P//fz4TAwPDZxDxD5X4i5fLMEwJgAADAEPVDbjNw87ZAAAAAElFTkSuQmCC");}.ace_tooltip {background-color: #FFF;background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));border: 1px solid gray;border-radius: 1px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);color: black;max-width: 100%;padding: 3px 4px;position: fixed;z-index: 999999;box-sizing: border-box;cursor: default;white-space: pre;word-wrap: break-word;line-height: normal;font-style: normal;font-weight: normal;letter-spacing: normal;pointer-events: none;}.ace_folding-enabled > .ace_gutter-cell {padding-right: 13px;}.ace_fold-widget {box-sizing: border-box;margin: 0 -12px 0 1px;display: none;width: 11px;vertical-align: top;background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: center;border-radius: 3px;border: 1px solid transparent;cursor: pointer;}.ace_folding-enabled .ace_fold-widget {display: inline-block;   }.ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42m3HwQkAMAhD0YzsRchFKI7sAikeWkrxwScEB0nh5e7KTPWimZki4tYfVbX+MNl4pyZXejUO1QAAAABJRU5ErkJggg==");}.ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAGCAYAAAAG5SQMAAAAOUlEQVR42jXKwQkAMAgDwKwqKD4EwQ26sSOkVWjgIIHAzPiCgaqiqnJHZnKICBERHN194O5b9vbLuAVRL+l0YWnZAAAAAElFTkSuQmCCXA==");}.ace_fold-widget:hover {border: 1px solid rgba(0, 0, 0, 0.3);background-color: rgba(255, 255, 255, 0.2);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);}.ace_fold-widget:active {border: 1px solid rgba(0, 0, 0, 0.4);background-color: rgba(0, 0, 0, 0.05);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);}.ace_dark .ace_fold-widget {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2P4//8/AzoGEQ7oGCaLLAhWiSwB146BAQCSTPYocqT0AAAAAElFTkSuQmCC");}.ace_dark .ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQIW2P4//8/AxQ7wNjIAjDMgC4AxjCVKBirIAAF0kz2rlhxpAAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAAHElEQVQIW2P4//+/AxAzgDADlOOAznHAKgPWAwARji8UIDTfQQAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget:hover {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);background-color: rgba(255, 255, 255, 0.1);}.ace_dark .ace_fold-widget:active {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);}.ace_inline_button {border: 1px solid lightgray;display: inline-block;margin: -1px 8px;padding: 0 5px;pointer-events: auto;cursor: pointer;}.ace_inline_button:hover {border-color: gray;background: rgba(200,200,200,0.2);display: inline-block;pointer-events: auto;}.ace_fold-widget.ace_invalid {background-color: #FFB4B4;border-color: #DE5555;}.ace_fade-fold-widgets .ace_fold-widget {transition: opacity 0.4s ease 0.05s;opacity: 0;}.ace_fade-fold-widgets:hover .ace_fold-widget {transition: opacity 0.05s ease 0.05s;opacity:1;}.ace_underline {text-decoration: underline;}.ace_bold {font-weight: bold;}.ace_nobold .ace_bold {font-weight: normal;}.ace_italic {font-style: italic;}.ace_error-marker {background-color: rgba(255, 0, 0,0.2);position: absolute;z-index: 9;}.ace_highlight-marker {background-color: rgba(255, 255, 0,0.2);position: absolute;z-index: 8;}.ace_mobile-menu {position: absolute;line-height: 1.5;border-radius: 4px;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;background: white;box-shadow: 1px 3px 2px grey;border: 1px solid #dcdcdc;color: black;}.ace_dark > .ace_mobile-menu {background: #333;color: #ccc;box-shadow: 1px 3px 2px grey;border: 1px solid #444;}.ace_mobile-button {padding: 2px;cursor: pointer;overflow: hidden;}.ace_mobile-button:hover {background-color: #eee;opacity:1;}.ace_mobile-button:active {background-color: #ddd;}.ace_placeholder {font-family: arial;transform: scale(0.9);transform-origin: left;white-space: pre;opacity: 0.7;margin: 0 10px;}',
 	        m = e("./lib/useragent"),
 	        g = m.isIE;i.importCssString(v, "ace_editor.css");var y = function y(e, t) {
 	        var n = this;this.container = e || i.createElement("div"), i.addCssClass(this.container, "ace_editor"), i.HI_DPI && i.addCssClass(this.container, "ace_hidpi"), this.setTheme(t), this.$gutter = i.createElement("div"), this.$gutter.className = "ace_gutter", this.container.appendChild(this.$gutter), this.$gutter.setAttribute("aria-hidden", !0), this.scroller = i.createElement("div"), this.scroller.className = "ace_scroller", this.container.appendChild(this.scroller), this.content = i.createElement("div"), this.content.className = "ace_content", this.scroller.appendChild(this.content), this.$gutterLayer = new o(this.$gutter), this.$gutterLayer.on("changeGutterWidth", this.onGutterResize.bind(this)), this.$markerBack = new u(this.content);var r = this.$textLayer = new a(this.content);this.canvas = r.element, this.$markerFront = new u(this.content), this.$cursorLayer = new f(this.content), this.$horizScroll = !1, this.$vScroll = !1, this.scrollBar = this.scrollBarV = new c(this.container, this), this.scrollBarH = new l(this.container, this), this.scrollBarV.addEventListener("scroll", function (e) {
@@ -63178,7 +63210,7 @@
 	                i.translate(this.textarea, 0, 0);return;
 	            }var a = 1,
 	                f = this.$size.height - u;if (!t) s += this.lineHeight;else if (t.useTextareaForIME) {
-	                var l = this.textarea.value;a = this.characterWidth * this.session.$getStringScreenWidth(l)[0], u += 2;
+	                var l = this.textarea.value;a = this.characterWidth * this.session.$getStringScreenWidth(l)[0];
 	            } else s += this.lineHeight + 2;o -= this.scrollLeft, o > this.$size.scrollerWidth - a && (o = this.$size.scrollerWidth - a), o += this.gutterWidth + this.margin.left, i.setStyle(e, "height", u + "px"), i.setStyle(e, "width", a + "px"), i.translate(this.textarea, Math.min(o, this.$size.scrollerWidth - a), Math.min(s, f));
 	        }, this.getFirstVisibleRow = function () {
 	            return this.layerConfig.firstRow;
@@ -63216,16 +63248,16 @@
 	        }, this.$renderChanges = function (e, t) {
 	            this.$changes && (e |= this.$changes, this.$changes = 0);if (!this.session || !this.container.offsetWidth || this.$frozen || !e && !t) {
 	                this.$changes |= e;return;
-	            }if (this.$size.$dirty) return this.$changes |= e, this.onResize(!0);this.lineHeight || this.$textLayer.checkForSizeChanges(), this._signal("beforeRender"), this.session && this.session.$bidiHandler && this.session.$bidiHandler.updateCharacterWidths(this.$fontMetrics);var n = this.layerConfig;if (e & this.CHANGE_FULL || e & this.CHANGE_SIZE || e & this.CHANGE_TEXT || e & this.CHANGE_LINES || e & this.CHANGE_SCROLL || e & this.CHANGE_H_SCROLL) {
+	            }if (this.$size.$dirty) return this.$changes |= e, this.onResize(!0);this.lineHeight || this.$textLayer.checkForSizeChanges(), this._signal("beforeRender", e), this.session && this.session.$bidiHandler && this.session.$bidiHandler.updateCharacterWidths(this.$fontMetrics);var n = this.layerConfig;if (e & this.CHANGE_FULL || e & this.CHANGE_SIZE || e & this.CHANGE_TEXT || e & this.CHANGE_LINES || e & this.CHANGE_SCROLL || e & this.CHANGE_H_SCROLL) {
 	                e |= this.$computeLayerConfig() | this.$loop.clear();if (n.firstRow != this.layerConfig.firstRow && n.firstRowScreen == this.layerConfig.firstRowScreen) {
 	                    var r = this.scrollTop + (n.firstRow - this.layerConfig.firstRow) * this.lineHeight;r > 0 && (this.scrollTop = r, e |= this.CHANGE_SCROLL, e |= this.$computeLayerConfig() | this.$loop.clear());
 	                }n = this.layerConfig, this.$updateScrollBarV(), e & this.CHANGE_H_SCROLL && this.$updateScrollBarH(), i.translate(this.content, -this.scrollLeft, -n.offset);var s = n.width + 2 * this.$padding + "px",
 	                    o = n.minHeight + "px";i.setStyle(this.content.style, "width", s), i.setStyle(this.content.style, "height", o);
 	            }e & this.CHANGE_H_SCROLL && (i.translate(this.content, -this.scrollLeft, -n.offset), this.scroller.className = this.scrollLeft <= 0 ? "ace_scroller" : "ace_scroller ace_scroll-left");if (e & this.CHANGE_FULL) {
-	                this.$changedLines = null, this.$textLayer.update(n), this.$showGutter && this.$gutterLayer.update(n), this.$markerBack.update(n), this.$markerFront.update(n), this.$cursorLayer.update(n), this.$moveTextAreaToCursor(), this._signal("afterRender");return;
+	                this.$changedLines = null, this.$textLayer.update(n), this.$showGutter && this.$gutterLayer.update(n), this.$markerBack.update(n), this.$markerFront.update(n), this.$cursorLayer.update(n), this.$moveTextAreaToCursor(), this._signal("afterRender", e);return;
 	            }if (e & this.CHANGE_SCROLL) {
-	                this.$changedLines = null, e & this.CHANGE_TEXT || e & this.CHANGE_LINES ? this.$textLayer.update(n) : this.$textLayer.scrollLines(n), this.$showGutter && (e & this.CHANGE_GUTTER || e & this.CHANGE_LINES ? this.$gutterLayer.update(n) : this.$gutterLayer.scrollLines(n)), this.$markerBack.update(n), this.$markerFront.update(n), this.$cursorLayer.update(n), this.$moveTextAreaToCursor(), this._signal("afterRender");return;
-	            }e & this.CHANGE_TEXT ? (this.$changedLines = null, this.$textLayer.update(n), this.$showGutter && this.$gutterLayer.update(n)) : e & this.CHANGE_LINES ? (this.$updateLines() || e & this.CHANGE_GUTTER && this.$showGutter) && this.$gutterLayer.update(n) : e & this.CHANGE_TEXT || e & this.CHANGE_GUTTER ? this.$showGutter && this.$gutterLayer.update(n) : e & this.CHANGE_CURSOR && this.$highlightGutterLine && this.$gutterLayer.updateLineHighlight(n), e & this.CHANGE_CURSOR && (this.$cursorLayer.update(n), this.$moveTextAreaToCursor()), e & (this.CHANGE_MARKER | this.CHANGE_MARKER_FRONT) && this.$markerFront.update(n), e & (this.CHANGE_MARKER | this.CHANGE_MARKER_BACK) && this.$markerBack.update(n), this._signal("afterRender");
+	                this.$changedLines = null, e & this.CHANGE_TEXT || e & this.CHANGE_LINES ? this.$textLayer.update(n) : this.$textLayer.scrollLines(n), this.$showGutter && (e & this.CHANGE_GUTTER || e & this.CHANGE_LINES ? this.$gutterLayer.update(n) : this.$gutterLayer.scrollLines(n)), this.$markerBack.update(n), this.$markerFront.update(n), this.$cursorLayer.update(n), this.$moveTextAreaToCursor(), this._signal("afterRender", e);return;
+	            }e & this.CHANGE_TEXT ? (this.$changedLines = null, this.$textLayer.update(n), this.$showGutter && this.$gutterLayer.update(n)) : e & this.CHANGE_LINES ? (this.$updateLines() || e & this.CHANGE_GUTTER && this.$showGutter) && this.$gutterLayer.update(n) : e & this.CHANGE_TEXT || e & this.CHANGE_GUTTER ? this.$showGutter && this.$gutterLayer.update(n) : e & this.CHANGE_CURSOR && this.$highlightGutterLine && this.$gutterLayer.updateLineHighlight(n), e & this.CHANGE_CURSOR && (this.$cursorLayer.update(n), this.$moveTextAreaToCursor()), e & (this.CHANGE_MARKER | this.CHANGE_MARKER_FRONT) && this.$markerFront.update(n), e & (this.CHANGE_MARKER | this.CHANGE_MARKER_BACK) && this.$markerBack.update(n), this._signal("afterRender", e);
 	        }, this.$autosize = function () {
 	            var e = this.session.getScreenLength() * this.lineHeight,
 	                t = this.$maxLines * this.lineHeight,
@@ -63643,9 +63675,11 @@
 	            e.selectMore(-1, !0);
 	        }, bindKey: { win: "Ctrl-Alt-Shift-Left", mac: "Ctrl-Alt-Shift-Left" }, scrollIntoView: "cursor", readOnly: !0 }, { name: "selectNextAfter", description: "Select next after", exec: function exec(e) {
 	            e.selectMore(1, !0);
-	        }, bindKey: { win: "Ctrl-Alt-Shift-Right", mac: "Ctrl-Alt-Shift-Right" }, scrollIntoView: "cursor", readOnly: !0 }, { name: "splitIntoLines", description: "Split into lines", exec: function exec(e) {
+	        }, bindKey: { win: "Ctrl-Alt-Shift-Right", mac: "Ctrl-Alt-Shift-Right" }, scrollIntoView: "cursor", readOnly: !0 }, { name: "toggleSplitSelectionIntoLines", description: "Split into lines", exec: function exec(e) {
+	            e.multiSelect.rangeCount > 1 ? e.multiSelect.joinSelections() : e.multiSelect.splitIntoLines();
+	        }, bindKey: { win: "Ctrl-Alt-L", mac: "Ctrl-Alt-L" }, readOnly: !0 }, { name: "splitSelectionIntoLines", description: "Split into lines", exec: function exec(e) {
 	            e.multiSelect.splitIntoLines();
-	        }, bindKey: { win: "Ctrl-Alt-L", mac: "Ctrl-Alt-L" }, readOnly: !0 }, { name: "alignCursors", description: "Align cursors", exec: function exec(e) {
+	        }, readOnly: !0 }, { name: "alignCursors", description: "Align cursors", exec: function exec(e) {
 	            e.alignCursors();
 	        }, bindKey: { win: "Ctrl-Alt-A", mac: "Ctrl-Alt-A" }, scrollIntoView: "cursor" }, { name: "findAll", description: "Find all", exec: function exec(e) {
 	            e.findAll();
@@ -63704,23 +63738,22 @@
 	        }, this.getAllRanges = function () {
 	            return this.rangeCount ? this.rangeList.ranges.concat() : [this.getRange()];
 	        }, this.splitIntoLines = function () {
-	            if (this.rangeCount > 1) {
-	                var e = this.rangeList.ranges,
-	                    t = e[e.length - 1],
-	                    n = i.fromPoints(e[0].start, t.end);this.toSingleRange(), this.setSelectionRange(n, t.cursor == t.start);
-	            } else {
-	                var n = this.getRange(),
-	                    r = this.isBackwards(),
-	                    s = n.start.row,
-	                    o = n.end.row;if (s == o) {
-	                    if (r) var u = n.end,
-	                        a = n.start;else var u = n.start,
-	                        a = n.end;this.addRange(i.fromPoints(a, a)), this.addRange(i.fromPoints(u, u));return;
-	                }var f = [],
-	                    l = this.getLineRange(s, !0);l.start.column = n.start.column, f.push(l);for (var c = s + 1; c < o; c++) {
-	                    f.push(this.getLineRange(c, !0));
-	                }l = this.getLineRange(o, !0), l.end.column = n.end.column, f.push(l), f.forEach(this.addRange, this);
+	            var e = this.ranges.length ? this.ranges : [this.getRange()],
+	                t = [];for (var n = 0; n < e.length; n++) {
+	                var r = e[n],
+	                    s = r.start.row,
+	                    o = r.end.row;if (s === o) t.push(r.clone());else {
+	                    t.push(new i(s, r.start.column, s, this.session.getLine(s).length));while (++s < o) {
+	                        t.push(this.getLineRange(s, !0));
+	                    }t.push(new i(o, 0, o, r.end.column));
+	                }n == 0 && !this.isBackwards() && (t = t.reverse());
+	            }this.toSingleRange();for (var n = t.length; n--;) {
+	                this.addRange(t[n]);
 	            }
+	        }, this.joinSelections = function () {
+	            var e = this.rangeList.ranges,
+	                t = e[e.length - 1],
+	                n = i.fromPoints(e[0].start, t.end);this.toSingleRange(), this.setSelectionRange(n, t.cursor == t.start);
 	        }, this.toggleBlockSelection = function () {
 	            if (this.rangeCount > 1) {
 	                var e = this.rangeList.ranges,
@@ -63931,13 +63964,11 @@
 	}), ace.define("ace/theme/textmate", ["require", "exports", "module", "ace/lib/dom"], function (e, t, n) {
 	    "use strict";
 	    t.isDark = !1, t.cssClass = "ace-tm", t.cssText = '.ace-tm .ace_gutter {background: #f0f0f0;color: #333;}.ace-tm .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-tm .ace_fold {background-color: #6B72E6;}.ace-tm {background-color: #FFFFFF;color: black;}.ace-tm .ace_cursor {color: black;}.ace-tm .ace_invisible {color: rgb(191, 191, 191);}.ace-tm .ace_storage,.ace-tm .ace_keyword {color: blue;}.ace-tm .ace_constant {color: rgb(197, 6, 11);}.ace-tm .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-tm .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-tm .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-tm .ace_invalid {background-color: rgba(255, 0, 0, 0.1);color: red;}.ace-tm .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-tm .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-tm .ace_support.ace_type,.ace-tm .ace_support.ace_class {color: rgb(109, 121, 222);}.ace-tm .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-tm .ace_string {color: rgb(3, 106, 7);}.ace-tm .ace_comment {color: rgb(76, 136, 107);}.ace-tm .ace_comment.ace_doc {color: rgb(0, 102, 255);}.ace-tm .ace_comment.ace_doc.ace_tag {color: rgb(128, 159, 191);}.ace-tm .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-tm .ace_variable {color: rgb(49, 132, 149);}.ace-tm .ace_xml-pe {color: rgb(104, 104, 91);}.ace-tm .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-tm .ace_heading {color: rgb(12, 7, 255);}.ace-tm .ace_list {color:rgb(185, 6, 144);}.ace-tm .ace_meta.ace_tag {color:rgb(0, 22, 142);}.ace-tm .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-tm .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-tm.ace_multiselect .ace_selection.ace_start {box-shadow: 0 0 3px 0px white;}.ace-tm .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-tm .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-tm .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-tm .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-tm .ace_gutter-active-line {background-color : #dcdcdc;}.ace-tm .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-tm .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}', t.$id = "ace/theme/textmate";var r = e("../lib/dom");r.importCssString(t.cssText, t.cssClass);
-	}), ace.define("ace/line_widgets", ["require", "exports", "module", "ace/lib/oop", "ace/lib/dom", "ace/range"], function (e, t, n) {
+	}), ace.define("ace/line_widgets", ["require", "exports", "module", "ace/lib/dom"], function (e, t, n) {
 	    "use strict";
-	    function o(e) {
+	    function i(e) {
 	        this.session = e, this.session.widgetManager = this, this.session.getRowLength = this.getRowLength, this.session.$getWidgetScreenLength = this.$getWidgetScreenLength, this.updateOnChange = this.updateOnChange.bind(this), this.renderWidgets = this.renderWidgets.bind(this), this.measureWidgets = this.measureWidgets.bind(this), this.session._changedWidgets = [], this.$onChangeEditor = this.$onChangeEditor.bind(this), this.session.on("change", this.updateOnChange), this.session.on("changeFold", this.updateOnFold), this.session.on("changeEditor", this.$onChangeEditor);
-	    }var r = e("./lib/oop"),
-	        i = e("./lib/dom"),
-	        s = e("./range").Range;(function () {
+	    }var r = e("./lib/dom");(function () {
 	        this.getRowLength = function (e) {
 	            var t;return this.lineWidgets ? t = this.lineWidgets[e] && this.lineWidgets[e].rowCount || 0 : t = 0, !this.$useWrapMode || !this.$wrapData[e] ? 1 + t : this.$wrapData[e].length + 1 + t;
 	        }, this.$getWidgetScreenLength = function () {
@@ -63962,11 +63993,11 @@
 	        }, this.updateOnChange = function (e) {
 	            var t = this.session.lineWidgets;if (!t) return;var n = e.start.row,
 	                r = e.end.row - n;if (r !== 0) if (e.action == "remove") {
-	                var i = t.splice(n + 1, r);i.forEach(function (e) {
+	                var i = t.splice(n + 1, r);!t[n] && i[i.length - 1] && (t[n] = i.pop()), i.forEach(function (e) {
 	                    e && this.removeLineWidget(e);
 	                }, this), this.$updateRows();
 	            } else {
-	                var s = new Array(r);s.unshift(n, 0), t.splice.apply(t, s), this.$updateRows();
+	                var s = new Array(r);t[n] && t[n].column != null && e.start.column > t[n].column && n++, s.unshift(n, 0), t.splice.apply(t, s), this.$updateRows();
 	            }
 	        }, this.$updateRows = function () {
 	            var e = this.session.lineWidgets;if (!e) return;var t = !0;e.forEach(function (e, n) {
@@ -63976,10 +64007,12 @@
 	                    }
 	                }
 	            }), t && (this.session.lineWidgets = null);
+	        }, this.$registerLineWidget = function (e) {
+	            this.session.lineWidgets || (this.session.lineWidgets = new Array(this.session.getLength()));var t = this.session.lineWidgets[e.row];return t && (e.$oldWidget = t, t.el && t.el.parentNode && (t.el.parentNode.removeChild(t.el), t._inDocument = !1)), this.session.lineWidgets[e.row] = e, e;
 	        }, this.addLineWidget = function (e) {
-	            this.session.lineWidgets || (this.session.lineWidgets = new Array(this.session.getLength()));var t = this.session.lineWidgets[e.row];t && (e.$oldWidget = t, t.el && t.el.parentNode && (t.el.parentNode.removeChild(t.el), t._inDocument = !1)), this.session.lineWidgets[e.row] = e, e.session = this.session;var n = this.editor.renderer;e.html && !e.el && (e.el = i.createElement("div"), e.el.innerHTML = e.html), e.el && (i.addCssClass(e.el, "ace_lineWidgetContainer"), e.el.style.position = "absolute", e.el.style.zIndex = 5, n.container.appendChild(e.el), e._inDocument = !0), e.coverGutter || (e.el.style.zIndex = 3), e.pixelHeight == null && (e.pixelHeight = e.el.offsetHeight), e.rowCount == null && (e.rowCount = e.pixelHeight / n.layerConfig.lineHeight);var r = this.session.getFoldAt(e.row, 0);e.$fold = r;if (r) {
-	                var s = this.session.lineWidgets;e.row == r.end.row && !s[r.start.row] ? s[r.start.row] = e : e.hidden = !0;
-	            }return this.session._emit("changeFold", { data: { start: { row: e.row } } }), this.$updateRows(), this.renderWidgets(null, n), this.onWidgetChanged(e), e;
+	            this.$registerLineWidget(e), e.session = this.session;if (!this.editor) return e;var t = this.editor.renderer;e.html && !e.el && (e.el = r.createElement("div"), e.el.innerHTML = e.html), e.el && (r.addCssClass(e.el, "ace_lineWidgetContainer"), e.el.style.position = "absolute", e.el.style.zIndex = 5, t.container.appendChild(e.el), e._inDocument = !0, e.coverGutter || (e.el.style.zIndex = 3), e.pixelHeight == null && (e.pixelHeight = e.el.offsetHeight)), e.rowCount == null && (e.rowCount = e.pixelHeight / t.layerConfig.lineHeight);var n = this.session.getFoldAt(e.row, 0);e.$fold = n;if (n) {
+	                var i = this.session.lineWidgets;e.row == n.end.row && !i[n.start.row] ? i[n.start.row] = e : e.hidden = !0;
+	            }return this.session._emit("changeFold", { data: { start: { row: e.row } } }), this.$updateRows(), this.renderWidgets(null, t), this.onWidgetChanged(e), e;
 	        }, this.removeLineWidget = function (e) {
 	            e._inDocument = !1, e.session = null, e.el && e.el.parentNode && e.el.parentNode.removeChild(e.el);if (e.editor && e.editor.destroy) try {
 	                e.editor.destroy();
@@ -64016,7 +64049,7 @@
 	                }u._inDocument || (u._inDocument = !0, t.container.appendChild(u.el));var a = t.$cursorLayer.getPixelPosition({ row: o, column: 0 }, !0).top;u.coverLine || (a += n.lineHeight * this.session.getRowLineCount(u.row)), u.el.style.top = a - n.offset + "px";var f = u.coverGutter ? 0 : t.gutterWidth;u.fixedWidth || (f -= t.scrollLeft), u.el.style.left = f + "px", u.fullWidth && u.screenWidth && (u.el.style.minWidth = n.width + 2 * n.padding + "px"), u.fixedWidth ? u.el.style.right = t.scrollBar.getWidth() + "px" : u.el.style.right = "";
 	            }
 	        };
-	    }).call(o.prototype), t.LineWidgets = o;
+	    }).call(i.prototype), t.LineWidgets = i;
 	}), ace.define("ace/ext/error_marker", ["require", "exports", "module", "ace/line_widgets", "ace/lib/dom", "ace/range"], function (e, t, n) {
 	    "use strict";
 	    function o(e, t, n) {
