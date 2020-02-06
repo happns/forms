@@ -9,7 +9,7 @@
   "author": "Marek Micek <mmicek@happns.io>",
   "license": "MIT",
   "description": "",
-  "dependencies": {
+  "devDependencies": {
     "happenize": "git+https://github.com/happns/happenize.git"
   }
 }
