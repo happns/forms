@@ -10,6 +10,7 @@
   "license": "MIT",
   "description": "",
   "devDependencies": {
-    "happenize": "git+https://github.com/happns/happenize.git"
+    "happenize": "git+https://github.com/happns/happenize.git#dev",
+    "hard-source-webpack-plugin": "^0.13.1"
   }
 }

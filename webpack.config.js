@@ -1,8 +1,12 @@
 var webpack = require('webpack');
-var happenize = require('happenize');
+const happenizeFactory = require('happenize/webpack.config.factory');
 
-var hpForms = happenize.createConfiguration('forms');
-var hpFormsStandalone = happenize.createConfiguration('forms');
+var hpForms = happenizeFactory('forms');
+var hpFormsStandalone = happenizeFactory('forms');
+
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+hpForms.plugins.push(new HardSourceWebpackPlugin());
+hpFormsStandalone.plugins.push(new HardSourceWebpackPlugin());
 
 hpForms.plugins.push(new webpack.DefinePlugin({
 	CONF_STANDALONE: false

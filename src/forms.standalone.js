@@ -1042,14 +1042,42 @@
 /* 7 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FormValidationError = function (_Error) {
+	    _inherits(FormValidationError, _Error);
+
+	    function FormValidationError(params) {
+	        var _ref;
+
+	        _classCallCheck(this, FormValidationError);
+
+	        // Maintains proper stack trace for where our error was thrown (only available on V8)
+	        var _this = _possibleConstructorReturn(this, (_ref = FormValidationError.__proto__ || Object.getPrototypeOf(FormValidationError)).call.apply(_ref, [this].concat(_toConsumableArray(params))));
+
+	        if (Error.captureStackTrace) {
+	            Error.captureStackTrace(_this, CustomError);
+	        }
+	        return _this;
+	    }
+
+	    return FormValidationError;
+	}(Error);
+
 	exports.default = function _callee4($scope, $resource, FormResource, Config) {
-	    var _this = this;
+	    var _this2 = this;
 
 	    var endpoint;
 	    return regeneratorRuntime.async(function _callee4$(_context4) {
@@ -1059,15 +1087,15 @@
 	                    endpoint = Config.forms.api.endpoint;
 
 
-	                    $scope.loadForm = function _callee(_ref) {
-	                        var type = _ref.type;
+	                    $scope.loadForm = function _callee(_ref2) {
+	                        var type = _ref2.type;
 	                        var form;
 	                        return regeneratorRuntime.async(function _callee$(_context) {
 	                            while (1) {
 	                                switch (_context.prev = _context.next) {
 	                                    case 0:
 	                                        _context.next = 2;
-	                                        return regeneratorRuntime.awrap($resource(endpoint + "/forms/request?@type=" + encodeURIComponent(type)).get().$promise);
+	                                        return regeneratorRuntime.awrap($resource(endpoint + '/forms/request?@type=' + encodeURIComponent(type)).get().$promise);
 
 	                                    case 2:
 	                                        form = _context.sent;
@@ -1077,23 +1105,23 @@
 	                                        $scope.$apply();
 
 	                                    case 5:
-	                                    case "end":
+	                                    case 'end':
 	                                        return _context.stop();
 	                                }
 	                            }
-	                        }, null, _this);
+	                        }, null, _this2);
 	                    };
 
-	                    $scope.loadResource = function _callee2(_ref2) {
-	                        var type = _ref2.type,
-	                            client_id = _ref2.client_id;
+	                    $scope.loadResource = function _callee2(_ref3) {
+	                        var type = _ref3.type,
+	                            client_id = _ref3.client_id;
 	                        var resources;
 	                        return regeneratorRuntime.async(function _callee2$(_context2) {
 	                            while (1) {
 	                                switch (_context2.prev = _context2.next) {
 	                                    case 0:
 	                                        _context2.next = 2;
-	                                        return regeneratorRuntime.awrap($resource(endpoint + "/resources?@type=" + encodeURIComponent(type)).query({
+	                                        return regeneratorRuntime.awrap($resource(endpoint + '/resources?@type=' + encodeURIComponent(type)).query({
 	                                            client_id: client_id
 	                                        }).$promise);
 
@@ -1107,11 +1135,11 @@
 	                                        $scope.$apply();
 
 	                                    case 6:
-	                                    case "end":
+	                                    case 'end':
 	                                        return _context2.stop();
 	                                }
 	                            }
-	                        }, null, _this);
+	                        }, null, _this2);
 	                    };
 
 	                    $scope.save = function _callee3() {
@@ -1128,7 +1156,7 @@
 	                                        $scope.ngForm.$setSubmitted();
 
 	                                        if (!$scope.ngForm.$valid) {
-	                                            _context3.next = 10;
+	                                            _context3.next = 12;
 	                                            break;
 	                                        }
 
@@ -1143,19 +1171,24 @@
 	                                        $scope.ngForm.$setUntouched();
 
 	                                        $scope.$$phase || $scope.$apply();
+	                                        _context3.next = 13;
+	                                        break;
 
-	                                    case 10:
-	                                    case "end":
+	                                    case 12:
+	                                        throw new FormValidationError('form is not valid');
+
+	                                    case 13:
+	                                    case 'end':
 	                                        return _context3.stop();
 	                                }
 	                            }
-	                        }, null, _this);
+	                        }, null, _this2);
 	                    };
 
 	                    $scope.ngModel = $scope;
 
 	                case 5:
-	                case "end":
+	                case 'end':
 	                    return _context4.stop();
 	            }
 	        }

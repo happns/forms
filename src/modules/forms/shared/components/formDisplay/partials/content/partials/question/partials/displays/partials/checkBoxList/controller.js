@@ -12,6 +12,6 @@ export default function ($scope) {
     };
 
     $scope.exists = function (item, list) {
-        return list.indexOf(item.name) > -1;
+        return list && list.indexOf(item.name) > -1;
     };
 }
