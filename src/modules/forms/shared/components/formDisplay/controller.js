@@ -28,11 +28,18 @@ export default function ($scope, $resource, FormResource, Config) {
             })
             .$promise;
 
-        $scope.resource = resources[0] || angular.copy($scope.form.request);
+            const resource = resources[0] || angular.copy($scope.form.request);
+
+            $scope.loadResourceFromObject(resource);
+    };
+
+    $scope.loadResourceFromObject = async (resource) => {        
+        $scope.resource = resource;
+
         FormResource.toForm($scope.form, $scope.resource);
 
         $scope.$apply();
-    };
+    }
 
     $scope.save = async () => {
         const client_id = $scope.clientId;

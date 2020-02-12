@@ -3538,7 +3538,7 @@ function (_Error) {
     var _ref3 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee2(_ref4) {
-      var type, client_id, resources;
+      var type, client_id, resources, resource;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -3551,11 +3551,10 @@ function (_Error) {
 
             case 3:
               resources = _context2.sent;
-              $scope.resource = resources[0] || angular.copy($scope.form.request);
-              FormResource.toForm($scope.form, $scope.resource);
-              $scope.$apply();
+              resource = resources[0] || angular.copy($scope.form.request);
+              $scope.loadResourceFromObject(resource);
 
-            case 7:
+            case 6:
             case "end":
               return _context2.stop();
           }
@@ -3568,37 +3567,64 @@ function (_Error) {
     };
   }();
 
+  $scope.loadResourceFromObject =
+  /*#__PURE__*/
+  function () {
+    var _ref5 = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee3(resource) {
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              $scope.resource = resource;
+              FormResource.toForm($scope.form, $scope.resource);
+              $scope.$apply();
+
+            case 3:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function (_x3) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
   $scope.save =
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee3() {
+  regeneratorRuntime.mark(function _callee4() {
     var client_id;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             client_id = $scope.clientId;
             Object.assign($scope.resource, FormResource.fromForm($scope.form));
             $scope.ngForm.$setSubmitted();
 
             if (!$scope.ngForm.$valid) {
-              _context3.next = 12;
+              _context4.next = 12;
               break;
             }
 
-            _context3.next = 6;
+            _context4.next = 6;
             return FormResource.save({
               formId: $scope.form._id,
               client_id: client_id
             }, $scope.resource).$promise;
 
           case 6:
-            $scope.resource = _context3.sent;
+            $scope.resource = _context4.sent;
             $scope.ngForm.$setPristine();
             $scope.ngForm.$setUntouched();
             $scope.$$phase || $scope.$apply();
-            _context3.next = 13;
+            _context4.next = 13;
             break;
 
           case 12:
@@ -3606,10 +3632,10 @@ function (_Error) {
 
           case 13:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3);
+    }, _callee4);
   }));
   $scope.ngModel = $scope;
 });
