@@ -2,6 +2,11 @@ export default function ($scope) {
     $scope.question.answer = [];
 
     $scope.toggle = function (item, list) {
+        if (!list) {
+            list = [];
+            $scope.question.answer = list;
+        }
+
         var idx = list.indexOf(item.name);
         if (idx > -1) {
             list.splice(idx, 1);

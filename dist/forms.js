@@ -3722,6 +3722,11 @@ var autocomplete_template_default = /*#__PURE__*/__webpack_require__.n(autocompl
   $scope.question.answer = [];
 
   $scope.toggle = function (item, list) {
+    if (!list) {
+      list = [];
+      $scope.question.answer = list;
+    }
+
     var idx = list.indexOf(item.name);
 
     if (idx > -1) {
