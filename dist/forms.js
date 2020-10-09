@@ -2300,7 +2300,7 @@ module.exports = "<div class=\"question\" layout=\"row\" layout-align=\"start ce
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = "<div ng-repeat=\"item in form.items\">\r\n    <form-display_content_heading ng-init=\"heading=item\" ng-if=\"item.type === 'heading'\">\r\n    </form-display_content_heading>\r\n    <form-display_content_question ng-init=\"question=item.question\" ng-if=\"item.type === 'question'\">\r\n    </form-display_content_question>\r\n    <form-display_content ng-init=\"form=item\" ng-if=\"item.type === 'section'\">\r\n    </form-display_content>\r\n</div>";
+module.exports = "<div ng-repeat=\"item in form.items\" ng-show=\"!item.hidden\">\r\n    <form-display_content_heading ng-init=\"heading=item\" ng-if=\"item.type === 'heading'\">\r\n    </form-display_content_heading>\r\n    <form-display_content_question ng-init=\"question=item.question\" ng-if=\"item.type === 'question'\">\r\n    </form-display_content_question>\r\n    <form-display_content ng-init=\"form=item\" ng-if=\"item.type === 'section'\">\r\n    </form-display_content>\r\n</div>";
 
 /***/ }),
 /* 14 */
@@ -3435,6 +3435,7 @@ process.umask = function() { return 0; };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./shared/components/formDisplay/controller.js
@@ -3579,9 +3580,8 @@ function (_Error) {
             case 0:
               $scope.resource = resource;
               FormResource.toForm($scope.form, $scope.resource);
-              $scope.$apply();
 
-            case 3:
+            case 2:
             case "end":
               return _context3.stop();
           }

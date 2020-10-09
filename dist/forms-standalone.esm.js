@@ -1,3 +1,4 @@
+var hpForms =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -78352,3 +78353,8 @@ module_App.service('Config', function () {
 
 /***/ })
 /******/ ]);
+
+
+
+export default hpForms;
+export { hpForms };

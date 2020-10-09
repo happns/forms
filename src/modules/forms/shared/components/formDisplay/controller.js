@@ -2,10 +2,10 @@ class FormValidationError extends Error {
     constructor(params) {
         super(...params);
 
-    // Maintains proper stack trace for where our error was thrown (only available on V8)
-    if(Error.captureStackTrace) {
-        Error.captureStackTrace(this, CustomError);
-    }
+        // Maintains proper stack trace for where our error was thrown (only available on V8)
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, CustomError);
+        }
     }
 }
 
@@ -28,17 +28,15 @@ export default function ($scope, $resource, FormResource, Config) {
             })
             .$promise;
 
-            const resource = resources[0] || angular.copy($scope.form.request);
+        const resource = resources[0] || angular.copy($scope.form.request);
 
-            $scope.loadResourceFromObject(resource);
+        $scope.loadResourceFromObject(resource);
     };
 
-    $scope.loadResourceFromObject = async (resource) => {        
+    $scope.loadResourceFromObject = async (resource) => {
         $scope.resource = resource;
 
         FormResource.toForm($scope.form, $scope.resource);
-
-        $scope.$apply();
     }
 
     $scope.save = async () => {

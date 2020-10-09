@@ -16,6 +16,21 @@ hpFormsStandalone.plugins.push(new webpack.DefinePlugin({
 	CONF_STANDALONE: true
 }));
 
-hpFormsStandalone.output.filename = hpFormsStandalone.output.filename.replace('.js', '.standalone.js');
+hpFormsStandalone.output.filename = hpFormsStandalone.output.filename.replace('.js', '-standalone.js');
+hpFormsStandalone.output.libraryTarget = 'var';
 
-module.exports = [ hpForms, hpFormsStandalone];
+var EsmWebpackPlugin = require('@purtuga/esm-webpack-plugin');
+var hpFormsStandaloneEsm = happenizeFactory('forms');
+
+
+hpFormsStandaloneEsm.plugins.push(new webpack.DefinePlugin({
+	CONF_STANDALONE: true
+}));
+hpFormsStandaloneEsm.plugins.push(new EsmWebpackPlugin());
+hpFormsStandaloneEsm.output = {
+	filename: 'forms-standalone.esm.js',
+	library: 'hpForms',
+	libraryTarget: 'var'
+},
+
+module.exports = [ hpForms, hpFormsStandalone, hpFormsStandaloneEsm];

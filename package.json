@@ -10,7 +10,10 @@
   "license": "MIT",
   "description": "",
   "devDependencies": {
+    "@purtuga/esm-webpack-plugin": "^1.4.0",
+    "@types/jest": "^26.0.13",
     "happenize": "git+https://github.com/happns/happenize.git#dev",
-    "hard-source-webpack-plugin": "^0.13.1"
+    "hard-source-webpack-plugin": "^0.13.1",
+    "jest": "^26.4.2"
   }
 }
