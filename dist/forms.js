@@ -81,14 +81,12 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 53);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof2(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
 /*!
  * Copyright (c) 2018 Chris O'Hara <cohara87@gmail.com>
@@ -113,22 +111,18 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 (function (global, factory) {
-  ( false ? undefined : _typeof2(exports)) === 'object' && typeof module !== 'undefined' ? module.exports = factory() :  true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : undefined;
+   true ? module.exports = factory() : undefined;
 })(this, function () {
   'use strict';
 
   function _typeof(obj) {
-    if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-      _typeof = function _typeof(obj) {
-        return _typeof2(obj);
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
       };
     } else {
-      _typeof = function _typeof(obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
       };
     }
 
@@ -152,12 +146,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
   }
 
   function _toPrimitive(input, hint) {
-    if (_typeof2(input) !== "object" || input === null) return input;
+    if (typeof input !== "object" || input === null) return input;
     var prim = input[Symbol.toPrimitive];
 
     if (prim !== undefined) {
       var res = prim.call(input, hint || "default");
-      if (_typeof2(res) !== "object") return res;
+      if (typeof res !== "object") return res;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
 
@@ -167,7 +161,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
   function _toPropertyKey(arg) {
     var key = _toPrimitive(arg, "string");
 
-    return _typeof2(key) === "symbol" ? key : String(key);
+    return typeof key === "symbol" ? key : String(key);
   }
 
   function _addElementPlacement(element, placements, silent) {
@@ -988,7 +982,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
     return numeric.test(str);
   }
 
-  var _int = /^(?:[-+]?(?:0|[1-9][0-9]*))$/;
+  var int = /^(?:[-+]?(?:0|[1-9][0-9]*))$/;
   var intLeadingZeroes = /^[-+]?[0-9]+$/;
 
   function isInt(str, options) {
@@ -996,7 +990,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
     options = options || {}; // Get the regex to use for testing, based on whether
     // leading zeroes are allowed or not.
 
-    var regex = options.hasOwnProperty('allow_leading_zeroes') && !options.allow_leading_zeroes ? _int : intLeadingZeroes; // Check min/max/lt/gt
+    var regex = options.hasOwnProperty('allow_leading_zeroes') && !options.allow_leading_zeroes ? int : intLeadingZeroes; // Check min/max/lt/gt
 
     var minCheckPassed = !options.hasOwnProperty('min') || str >= options.min;
     var maxCheckPassed = !options.hasOwnProperty('max') || str <= options.max;
@@ -1071,15 +1065,14 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
   function isFloat(str, options) {
     assertString(str);
     options = options || {};
-
-    var _float = new RegExp("^(?:[-+])?(?:[0-9]+)?(?:\\".concat(options.locale ? decimal[options.locale] : '.', "[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$"));
+    var float = new RegExp("^(?:[-+])?(?:[0-9]+)?(?:\\".concat(options.locale ? decimal[options.locale] : '.', "[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$"));
 
     if (str === '' || str === '.' || str === '-' || str === '+') {
       return false;
     }
 
     var value = parseFloat(str.replace(',', '.'));
-    return _float.test(str) && (!options.hasOwnProperty('min') || value >= options.min) && (!options.hasOwnProperty('max') || value <= options.max) && (!options.hasOwnProperty('lt') || value < options.lt) && (!options.hasOwnProperty('gt') || value > options.gt);
+    return float.test(str) && (!options.hasOwnProperty('min') || value >= options.min) && (!options.hasOwnProperty('max') || value <= options.max) && (!options.hasOwnProperty('lt') || value < options.lt) && (!options.hasOwnProperty('gt') || value > options.gt);
   }
 
   var locales$2 = Object.keys(decimal);
@@ -1335,8 +1328,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
       } // validate the control digit
 
 
-      var number = sanitized.slice(0, -1).replace(/[X,Y,Z]/g, function (_char) {
-        return charsValue[_char];
+      var number = sanitized.slice(0, -1).replace(/[X,Y,Z]/g, function (char) {
+        return charsValue[char];
       });
       return sanitized.endsWith(controlDigits[number % 23]);
     }
@@ -1858,13 +1851,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
   }
 
   var lat = /^\(?[+-]?(90(\.0+)?|[1-8]?\d(\.\d+)?)$/;
-  var _long = /^\s?[+-]?(180(\.0+)?|1[0-7]\d(\.\d+)?|\d{1,2}(\.\d+)?)\)?$/;
+  var long = /^\s?[+-]?(180(\.0+)?|1[0-7]\d(\.\d+)?|\d{1,2}(\.\d+)?)\)?$/;
 
-  var isLatLong = function isLatLong(str) {
+  var isLatLong = function (str) {
     assertString(str);
     if (!str.includes(',')) return false;
     var pair = str.split(',');
-    return lat.test(pair[0]) && _long.test(pair[1]);
+    return lat.test(pair[0]) && long.test(pair[1]);
   };
 
   var threeDigit = /^\d{3}$/;
@@ -1921,7 +1914,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
   };
   var locales$4 = Object.keys(patterns);
 
-  var isPostalCode = function isPostalCode(str, locale) {
+  var isPostalCode = function (str, locale) {
     assertString(str);
 
     if (locale in patterns) {
@@ -2234,43 +2227,43 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>{{item.title}}</h2>\r\n<span ng-bind-html=\"item.description.indexOf('data:text/html') === 0 ? item.description.replace('data:text/html,', '') : (item.description | linky)\"></span>\r\n\r\n<p class=\"required-info\" ng-if=\"$index === 0\">* <span translate=\".required\">Required</span></p>";
+module.exports = "<h2>{{item.title}}</h2>\n<span ng-bind-html=\"item.description.indexOf('data:text/html') === 0 ? item.description.replace('data:text/html,', '') : (item.description | linky)\"></span>\n\n<p class=\"required-info\" ng-if=\"$index === 0\">* <span translate=\".required\">Required</span></p>";
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = "<div layout=\"column\">\r\n    <md-autocomplete md-selected-item=\"selectedItem\" md-search-text=\"searchText\" md-items=\"item in querySearch(searchText)\">\r\n        <md-item-template>\r\n            <span class=\"item-title\">\r\n                <md-icon md-svg-icon=\"img/icons/octicon-repo.svg\"></md-icon>\r\n            </span>\r\n            <span class=\"item-metadata\">\r\n                <span>\r\n                    <strong>{{item.title}}</strong>\r\n                </span>\r\n                <span>\r\n                    <strong>{{item.description}}</strong>\r\n                </span>\r\n            </span>\r\n        </md-item-template>\r\n    </md-autocomplete>\r\n</div>\r\n";
+module.exports = "<div layout=\"column\">\n    <md-autocomplete md-selected-item=\"selectedItem\" md-search-text=\"searchText\" md-items=\"item in querySearch(searchText)\">\n        <md-item-template>\n            <span class=\"item-title\">\n                <md-icon md-svg-icon=\"img/icons/octicon-repo.svg\"></md-icon>\n            </span>\n            <span class=\"item-metadata\">\n                <span>\n                    <strong>{{item.title}}</strong>\n                </span>\n                <span>\n                    <strong>{{item.description}}</strong>\n                </span>\n            </span>\n        </md-item-template>\n    </md-autocomplete>\n</div>\n";
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = "<div layout=\"column\">\r\n    <md-checkbox ng-repeat=\"option in question.options\" ng-checked=\"exists(option, question.answer)\" ng-click=\"toggle(option, question.answer)\"  class=\"md-primary\" ng-disabled=\"disabled\">\r\n        {{option.name}}\r\n    </md-checkbox>\r\n</div>\r\n";
+module.exports = "<div layout=\"column\">\n    <md-checkbox ng-repeat=\"option in question.options\" ng-checked=\"exists(option, question.answer)\" ng-click=\"toggle(option, question.answer)\"  class=\"md-primary\" ng-disabled=\"disabled\">\n        {{option.name}}\n    </md-checkbox>\n</div>\n";
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-input-container class=\"md-block\">\r\n    <textarea ng-model=\"question.answer\" md-maxlength=\"2000\" rows=\"5\" md-select-on-focus ng-required=\"question.required\" name=\"{{question.ask}}\" ng-disabled=\"disabled\"></textarea>\r\n</md-input-container>\r\n";
+module.exports = "<md-input-container class=\"md-block\">\n    <textarea ng-model=\"question.answer\" md-maxlength=\"2000\" rows=\"5\" md-select-on-focus ng-required=\"question.required\" name=\"{{question.ask}}\" ng-disabled=\"disabled\"></textarea>\n</md-input-container>\n";
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-radio-group ng-model=\"question.answer\" ng-required=\"question.required\" name=\"{{question.ask}}\" ng-disabled=\"disabled\">\r\n\r\n    <md-radio-button ng-repeat=\"option in question.options\" value=\"{{option.name}}\" class=\"md-primary\">{{option.name}}</md-radio-button>\r\n\r\n</md-radio-group>\r\n";
+module.exports = "<md-radio-group ng-model=\"question.answer\" ng-required=\"question.required\" name=\"{{question.ask}}\" ng-disabled=\"disabled\">\n\n    <md-radio-button ng-repeat=\"option in question.options\" value=\"{{option.name}}\" class=\"md-primary\">{{option.name}}</md-radio-button>\n\n</md-radio-group>\n";
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-input-container>\r\n    <input ng-model=\"question.answer\" ng-required=\"question.required\" name=\"{{question.ask}}\" ng-disabled=\"disabled\" question-validator>\r\n    <form-display_content_question_validators></form-display_content_question_validators>\r\n</md-input-container>";
+module.exports = "<md-input-container>\n    <input ng-model=\"question.answer\" ng-required=\"question.required\" name=\"{{question.ask}}\" ng-disabled=\"disabled\" question-validator>\n    <form-display_content_question_validators></form-display_content_question_validators>\n</md-input-container>";
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"display\">\r\n    <form-display_content_question_displays_radio-button-list ng-if=\"question.type === 'radioButtonList'\">\r\n    </form-display_content_question_displays_radio-button-list>\r\n    <form-display_content_question_displays_check-box-list ng-if=\"question.type === 'checkBoxList'\">\r\n    </form-display_content_question_displays_check-box-list>\r\n    <form-display_content_question_displays_short-text ng-if=\"question.type === 'shortText'\">\r\n    </form-display_content_question_displays_short-text>\r\n    <form-display_content_question_displays_long-text ng-if=\"question.type === 'longText'\">\r\n    </form-display_content_question_displays_long-text>\r\n    <form-display_content_question_displays_autocomplete ng-if=\"question.type === 'autocomplete'\">\r\n    </form-display_content_question_displays_autocomplete>\r\n</div>";
+module.exports = "<div class=\"display\">\n    <form-display_content_question_displays_radio-button-list ng-if=\"question.type === 'radioButtonList'\">\n    </form-display_content_question_displays_radio-button-list>\n    <form-display_content_question_displays_check-box-list ng-if=\"question.type === 'checkBoxList'\">\n    </form-display_content_question_displays_check-box-list>\n    <form-display_content_question_displays_short-text ng-if=\"question.type === 'shortText'\">\n    </form-display_content_question_displays_short-text>\n    <form-display_content_question_displays_long-text ng-if=\"question.type === 'longText'\">\n    </form-display_content_question_displays_long-text>\n    <form-display_content_question_displays_autocomplete ng-if=\"question.type === 'autocomplete'\">\n    </form-display_content_question_displays_autocomplete>\n</div>";
 
 /***/ }),
 /* 9 */
@@ -2282,7 +2275,7 @@ module.exports = "<div class=\"display\">\r\n    <form-display_content_question_
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = "<ng-messages for=\"ngForm[question.ask].$error\" role=\"alert\" ng-if=\"!disabled && (!ngForm[question.ask].$pristine || ngForm.$submitted)\">\r\n    <ng-message when=\"required\" translate=\".validator.required\">This item is required</ng-message>\r\n    <ng-message ng-repeat=\"validator in question.validation.items\" when=\"{{validator.name}}\">\r\n        <span ng-if=\"!validator.message\" translate=\".validator.{{validator.name}}\" translate-values=\"{ param: validator.param }\"></span>\r\n        <span ng-if=\"validator.message\">{{validator.message}}</span>\r\n    </ng-message>\r\n</ng-messages>";
+module.exports = "<ng-messages for=\"ngForm[question.ask].$error\" role=\"alert\" ng-if=\"!disabled && (!ngForm[question.ask].$pristine || ngForm.$submitted)\">\n    <ng-message when=\"required\" translate=\".validator.required\">This item is required</ng-message>\n    <ng-message ng-repeat=\"validator in question.validation.items\" when=\"{{validator.name}}\">\n        <span ng-if=\"!validator.message\" translate=\".validator.{{validator.name}}\" translate-values=\"{ param: validator.param }\"></span>\n        <span ng-if=\"validator.message\">{{validator.message}}</span>\n    </ng-message>\n</ng-messages>";
 
 /***/ }),
 /* 11 */
@@ -2294,19 +2287,19 @@ module.exports = "<ng-messages for=\"ngForm[question.ask].$error\" role=\"alert\
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"question\" layout=\"row\" layout-align=\"start center\">\r\n    <label>{{question.ask}} <span class=\"required\" ng-if=\"question.required\">*</span></label>\r\n\r\n    <form-display_content_question_displays>\r\n    </form-display_content_question_displays>\r\n</div>";
+module.exports = "<div class=\"question\" layout=\"row\" layout-align=\"start center\">\n    <label>{{question.ask}} <span class=\"required\" ng-if=\"question.required\">*</span></label>\n\n    <form-display_content_question_displays>\n    </form-display_content_question_displays>\n</div>";
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = "<div ng-repeat=\"item in form.items\" ng-show=\"!item.hidden\">\r\n    <form-display_content_heading ng-init=\"heading=item\" ng-if=\"item.type === 'heading'\">\r\n    </form-display_content_heading>\r\n    <form-display_content_question ng-init=\"question=item.question\" ng-if=\"item.type === 'question'\">\r\n    </form-display_content_question>\r\n    <form-display_content ng-init=\"form=item\" ng-if=\"item.type === 'section'\">\r\n    </form-display_content>\r\n</div>";
+module.exports = "<div ng-repeat=\"item in form.items\" ng-show=\"!item.hidden\">\n    <form-display_content_heading ng-init=\"heading=item\" ng-if=\"item.type === 'heading'\">\n    </form-display_content_heading>\n    <form-display_content_question ng-init=\"question=item.question\" ng-if=\"item.type === 'question'\">\n    </form-display_content_question>\n    <form-display_content ng-init=\"form=item\" ng-if=\"item.type === 'section'\">\n    </form-display_content>\n</div>";
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <form-display_content ng-form=\"ngForm\">\r\n    </form-display_content>\r\n</div>";
+module.exports = "<div>\n    <form-display_content ng-form=\"ngForm\">\n    </form-display_content>\n</div>";
 
 /***/ }),
 /* 15 */
@@ -2318,7 +2311,7 @@ module.exports = "<div>\r\n    <form-display_content ng-form=\"ngForm\">\r\n    
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "<md-icon class=\"drag-handle\"><i class=\"material-icons\">drag_handle</i></md-icon>\r\n";
+module.exports = "<md-icon class=\"drag-handle\"><i class=\"material-icons\">drag_handle</i></md-icon>\n";
 
 /***/ }),
 /* 17 */
@@ -2336,7 +2329,7 @@ module.exports = JSON.parse("{\"createNewQuestion\":\"Utwórz nowe pytanie\",\"c
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"md-whiteframe-z1 editing-menu\" layout=\"row\" layout-gt-sm=\"column\" layout-align=\"start center\">\r\n    <md-button class=\"md-icon-button\" ng-click=\"addNewQuestion()\">\r\n        <md-tooltip md-direction=\"right\">\r\n            <span translate=\"formEditor.editingMenu.createNewQuestion\">Add new question</span>\r\n        </md-tooltip>\r\n        <md-icon>\r\n            <i class=\"material-icons\">add_circle</i>\r\n        </md-icon>\r\n    </md-button>\r\n    <md-button class=\"md-icon-button\" ng-click=\"addNewHeading()\">\r\n        <md-tooltip md-direction=\"right\">\r\n            <span translate=\"formEditor.editingMenu.createNewHeading\">Add new heading</span>\r\n        </md-tooltip>\r\n        <md-icon>\r\n            <i class=\"material-icons\">text_fields</i>\r\n        </md-icon>\r\n    </md-button>\r\n    <md-button class=\"md-icon-button\" ng-click=\"addNewSection()\">\r\n        <md-tooltip md-direction=\"right\">\r\n            <span translate=\"formEditor.editingMenu.createNewSection\">Add new section</span>\r\n        </md-tooltip>\r\n        <md-icon>\r\n            <i class=\"material-icons\">view_agenda</i>\r\n        </md-icon>\r\n    </md-button>\r\n</div>";
+module.exports = "<div class=\"md-whiteframe-z1 editing-menu\" layout=\"row\" layout-gt-sm=\"column\" layout-align=\"start center\">\n    <md-button class=\"md-icon-button\" ng-click=\"addNewQuestion()\">\n        <md-tooltip md-direction=\"right\">\n            <span translate=\"formEditor.editingMenu.createNewQuestion\">Add new question</span>\n        </md-tooltip>\n        <md-icon>\n            <i class=\"material-icons\">add_circle</i>\n        </md-icon>\n    </md-button>\n    <md-button class=\"md-icon-button\" ng-click=\"addNewHeading()\">\n        <md-tooltip md-direction=\"right\">\n            <span translate=\"formEditor.editingMenu.createNewHeading\">Add new heading</span>\n        </md-tooltip>\n        <md-icon>\n            <i class=\"material-icons\">text_fields</i>\n        </md-icon>\n    </md-button>\n    <md-button class=\"md-icon-button\" ng-click=\"addNewSection()\">\n        <md-tooltip md-direction=\"right\">\n            <span translate=\"formEditor.editingMenu.createNewSection\">Add new section</span>\n        </md-tooltip>\n        <md-icon>\n            <i class=\"material-icons\">view_agenda</i>\n        </md-icon>\n    </md-button>\n</div>";
 
 /***/ }),
 /* 20 */
@@ -2348,7 +2341,7 @@ module.exports = "<div class=\"md-whiteframe-z1 editing-menu\" layout=\"row\" la
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div layout=\"column\" class=\"editable\" ng-class=\"{ 'editing': editingItem === heading, 'locked': item.settings.locked }\" ng-click=\"setEditingItem(item, section, $event)\">\r\n    <div layout=\"row\" layout-align=\"center center\">\r\n        <form-editor_drag-handle class=\"item-drag-handle editing-ui\" as-sortable-item-handle ng-mousedown=\"setEditingItem(item, section, $event)\"></form-editor_drag-handle>\r\n    </div>\r\n    <md-input-container class=\"big\" md-no-float>\r\n        <input ng-model=\"heading.title\" ng-focus=\"setEditingItem(heading, $event)\" placeholder=\"Title\">\r\n    </md-input-container>\r\n\r\n    <md-input-container class=\"small\" md-no-float>\r\n        <input ng-model=\"heading.description\" ng-focus=\"setEditingItem(heading, $event)\" placeholder=\"Description\">\r\n    </md-input-container>\r\n\r\n    <div layout=\"row\" class=\"editing-ui\" layout-align=\"end center\" layout-padding ng-if=\"!item.settings.locked\">\r\n            <md-button class=\"md-icon-button\" ng-click=\"deleteItem(item)\">\r\n                <md-icon><i class=\"material-icons\">delete</i></md-icon>\r\n            </md-button>\r\n        </div>\r\n</div>\r\n";
+module.exports = "<div layout=\"column\" class=\"editable\" ng-class=\"{ 'editing': editingItem === heading, 'locked': item.settings.locked }\" ng-click=\"setEditingItem(item, section, $event)\">\n    <div layout=\"row\" layout-align=\"center center\">\n        <form-editor_drag-handle class=\"item-drag-handle editing-ui\" as-sortable-item-handle ng-mousedown=\"setEditingItem(item, section, $event)\"></form-editor_drag-handle>\n    </div>\n    <md-input-container class=\"big\" md-no-float>\n        <input ng-model=\"heading.title\" ng-focus=\"setEditingItem(heading, $event)\" placeholder=\"Title\">\n    </md-input-container>\n\n    <md-input-container class=\"small\" md-no-float>\n        <input ng-model=\"heading.description\" ng-focus=\"setEditingItem(heading, $event)\" placeholder=\"Description\">\n    </md-input-container>\n\n    <div layout=\"row\" class=\"editing-ui\" layout-align=\"end center\" layout-padding ng-if=\"!item.settings.locked\">\n            <md-button class=\"md-icon-button\" ng-click=\"deleteItem(item)\">\n                <md-icon><i class=\"material-icons\">delete</i></md-icon>\n            </md-button>\n        </div>\n</div>\n";
 
 /***/ }),
 /* 22 */
@@ -2360,7 +2353,7 @@ module.exports = "<div layout=\"column\" class=\"editable\" ng-class=\"{ 'editin
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div ng-repeat=\"property in getProperties()\">\r\n    <div layout=\"row\" layout-align=\"start center\">\r\n        <span class=\"title\">{{property.title}}</span>\r\n        <md-input-container flex>\r\n            <input ng-model=\"property.value\">\r\n        </md-input-container>\r\n    </div>\r\n\r\n    <div ui-ace></div>\r\n</div>";
+module.exports = "<div ng-repeat=\"property in getProperties()\">\n    <div layout=\"row\" layout-align=\"start center\">\n        <span class=\"title\">{{property.title}}</span>\n        <md-input-container flex>\n            <input ng-model=\"property.value\">\n        </md-input-container>\n    </div>\n\n    <div ui-ace></div>\n</div>";
 
 /***/ }),
 /* 24 */
@@ -2378,7 +2371,7 @@ module.exports = "Autocomplete";
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<form-editor_question_editors_options></form-editor_question_editors_options>\r\n";
+module.exports = "<form-editor_question_editors_options></form-editor_question_editors_options>\n";
 
 /***/ }),
 /* 27 */
@@ -2396,7 +2389,7 @@ module.exports = JSON.parse("{\"longTextContent\":\"Tekst długiej odpowiedzi\"}
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <span translate=\"formEditor.question.editors.longText.longTextContent\">Long text content</span>\r\n    <br>\r\n    .<br>.<br>.<br>\r\n</div>\r\n";
+module.exports = "<div>\n    <span translate=\"formEditor.question.editors.longText.longTextContent\">Long text content</span>\n    <br>\n    .<br>.<br>.<br>\n</div>\n";
 
 /***/ }),
 /* 30 */
@@ -2408,7 +2401,7 @@ module.exports = "<div>\r\n    <span translate=\"formEditor.question.editors.lon
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = "<div layout=\"row\" layout-align=\"start center\">\r\n    <form-editor_drag-handle ng-class=\"{hidden: question.options.length <= 1}\" class=\"editing-ui vertical\" as-sortable-item-handle></form-editor_drag-handle>\r\n    <md-icon ng-if=\"question.type === 'radioButtonList'\"><i class=\"material-icons\">radio_button_unchecked</i></md-icon>\r\n    <md-icon ng-if=\"question.type === 'checkBoxList'\"><i class=\"material-icons\">check_box_outline_blank</i></md-icon>\r\n    <md-input-container md-no-float flex>\r\n        <input ng-model=\"option.name\" placeholder=\"Option\" ng-focus=\"setEditingItem(item, $event)\" ng-keyup=\"handleKeyUp($event)\">\r\n    </md-input-container>\r\n    <md-button class=\"md-icon-button editing-ui\" ng-click=\"deleteOption(option)\" ng-if=\"question.options.length > 1\" tabindex=\"-1\">\r\n        <md-icon md-menu-origin><i class=\"material-icons\">close</i></md-icon>\r\n    </md-button>\r\n</div>\r\n";
+module.exports = "<div layout=\"row\" layout-align=\"start center\">\n    <form-editor_drag-handle ng-class=\"{hidden: question.options.length <= 1}\" class=\"editing-ui vertical\" as-sortable-item-handle></form-editor_drag-handle>\n    <md-icon ng-if=\"question.type === 'radioButtonList'\"><i class=\"material-icons\">radio_button_unchecked</i></md-icon>\n    <md-icon ng-if=\"question.type === 'checkBoxList'\"><i class=\"material-icons\">check_box_outline_blank</i></md-icon>\n    <md-input-container md-no-float flex>\n        <input ng-model=\"option.name\" placeholder=\"Option\" ng-focus=\"setEditingItem(item, $event)\" ng-keyup=\"handleKeyUp($event)\">\n    </md-input-container>\n    <md-button class=\"md-icon-button editing-ui\" ng-click=\"deleteOption(option)\" ng-if=\"question.options.length > 1\" tabindex=\"-1\">\n        <md-icon md-menu-origin><i class=\"material-icons\">close</i></md-icon>\n    </md-button>\n</div>\n";
 
 /***/ }),
 /* 32 */
@@ -2420,7 +2413,7 @@ module.exports = "<div layout=\"row\" layout-align=\"start center\">\r\n    <for
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"placeholder\" layout=\"row\" layout-align=\"start center\">\r\n    <form-editor_drag-handle class=\"editing-ui\" as-sortable-item-handle style=\"visibility: hidden\"></form-editor_drag-handle>\r\n        <md-icon ng-if=\"question.type === 'radioButtonList'\"><i class=\"material-icons\">radio_button_unchecked</i></md-icon>\r\n    <md-icon ng-if=\"question.type === 'checkBoxList'\"><i class=\"material-icons\">check_box_outline_blank</i></md-icon>\r\n    <md-input-container md-no-float flex>\r\n        <a ng-click=\"addNewOption($event)\">Add new option</a>\r\n    </md-input-container>\r\n</div>\r\n";
+module.exports = "<div class=\"placeholder\" layout=\"row\" layout-align=\"start center\">\n    <form-editor_drag-handle class=\"editing-ui\" as-sortable-item-handle style=\"visibility: hidden\"></form-editor_drag-handle>\n        <md-icon ng-if=\"question.type === 'radioButtonList'\"><i class=\"material-icons\">radio_button_unchecked</i></md-icon>\n    <md-icon ng-if=\"question.type === 'checkBoxList'\"><i class=\"material-icons\">check_box_outline_blank</i></md-icon>\n    <md-input-container md-no-float flex>\n        <a ng-click=\"addNewOption($event)\">Add new option</a>\n    </md-input-container>\n</div>\n";
 
 /***/ }),
 /* 34 */
@@ -2432,13 +2425,13 @@ module.exports = "<div class=\"placeholder\" layout=\"row\" layout-align=\"start
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = "<div as-sortable=\"sortable.options\" ng-model=\"question.options\">\r\n    <form-editor_question_editors_options_item ng-repeat=\"option in question.options\" as-sortable-item></form-editor_question_editors_options_item>\r\n</div>\r\n<form-editor_question_editors_options_placeholder class=\"editing-ui\"></form-editor_question_editors_options_placeholder>\r\n";
+module.exports = "<div as-sortable=\"sortable.options\" ng-model=\"question.options\">\n    <form-editor_question_editors_options_item ng-repeat=\"option in question.options\" as-sortable-item></form-editor_question_editors_options_item>\n</div>\n<form-editor_question_editors_options_placeholder class=\"editing-ui\"></form-editor_question_editors_options_placeholder>\n";
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports) {
 
-module.exports = "<form-editor_question_editors_options></form-editor_question_editors_options>\r\n";
+module.exports = "<form-editor_question_editors_options></form-editor_question_editors_options>\n";
 
 /***/ }),
 /* 37 */
@@ -2456,7 +2449,7 @@ module.exports = JSON.parse("{\"shortTextContent\":\"Tekst krótkiej odpowiedzi\
 /* 39 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <span translate=\"formEditor.question.editors.shortText.shortTextContent\">Short text content</span>\r\n</div>\r\n";
+module.exports = "<div>\n    <span translate=\"formEditor.question.editors.shortText.shortTextContent\">Short text content</span>\n</div>\n";
 
 /***/ }),
 /* 40 */
@@ -2474,7 +2467,7 @@ module.exports = JSON.parse("{\"radioButtons\":\"Pojedynczy wybór\",\"checkBoxe
 /* 42 */
 /***/ (function(module, exports) {
 
-module.exports = "<div layout-align=\"center center\" layout=\"row\">\r\n        <md-select ng-model=\"question.type\">\r\n            <md-option value=\"shortText\">\r\n                <md-icon style=\"margin-right: 10px;\">\r\n                    <i class=\"material-icons\">short_text</i>\r\n                </md-icon>\r\n                <span translate=\"formEditor.question.typeSelectMenu.shortText\">Short text</span>\r\n            </md-option>\r\n            <md-option value=\"longText\">\r\n                <md-icon style=\"margin-right: 10px;\">\r\n                    <i class=\"material-icons\">view_headline</i>\r\n                </md-icon>\r\n                <span translate=\"formEditor.question.typeSelectMenu.longText\">Long text</span>\r\n            </md-option>\r\n            <md-divider></md-divider>\r\n            <md-option value=\"radioButtonList\">\r\n                <md-icon style=\"margin-right: 10px;\">\r\n                    <i class=\"material-icons\">radio_button_checked</i>\r\n                </md-icon>\r\n                <span translate=\"formEditor.question.typeSelectMenu.radioButtons\">Radio buttons</span>\r\n            </md-option>\r\n            <md-option value=\"checkBoxList\">\r\n                <md-icon style=\"margin-right: 10px;\">\r\n                    <i class=\"material-icons\">check_box</i>\r\n                </md-icon>\r\n                <span translate=\"formEditor.question.typeSelectMenu.checkBoxes\">Check boxes</span>\r\n            </md-option>\r\n        </md-select>\r\n</div>";
+module.exports = "<div layout-align=\"center center\" layout=\"row\">\n        <md-select ng-model=\"question.type\">\n            <md-option value=\"shortText\">\n                <md-icon style=\"margin-right: 10px;\">\n                    <i class=\"material-icons\">short_text</i>\n                </md-icon>\n                <span translate=\"formEditor.question.typeSelectMenu.shortText\">Short text</span>\n            </md-option>\n            <md-option value=\"longText\">\n                <md-icon style=\"margin-right: 10px;\">\n                    <i class=\"material-icons\">view_headline</i>\n                </md-icon>\n                <span translate=\"formEditor.question.typeSelectMenu.longText\">Long text</span>\n            </md-option>\n            <md-divider></md-divider>\n            <md-option value=\"radioButtonList\">\n                <md-icon style=\"margin-right: 10px;\">\n                    <i class=\"material-icons\">radio_button_checked</i>\n                </md-icon>\n                <span translate=\"formEditor.question.typeSelectMenu.radioButtons\">Radio buttons</span>\n            </md-option>\n            <md-option value=\"checkBoxList\">\n                <md-icon style=\"margin-right: 10px;\">\n                    <i class=\"material-icons\">check_box</i>\n                </md-icon>\n                <span translate=\"formEditor.question.typeSelectMenu.checkBoxes\">Check boxes</span>\n            </md-option>\n        </md-select>\n</div>";
 
 /***/ }),
 /* 43 */
@@ -2498,7 +2491,7 @@ module.exports = JSON.parse("{\"number\":\"Liczba\",\"text\":\"Tekst\",\"regex\"
 /* 46 */
 /***/ (function(module, exports) {
 
-module.exports = "<div layout=\"row\" layout-align=\"start start\" flex>\r\n    <md-select ng-model=\"validator.group\">\r\n        <md-option value=\"number\"><span translate=\"formEditor.question.validators.number\">Number</span></md-option>\r\n        <md-option value=\"text\"><span translate=\"formEditor.question.validators.text\">Text</span></md-option>\r\n        <md-option value=\"regex\"><span translate=\"formEditor.question.validators.regex\">Regular expression</span></md-option>\r\n      </md-select>\r\n\r\n      <md-select ng-model=\"validator.name\">\r\n        <md-option ng-repeat=\"v in getValidatorsForGroup(validator.group)\" ng-value=\"v[1]\"><span translate=\"formEditor.question.validators.{{v[0][1]}}\"></span></md-option>\r\n      </md-select>\r\n\r\n      <md-input-container ng-if=\"hasParam('number')\" flex>\r\n        <label><span translate=\"formEditor.question.validators.number\">Number</span></label>\r\n        <input ng-model=\"validator.param\" type=\"number\">\r\n      </md-input-container>\r\n\r\n      <md-input-container ng-if=\"hasParam('text')\" flex>\r\n        <label>\r\n            <span ng-if=\"validator.group !== 'regex'\" translate=\"formEditor.question.validators.text\">Text</span>\r\n            <span ng-if=\"validator.group === 'regex'\" translate=\"formEditor.question.validators.expression\">Expression</span>\r\n        </label>\r\n        <input ng-model=\"validator.param\">\r\n      </md-input-container>\r\n\r\n      <md-input-container flex>\r\n        <label translate=\"formEditor.question.validators.customErrorMessage\">Custom error message</label>\r\n        <input ng-model=\"validator.message\">\r\n      </md-input-container>\r\n\r\n      <md-button class=\"md-icon-button remove-validator-button\" ng-click=\"toggleValidation(question)\">\r\n          <md-icon>\r\n              <i class=\"material-icons\">close</i>\r\n          </md-icon>\r\n      </md-button>\r\n</div>\r\n";
+module.exports = "<div layout=\"row\" layout-align=\"start start\" flex>\n    <md-select ng-model=\"validator.group\">\n        <md-option value=\"number\"><span translate=\"formEditor.question.validators.number\">Number</span></md-option>\n        <md-option value=\"text\"><span translate=\"formEditor.question.validators.text\">Text</span></md-option>\n        <md-option value=\"regex\"><span translate=\"formEditor.question.validators.regex\">Regular expression</span></md-option>\n      </md-select>\n\n      <md-select ng-model=\"validator.name\">\n        <md-option ng-repeat=\"v in getValidatorsForGroup(validator.group)\" ng-value=\"v[1]\"><span translate=\"formEditor.question.validators.{{v[0][1]}}\"></span></md-option>\n      </md-select>\n\n      <md-input-container ng-if=\"hasParam('number')\" flex>\n        <label><span translate=\"formEditor.question.validators.number\">Number</span></label>\n        <input ng-model=\"validator.param\" type=\"number\">\n      </md-input-container>\n\n      <md-input-container ng-if=\"hasParam('text')\" flex>\n        <label>\n            <span ng-if=\"validator.group !== 'regex'\" translate=\"formEditor.question.validators.text\">Text</span>\n            <span ng-if=\"validator.group === 'regex'\" translate=\"formEditor.question.validators.expression\">Expression</span>\n        </label>\n        <input ng-model=\"validator.param\">\n      </md-input-container>\n\n      <md-input-container flex>\n        <label translate=\"formEditor.question.validators.customErrorMessage\">Custom error message</label>\n        <input ng-model=\"validator.message\">\n      </md-input-container>\n\n      <md-button class=\"md-icon-button remove-validator-button\" ng-click=\"toggleValidation(question)\">\n          <md-icon>\n              <i class=\"material-icons\">close</i>\n          </md-icon>\n      </md-button>\n</div>\n";
 
 /***/ }),
 /* 47 */
@@ -2510,7 +2503,7 @@ module.exports = "<div layout=\"row\" layout-align=\"start start\" flex>\r\n    
 /* 48 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"editable\" ng-class=\"{ 'editing': editingItem === item, 'last': $last }\" ng-click=\"setEditingItem(item, section, $event);\">\r\n    <div layout=\"row\" layout-align=\"center center\">\r\n        <form-editor_drag-handle class=\"item-drag-handle editing-ui\" as-sortable-item-handle ng-mousedown=\"setEditingItem(item, section, $event)\"></form-editor_drag-handle>\r\n    </div>\r\n    <div class=\"basic-settings\" layout=\"column\" layout-gt-sm=\"row\" layout-align=\"start center\">\r\n        <md-input-container md-no-float class=\"question-input\" flex>\r\n            <input ng-model=\"question.ask\" placeholder=\"Question\" ng-focus=\"setEditingItem(item, $event)\">\r\n        </md-input-container>\r\n        <form-editor_question_type-select-menu class=\"editing-ui\"></form-editor_question_type-select-menu>\r\n    </div>\r\n\r\n    <div class=\"answer-editor\">\r\n        <form-editor_question_editors_radio-button-list ng-if=\"question.type === 'radioButtonList'\"></form-editor_question_editors_radio-button-list>\r\n        <form-editor_question_editors_check-box-list ng-if=\"question.type === 'checkBoxList'\"></form-editor_question_editors_check-box-list>\r\n        <form-editor_question_editors_short-text ng-if=\"question.type === 'shortText'\"></form-editor_question_editors_short-text>\r\n        <form-editor_question_editors_long-text ng-if=\"question.type === 'longText'\"></form-editor_question_editors_long-text>\r\n        <form-editor_question_editors_autocomplete ng-if=\"question.type === 'autocomplete'\"></form-editor_question_editors_autocomplete>\r\n    </div>\r\n\r\n    <div class=\"editing-ui\" ng-if=\"question.validation\" flex>\r\n        <form-editor_question_validators flex></form-editor_question_validators>\r\n    </div>\r\n\r\n    <div layout=\"row\" class=\"question-toolbar editing-ui\" layout-align=\"end center\" layout-padding>\r\n        <md-button class=\"md-icon-button\" ng-click=\"copyItem(item)\">\r\n            <md-icon><i class=\"material-icons\">content_copy</i></md-icon>\r\n        </md-button>\r\n        <md-button class=\"md-icon-button\" ng-click=\"deleteItem(item)\">\r\n            <md-icon><i class=\"material-icons\">delete</i></md-icon>\r\n        </md-button>\r\n        <div class=\"divider\"></div>\r\n        <md-switch ng-model=\"question.required\">\r\n            <span translate=\".required\">Required</span>\r\n        </md-switch>\r\n        <md-menu>\r\n            <md-button class=\"md-icon-button\" ng-click=\"$mdMenu.open($event)\">\r\n                <md-icon><i class=\"material-icons\">more_vert</i></md-icon>\r\n            </md-button>\r\n            <md-menu-content>\r\n                <md-menu-item>\r\n                    <md-button ng-click=\"toggleValidation(question)\">\r\n                        <md-icon>\r\n                            <i class=\"material-icons\" ng-if=\"question.validation\">checked</i>\r\n                        </md-icon>\r\n                        <span translate=\"formEditor.question.answerValidation\">Answer validation</span>\r\n                    </md-button>\r\n                </md-menu-item>\r\n            </md-menu-content>\r\n        </md-menu>\r\n    </div>\r\n</div>\r\n";
+module.exports = "<div class=\"editable\" ng-class=\"{ 'editing': editingItem === item, 'last': $last }\" ng-click=\"setEditingItem(item, section, $event);\">\n    <div layout=\"row\" layout-align=\"center center\">\n        <form-editor_drag-handle class=\"item-drag-handle editing-ui\" as-sortable-item-handle ng-mousedown=\"setEditingItem(item, section, $event)\"></form-editor_drag-handle>\n    </div>\n    <div class=\"basic-settings\" layout=\"column\" layout-gt-sm=\"row\" layout-align=\"start center\">\n        <md-input-container md-no-float class=\"question-input\" flex>\n            <input ng-model=\"question.ask\" placeholder=\"Question\" ng-focus=\"setEditingItem(item, $event)\">\n        </md-input-container>\n        <form-editor_question_type-select-menu class=\"editing-ui\"></form-editor_question_type-select-menu>\n    </div>\n\n    <div class=\"answer-editor\">\n        <form-editor_question_editors_radio-button-list ng-if=\"question.type === 'radioButtonList'\"></form-editor_question_editors_radio-button-list>\n        <form-editor_question_editors_check-box-list ng-if=\"question.type === 'checkBoxList'\"></form-editor_question_editors_check-box-list>\n        <form-editor_question_editors_short-text ng-if=\"question.type === 'shortText'\"></form-editor_question_editors_short-text>\n        <form-editor_question_editors_long-text ng-if=\"question.type === 'longText'\"></form-editor_question_editors_long-text>\n        <form-editor_question_editors_autocomplete ng-if=\"question.type === 'autocomplete'\"></form-editor_question_editors_autocomplete>\n    </div>\n\n    <div class=\"editing-ui\" ng-if=\"question.validation\" flex>\n        <form-editor_question_validators flex></form-editor_question_validators>\n    </div>\n\n    <div layout=\"row\" class=\"question-toolbar editing-ui\" layout-align=\"end center\" layout-padding>\n        <md-button class=\"md-icon-button\" ng-click=\"copyItem(item)\">\n            <md-icon><i class=\"material-icons\">content_copy</i></md-icon>\n        </md-button>\n        <md-button class=\"md-icon-button\" ng-click=\"deleteItem(item)\">\n            <md-icon><i class=\"material-icons\">delete</i></md-icon>\n        </md-button>\n        <div class=\"divider\"></div>\n        <md-switch ng-model=\"question.required\">\n            <span translate=\".required\">Required</span>\n        </md-switch>\n        <md-menu>\n            <md-button class=\"md-icon-button\" ng-click=\"$mdMenu.open($event)\">\n                <md-icon><i class=\"material-icons\">more_vert</i></md-icon>\n            </md-button>\n            <md-menu-content>\n                <md-menu-item>\n                    <md-button ng-click=\"toggleValidation(question)\">\n                        <md-icon>\n                            <i class=\"material-icons\" ng-if=\"question.validation\">checked</i>\n                        </md-icon>\n                        <span translate=\"formEditor.question.answerValidation\">Answer validation</span>\n                    </md-button>\n                </md-menu-item>\n            </md-menu-content>\n        </md-menu>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 49 */
@@ -2522,7 +2515,7 @@ module.exports = "<div class=\"editable\" ng-class=\"{ 'editing': editingItem ==
 /* 50 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <form-editor_editing-menu></form-editor_editing-menu>\r\n\r\n    <md-content ng-repeat=\"section in getSections()\" class=\"page md-whiteframe-z1\" flex ng-click=\"setEditingItem(null, section, $event)\">\r\n        <div as-sortable=\"sortable.options\" ng-model=\"section.items\">\r\n            <div as-sortable-item ng-repeat=\"item in section.items\">\r\n                <form-editor_heading ng-init=\"heading=item\" ng-if=\"item.type === 'heading'\">\r\n                </form-editor_heading>\r\n                <form-editor_question ng-init=\"question=item.question\" ng-if=\"item.type === 'question'\">\r\n                </form-editor_question>\r\n            </div>\r\n        </div>\r\n    </md-content>\r\n</div>\r\n";
+module.exports = "<div>\n    <form-editor_editing-menu></form-editor_editing-menu>\n\n    <md-content ng-repeat=\"section in getSections()\" class=\"page md-whiteframe-z1\" flex ng-click=\"setEditingItem(null, section, $event)\">\n        <div as-sortable=\"sortable.options\" ng-model=\"section.items\">\n            <div as-sortable-item ng-repeat=\"item in section.items\">\n                <form-editor_heading ng-init=\"heading=item\" ng-if=\"item.type === 'heading'\">\n                </form-editor_heading>\n                <form-editor_question ng-init=\"question=item.question\" ng-if=\"item.type === 'question'\">\n                </form-editor_question>\n            </div>\n        </div>\n    </md-content>\n</div>\n";
 
 /***/ }),
 /* 51 */
@@ -2540,898 +2533,10 @@ module.exports = JSON.parse("{\"edit\":\"Edycja\",\"responses\":\"Odpowiedzi\",\
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(54);
-module.exports = __webpack_require__(58);
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {/**
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * https://raw.github.com/facebook/regenerator/master/LICENSE file. An
- * additional grant of patent rights can be found in the PATENTS file in
- * the same directory.
- */
-
-!(function(global) {
-  "use strict";
-
-  var hasOwn = Object.prototype.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var iteratorSymbol =
-    typeof Symbol === "function" && Symbol.iterator || "@@iterator";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided, then outerFn.prototype instanceof Generator.
-    var generator = Object.create((outerFn || Generator).prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  runtime.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype;
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  runtime.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  runtime.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `value instanceof AwaitArgument` to determine if the yielded value is
-  // meant to be awaited. Some may consider the name of this method too
-  // cutesy, but they are curmudgeons.
-  runtime.awrap = function(arg) {
-    return new AwaitArgument(arg);
-  };
-
-  function AwaitArgument(arg) {
-    this.arg = arg;
-  }
-
-  function AsyncIterator(generator) {
-    // This invoke function is written in a style that assumes some
-    // calling function (or Promise) will handle exceptions.
-    function invoke(method, arg) {
-      var result = generator[method](arg);
-      var value = result.value;
-      return value instanceof AwaitArgument
-        ? Promise.resolve(value.arg).then(invokeNext, invokeThrow)
-        : Promise.resolve(value).then(function(unwrapped) {
-            // When a yielded Promise is resolved, its final value becomes
-            // the .value of the Promise<{value,done}> result for the
-            // current iteration. If the Promise is rejected, however, the
-            // result for this iteration will be rejected with the same
-            // reason. Note that rejections of yielded Promises are not
-            // thrown back into the generator function, as is the case
-            // when an awaited Promise is rejected. This difference in
-            // behavior between yield and await is important, because it
-            // allows the consumer to decide what to do with the yielded
-            // rejection (swallow it and continue, manually .throw it back
-            // into the generator, abandon iteration, whatever). With
-            // await, by contrast, there is no opportunity to examine the
-            // rejection reason outside the generator function, so the
-            // only option is to throw it from the await expression, and
-            // let the generator function handle the exception.
-            result.value = unwrapped;
-            return result;
-          });
-    }
-
-    if (typeof process === "object" && process.domain) {
-      invoke = process.domain.bind(invoke);
-    }
-
-    var invokeNext = invoke.bind(generator, "next");
-    var invokeThrow = invoke.bind(generator, "throw");
-    var invokeReturn = invoke.bind(generator, "return");
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return invoke(method, arg);
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : new Promise(function (resolve) {
-          resolve(callInvokeWithMethodAndArg());
-        });
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return runtime.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          if (method === "return" ||
-              (method === "throw" && delegate.iterator[method] === undefined)) {
-            // A return or throw (when the delegate iterator has no throw
-            // method) always terminates the yield* loop.
-            context.delegate = null;
-
-            // If the delegate iterator has a return method, give it a
-            // chance to clean up.
-            var returnMethod = delegate.iterator["return"];
-            if (returnMethod) {
-              var record = tryCatch(returnMethod, delegate.iterator, arg);
-              if (record.type === "throw") {
-                // If the return method threw an exception, let that
-                // exception prevail over the original return or throw.
-                method = "throw";
-                arg = record.arg;
-                continue;
-              }
-            }
-
-            if (method === "return") {
-              // Continue with the outer return, now that the delegate
-              // iterator has been terminated.
-              continue;
-            }
-          }
-
-          var record = tryCatch(
-            delegate.iterator[method],
-            delegate.iterator,
-            arg
-          );
-
-          if (record.type === "throw") {
-            context.delegate = null;
-
-            // Like returning generator.throw(uncaught), but without the
-            // overhead of an extra function call.
-            method = "throw";
-            arg = record.arg;
-            continue;
-          }
-
-          // Delegate generator ran and handled its own exceptions so
-          // regardless of what the method was, we continue as if it is
-          // "next" with an undefined arg.
-          method = "next";
-          arg = undefined;
-
-          var info = record.arg;
-          if (info.done) {
-            context[delegate.resultName] = info.value;
-            context.next = delegate.nextLoc;
-          } else {
-            state = GenStateSuspendedYield;
-            return info;
-          }
-
-          context.delegate = null;
-        }
-
-        if (method === "next") {
-          context._sent = arg;
-
-          if (state === GenStateSuspendedYield) {
-            context.sent = arg;
-          } else {
-            context.sent = undefined;
-          }
-        } else if (method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw arg;
-          }
-
-          if (context.dispatchException(arg)) {
-            // If the dispatched exception was caught by a catch block,
-            // then let that catch block handle the exception normally.
-            method = "next";
-            arg = undefined;
-          }
-
-        } else if (method === "return") {
-          context.abrupt("return", arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          var info = {
-            value: record.arg,
-            done: context.done
-          };
-
-          if (record.arg === ContinueSentinel) {
-            if (context.delegate && method === "next") {
-              // Deliberately forget the last sent value so that we don't
-              // accidentally pass it on to the delegate.
-              arg = undefined;
-            }
-          } else {
-            return info;
-          }
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(arg) call above.
-          method = "throw";
-          arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  runtime.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  runtime.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      this.sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-        return !!caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.next = finallyEntry.finallyLoc;
-      } else {
-        this.complete(record);
-      }
-
-      return ContinueSentinel;
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = record.arg;
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      return ContinueSentinel;
-    }
-  };
-})(
-  // Among the various tricks for obtaining a reference to the global
-  // object, this seems to be the most reliable technique that does not
-  // use indirect eval (which violates Content Security Policy).
-  typeof global === "object" ? global :
-  typeof window === "object" ? window :
-  typeof self === "object" ? self : this
-);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(55), __webpack_require__(56)))
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 58 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3439,247 +2544,79 @@ process.umask = function() { return 0; };
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./shared/components/formDisplay/controller.js
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-var FormValidationError =
-/*#__PURE__*/
-function (_Error) {
-  _inherits(FormValidationError, _Error);
-
-  function FormValidationError(params) {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    _classCallCheck(this, FormValidationError);
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormValidationError)).call.apply(_getPrototypeOf2, [this].concat(_toConsumableArray(params)))); // Maintains proper stack trace for where our error was thrown (only available on V8)
+class FormValidationError extends Error {
+  constructor(params) {
+    super(...params); // Maintains proper stack trace for where our error was thrown (only available on V8)
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(_assertThisInitialized(_this), CustomError);
+      Error.captureStackTrace(this, CustomError);
     }
-
-    return _this;
   }
 
-  return FormValidationError;
-}(_wrapNativeSuper(Error));
+}
 
 /* harmony default export */ var controller = (function ($scope, $resource, FormResource, Config) {
-  var endpoint = Config.forms.api.endpoint;
+  const endpoint = Config.forms.api.endpoint;
 
-  $scope.loadForm =
-  /*#__PURE__*/
-  function () {
-    var _ref = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee(_ref2) {
-      var type, form;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              type = _ref2.type;
-              _context.next = 3;
-              return $resource("".concat(endpoint, "/forms/request?@type=").concat(encodeURIComponent(type))).get().$promise;
+  $scope.loadForm = async ({
+    type
+  }) => {
+    let form = await $resource(`${endpoint}/forms/request?@type=${encodeURIComponent(type)}`).get().$promise;
+    $scope.form = form;
+    $scope.$apply();
+  };
 
-            case 3:
-              form = _context.sent;
-              $scope.form = form;
-              $scope.$apply();
+  $scope.loadResource = async ({
+    type,
+    client_id
+  }) => {
+    const resources = await $resource(`${endpoint}/resources?@type=${encodeURIComponent(type)}`).query({
+      client_id
+    }).$promise;
+    const resource = resources[0] || angular.copy($scope.form.request);
+    $scope.loadResourceFromObject(resource);
+  };
 
-            case 6:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
+  $scope.loadResourceFromObject = async resource => {
+    $scope.resource = resource;
+    FormResource.toForm($scope.form, $scope.resource);
+  };
 
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
+  $scope.save = async () => {
+    const client_id = $scope.clientId;
+    Object.assign($scope.resource, FormResource.fromForm($scope.form));
+    $scope.ngForm.$setSubmitted();
 
-  $scope.loadResource =
-  /*#__PURE__*/
-  function () {
-    var _ref3 = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee2(_ref4) {
-      var type, client_id, resources, resource;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              type = _ref4.type, client_id = _ref4.client_id;
-              _context2.next = 3;
-              return $resource("".concat(endpoint, "/resources?@type=").concat(encodeURIComponent(type))).query({
-                client_id: client_id
-              }).$promise;
+    if ($scope.ngForm.$valid) {
+      $scope.resource = await FormResource.save({
+        formId: $scope.form._id,
+        client_id
+      }, $scope.resource).$promise;
+      $scope.ngForm.$setPristine();
+      $scope.ngForm.$setUntouched();
+      $scope.$$phase || $scope.$apply();
+    } else {
+      throw new FormValidationError('form is not valid');
+    }
+  };
 
-            case 3:
-              resources = _context2.sent;
-              resource = resources[0] || angular.copy($scope.form.request);
-              $scope.loadResourceFromObject(resource);
-
-            case 6:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }));
-
-    return function (_x2) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  $scope.loadResourceFromObject =
-  /*#__PURE__*/
-  function () {
-    var _ref5 = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee3(resource) {
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              $scope.resource = resource;
-              FormResource.toForm($scope.form, $scope.resource);
-
-            case 2:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    return function (_x3) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  $scope.save =
-  /*#__PURE__*/
-  _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee4() {
-    var client_id;
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            client_id = $scope.clientId;
-            Object.assign($scope.resource, FormResource.fromForm($scope.form));
-            $scope.ngForm.$setSubmitted();
-
-            if (!$scope.ngForm.$valid) {
-              _context4.next = 12;
-              break;
-            }
-
-            _context4.next = 6;
-            return FormResource.save({
-              formId: $scope.form._id,
-              client_id: client_id
-            }, $scope.resource).$promise;
-
-          case 6:
-            $scope.resource = _context4.sent;
-            $scope.ngForm.$setPristine();
-            $scope.ngForm.$setUntouched();
-            $scope.$$phase || $scope.$apply();
-            _context4.next = 13;
-            break;
-
-          case 12:
-            throw new FormValidationError('form is not valid');
-
-          case 13:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4);
-  }));
   $scope.ngModel = $scope;
 });
 // CONCATENATED MODULE: ./shared/components/formDisplay/link.js
-function link_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function link_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { link_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { link_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ var formDisplay_link = (function (_x, _x2, _x3) {
-  return _ref.apply(this, arguments);
+/* harmony default export */ var formDisplay_link = (async function (scope, element, attrs) {
+  const {
+    type,
+    clientId
+  } = attrs;
+  scope.clientId = clientId;
+  await scope.loadForm({
+    type
+  });
+  await scope.loadResource({
+    type,
+    client_id: clientId
+  });
 });
-
-function _ref() {
-  _ref = link_asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee(scope, element, attrs) {
-    var type, clientId;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            type = attrs.type, clientId = attrs.clientId;
-            scope.clientId = clientId;
-            _context.next = 4;
-            return scope.loadForm({
-              type: type
-            });
-
-          case 4:
-            _context.next = 6;
-            return scope.loadResource({
-              type: type,
-              client_id: clientId
-            });
-
-          case 6:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _ref.apply(this, arguments);
-}
 // EXTERNAL MODULE: ./shared/components/formDisplay/partials/content/partials/heading/style.less
 var style = __webpack_require__(1);
 var style_default = /*#__PURE__*/__webpack_require__.n(style);
@@ -3696,41 +2633,11 @@ var template_default = /*#__PURE__*/__webpack_require__.n(template);
   template: template_default.a
 });
 // CONCATENATED MODULE: ./shared/components/formDisplay/partials/content/partials/question/partials/displays/partials/autocomplete/controller.js
-function controller_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function controller_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { controller_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { controller_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 /* harmony default export */ var autocomplete_controller = (function ($scope, $http) {
-  $scope.querySearch =
-  /*#__PURE__*/
-  function () {
-    var _ref = controller_asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee(searchText) {
-      var response;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return $http.get($scope.question.source.url);
-
-            case 2:
-              response = _context.sent;
-              return _context.abrupt("return", response.data);
-
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
+  $scope.querySearch = async function (searchText) {
+    let response = await $http.get($scope.question.source.url);
+    return response.data;
+  };
 });
 // EXTERNAL MODULE: ./shared/components/formDisplay/partials/content/partials/question/partials/displays/partials/autocomplete/template.html
 var autocomplete_template = __webpack_require__(3);
@@ -3975,7 +2882,7 @@ var editingMenu_template_default = /*#__PURE__*/__webpack_require__.n(editingMen
   $scope.editingSection;
   $scope.sortable = {
     options: {
-      accept: function accept(sourceItemHandleScope, destSortableScope, destItemScope) {
+      accept: function (sourceItemHandleScope, destSortableScope, destItemScope) {
         var isTheSameScope = sourceItemHandleScope.sortableScope.$id === destSortableScope.$id;
 
         var isLocked = _.get(destItemScope, 'item.settings.locked');
@@ -4030,7 +2937,7 @@ var editingMenu_template_default = /*#__PURE__*/__webpack_require__.n(editingMen
     $scope.editingItem = item;
 
     if ($event) {
-      var currentTarget = $event.currentTarget;
+      let currentTarget = $event.currentTarget;
       currentTarget.select && currentTarget.select();
       $event.stopPropagation();
     }
@@ -4052,9 +2959,9 @@ var editingMenu_template_default = /*#__PURE__*/__webpack_require__.n(editingMen
     }
   };
 
-  var placeEditingMenuPosition = function placeEditingMenuPosition() {
-    var editingMenu = document.querySelector('form-editor_editing-menu');
-    var editable = document.querySelector('.editable.editing');
+  var placeEditingMenuPosition = function () {
+    const editingMenu = document.querySelector('form-editor_editing-menu');
+    let editable = document.querySelector('.editable.editing');
 
     if (!editable) {
       editable = document.querySelector('.editable');
@@ -4064,14 +2971,14 @@ var editingMenu_template_default = /*#__PURE__*/__webpack_require__.n(editingMen
       return;
     }
 
-    var _editable$getBounding = editable.getBoundingClientRect(),
-        top = _editable$getBounding.top,
-        left = _editable$getBounding.left,
-        width = _editable$getBounding.width,
-        height = _editable$getBounding.height;
-
+    var {
+      top,
+      left,
+      width,
+      height
+    } = editable.getBoundingClientRect();
     angular.element(editingMenu).css({
-      top: top,
+      top,
       left: left + width + 15
     });
     angular.element(editingMenu).css('display', 'block');
@@ -4084,18 +2991,16 @@ var editingMenu_template_default = /*#__PURE__*/__webpack_require__.n(editingMen
       }
     });
   });
-  var formEditor = document.querySelector('form-editor');
-  $scope.$watch(function () {
-    return formEditor.getBoundingClientRect().top;
-  }, function () {
-    var editingMenu = document.querySelector('form-editor_editing-menu');
-    var top = Math.max(editingMenu.getBoundingClientRect().top, 0);
-    var formEditorBoundingClientRect = formEditor.getBoundingClientRect();
-    var minTop = formEditorBoundingClientRect.top;
-    var maxTop = formEditorBoundingClientRect.top + formEditorBoundingClientRect.height - editingMenu.getBoundingClientRect().height;
+  const formEditor = document.querySelector('form-editor');
+  $scope.$watch(() => formEditor.getBoundingClientRect().top, () => {
+    const editingMenu = document.querySelector('form-editor_editing-menu');
+    let top = Math.max(editingMenu.getBoundingClientRect().top, 0);
+    const formEditorBoundingClientRect = formEditor.getBoundingClientRect();
+    const minTop = formEditorBoundingClientRect.top;
+    const maxTop = formEditorBoundingClientRect.top + formEditorBoundingClientRect.height - editingMenu.getBoundingClientRect().height;
     top = Math.min(Math.max(top, minTop), maxTop);
     angular.element(editingMenu).css({
-      top: top
+      top
     });
   });
 });
@@ -4117,9 +3022,7 @@ var heading_template_default = /*#__PURE__*/__webpack_require__.n(heading_templa
 // CONCATENATED MODULE: ./shared/components/formEditor/partials/properties/controller.js
 /* harmony default export */ var properties_controller = (function ($scope) {
   $scope.getProperties = function () {
-    return $scope.form.items.filter(function (x) {
-      return x.type === 'property';
-    });
+    return $scope.form.items.filter(x => x.type === 'property');
   };
 });
 // EXTERNAL MODULE: ./shared/components/formEditor/partials/properties/style.less
@@ -4213,7 +3116,7 @@ var partials_longText_template_default = /*#__PURE__*/__webpack_require__.n(part
   $scope.setEditingItem = $scope.$parent.setEditingItem;
 
   $scope.addNewOption = function ($event) {
-    var focusAddedOption = function focusAddedOption() {
+    var focusAddedOption = () => {
       $($event.currentTarget).closest('.answer-editor').find('input').last().focus();
     };
 
@@ -4228,7 +3131,7 @@ var partials_longText_template_default = /*#__PURE__*/__webpack_require__.n(part
 
   $scope.sortable = {
     options: {
-      accept: function accept(sourceItemHandleScope, destSortableScope) {
+      accept: function (sourceItemHandleScope, destSortableScope) {
         var isTheSameScope = sourceItemHandleScope.sortableScope.$id === destSortableScope.$id;
         return isTheSameScope;
       }
@@ -4398,12 +3301,12 @@ var typeSelectMenu_template_default = /*#__PURE__*/__webpack_require__.n(typeSel
 });
 // CONCATENATED MODULE: ./shared/components/formEditor/partials/question/partials/validators/controller.js
 /* harmony default export */ var validators_controller = (function ($scope) {
-  var validatorMap = [[['number', 'gt'], 'gt'], [['number', 'gte'], 'gte'], [['number', 'lt'], 'lt'], [['number', 'lte'], 'lte'], [['number', 'eq'], 'eq'], [['number', 'ne'], 'ne'], [['text', 'contains'], 'contains'], [['text', 'notContains'], 'notContains'], [['text', 'isEmail'], 'isEmail'], [['text', 'isURL'], 'isURL', {
+  const validatorMap = [[['number', 'gt'], 'gt'], [['number', 'gte'], 'gte'], [['number', 'lt'], 'lt'], [['number', 'lte'], 'lte'], [['number', 'eq'], 'eq'], [['number', 'ne'], 'ne'], [['text', 'contains'], 'contains'], [['text', 'notContains'], 'notContains'], [['text', 'isEmail'], 'isEmail'], [['text', 'isURL'], 'isURL', {
     require_tld: false
   }], [['regex', 'matches'], 'matches'], [['regex', 'notMatches'], 'notMatches']];
-  var hasTextParam = ['contains', 'notContains', 'matches', 'notMatches'];
-  var hasNumberParam = ['gt', 'gte', 'lt', 'lte', 'eq', 'ne'];
-  var defaultValidator = {
+  const hasTextParam = ['contains', 'notContains', 'matches', 'notMatches'];
+  const hasNumberParam = ['gt', 'gte', 'lt', 'lte', 'eq', 'ne'];
+  const defaultValidator = {
     group: validatorMap[0][0][0],
     name: validatorMap[0][0][1]
   };
@@ -4412,12 +3315,8 @@ var typeSelectMenu_template_default = /*#__PURE__*/__webpack_require__.n(typeSel
     $scope.question.validation.items = $scope.question.validation.items || [defaultValidator];
     var item = $scope.question.validation.items[0];
     $scope.validator = {
-      group: validatorMap.filter(function (x) {
-        return x[1] === item.name;
-      })[0][0][0],
-      name: validatorMap.filter(function (x) {
-        return x[1] === item.name;
-      })[0][0][1],
+      group: validatorMap.filter(x => x[1] === item.name)[0][0][0],
+      name: validatorMap.filter(x => x[1] === item.name)[0][0][1],
       param: item.param,
       message: item.message
     };
@@ -4430,13 +3329,11 @@ var typeSelectMenu_template_default = /*#__PURE__*/__webpack_require__.n(typeSel
   };
 
   $scope.getValidatorsForGroup = function (group) {
-    return validatorMap.filter(function (entry) {
-      return entry[0][0] === group;
-    });
+    return validatorMap.filter(entry => entry[0][0] === group);
   };
 
   $scope.hasParam = function (type) {
-    var name = $scope.validator.name;
+    const name = $scope.validator.name;
 
     if (type === 'text') {
       return hasTextParam.indexOf(name) !== -1;
@@ -4445,25 +3342,21 @@ var typeSelectMenu_template_default = /*#__PURE__*/__webpack_require__.n(typeSel
     }
   };
 
-  $scope.$watch('validator.group', function (group, oldGroup) {
+  $scope.$watch('validator.group', (group, oldGroup) => {
     if (group === oldGroup) {
       return;
     }
 
     delete $scope.validator.param;
-    var validatorItem = validatorMap.filter(function (x) {
-      return x[0][0] === group;
-    })[0];
+    const validatorItem = validatorMap.filter(x => x[0][0] === group)[0];
     $scope.validator.name = validatorItem[1];
   });
-  $scope.$watch('validator', function (validator) {
-    var validatorItem = validatorMap.filter(function (x) {
-      return x[1] === validator.name;
-    })[0];
-    var param = validator.param || validatorItem[2];
+  $scope.$watch('validator', validator => {
+    const validatorItem = validatorMap.filter(x => x[1] === validator.name)[0];
+    let param = validator.param || validatorItem[2];
     $scope.question.validation.items = [{
       name: validator.name,
-      param: param,
+      param,
       message: validator.message
     }];
   }, true);
@@ -4567,7 +3460,7 @@ var formEditor_template_default = /*#__PURE__*/__webpack_require__.n(formEditor_
   formDisplay: formDisplay,
   formEditor: formEditor
 });
-// EXTERNAL MODULE: C:/Users/marmi/Documents/GitHub/forms/src/assets/libs/validator-js/validator.js
+// EXTERNAL MODULE: /Users/marekmicek/Documents/GitHub/forms/src/assets/libs/validator-js/validator.js
 var validator = __webpack_require__(0);
 var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
 
@@ -4575,42 +3468,42 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
 
 /* harmony default export */ var questionValidator = (function () {
   angular.extend(validator_default.a, {
-    gt: function gt(value, param) {
+    gt: function (value, param) {
       return validator_default.a.isInt(value, {
         gt: param
       });
     },
-    lt: function lt(value, param) {
+    lt: function (value, param) {
       return validator_default.a.isInt(value, {
         lt: param
       });
     },
-    gte: function gte(value, param) {
+    gte: function (value, param) {
       return validator_default.a.isInt(value, {
         min: param
       });
     },
-    lte: function lte(value, param) {
+    lte: function (value, param) {
       return validator_default.a.isInt(value, {
         max: param
       });
     },
-    eq: function eq(value, param) {
+    eq: function (value, param) {
       return value === param;
     },
-    ne: function ne(value, param) {
+    ne: function (value, param) {
       return value !== param;
     },
-    notContains: function notContains(value, param) {
+    notContains: function (value, param) {
       return !validator_default.a.contains(value, param);
     },
-    notMatches: function notMatches(value, param) {
+    notMatches: function (value, param) {
       return !validator_default.a.matches(value, param);
     }
   });
   return {
     require: 'ngModel',
-    link: function link(scope, elem, attr, ngModel) {
+    link: function (scope, elem, attr, ngModel) {
       var validationItem = scope.question.validation ? scope.question.validation.items[0] : undefined;
 
       if (validationItem) {
@@ -4637,60 +3530,31 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
 });
 // CONCATENATED MODULE: ./shared/services/FormResource.js
 /* harmony default export */ var FormResource = (function ($resource, $parse, Config) {
-  var endpoint = Config.forms.api.endpoint;
-  var resource = $resource("".concat(endpoint, "/resources"));
+  const endpoint = Config.forms.api.endpoint;
+  const resource = $resource(`${endpoint}/resources`);
 
-  resource.fromForm = function (form) {
-    var objectMap = form.items.map(function (item) {
-      return item.type === 'section' ? item.items : item;
-    }).flat().filter(function (item) {
-      return item.type === 'question';
-    }).map(function (_ref) {
-      var question = _ref.question,
-          answer = _ref.answer;
-      return {
-        key: question.ask,
-        value: question.answer
-      };
-    });
-    var object = {};
-    objectMap.forEach(function (_ref2) {
-      var key = _ref2.key,
-          value = _ref2.value;
-      return $parse(key).assign(object, value);
-    });
+  resource.fromForm = form => {
+    let objectMap = form.items.map(item => item.type === 'section' ? item.items : item).flat().filter(item => item.type === 'question').map(({
+      question,
+      answer
+    }) => ({
+      key: question.ask,
+      value: question.answer
+    }));
+    let object = {};
+    objectMap.forEach(({
+      key,
+      value
+    }) => $parse(key).assign(object, value));
     Object.assign(object, form.request);
     return object;
   };
 
-  resource.toForm = function (form, resource) {
-    var items = form.items.map(function (item) {
-      return item.type === 'section' ? item.items : item;
-    }).flat().filter(function (item) {
-      return item.type === 'question';
-    });
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+  resource.toForm = (form, resource) => {
+    const items = form.items.map(item => item.type === 'section' ? item.items : item).flat().filter(item => item.type === 'question');
 
-    try {
-      for (var _iterator = items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var item = _step.value;
-        item.question.answer = $parse(item.question.ask)(resource);
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+    for (let item of items) {
+      item.question.answer = $parse(item.question.ask)(resource);
     }
   };
 
@@ -4701,8 +3565,12 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
 /* harmony default export */ var services = ({
   FormResource: FormResource
 });
-// CONCATENATED MODULE: C:/Users/marmi/Documents/GitHub/forms/node_modules/happenize/utils/registerNamespace.js
+// CONCATENATED MODULE: /Users/marekmicek/Documents/GitHub/forms/node_modules/happenize/utils/registerNamespace.js
 /* harmony default export */ var registerNamespace = (function (components, func, ns) {
+	if (components.async) {
+		return;
+	}
+
 	var App = this && ((typeof (func) === 'string' && this[func]) || this.compileProvider) ? this : window.App;
 
 	ns = ns && `${ns}.` || '';
@@ -4715,7 +3583,7 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
 	.forEach(x => func(`${ns}${x}`, components[x]));
 });;
 
-// CONCATENATED MODULE: C:/Users/marmi/Documents/GitHub/forms/node_modules/happenize/utils/registerComponent.js
+// CONCATENATED MODULE: /Users/marekmicek/Documents/GitHub/forms/node_modules/happenize/utils/registerComponent.js
 /* harmony default export */ var registerComponent = (function (component, ns) {
     var controller = component.controller;
     var link = component.link;
@@ -4723,7 +3591,7 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
     //component.replace = component.replace || true;
 
     function loadObjectFromNamespace(obj, ns) {
-        return ns.split('.').reduce((o,i)=> o[i] = o[i] || {}, obj)
+        return ns.split('.').reduce((o, i) => o[i] = o[i] || {}, obj)
     }
 
     component.controller = function ($rootScope, $scope, $controller, $injector) {
@@ -4753,30 +3621,55 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
         if (controller) {
             var locals = { $scope, $namespace: ns };
             if ($state) {
-                angular.extend(locals, $state.$current.locals.globals);
+                function resolveGlobals() {
+                    if ($state.$current.locals) {
+                        return $state.$current.locals.globals;
+                    }
+
+                    const globals = {};
+                    const resolvables = $state.getCurrentPath().flatMap(x => x.resolvables)
+                    for (let resolvable of resolvables) {
+                        if (typeof resolvable.token === 'string') {
+                            globals[resolvable.token] = resolvable.data;
+                        }
+                    }
+                }
+
+                const globals = resolveGlobals($state.transition);
+
+                angular.extend(locals, globals);
             }
 
-            $controller(controller, locals);
+            return $controller(controller, locals);
         }
     };
 
-    component.link = function (scope, element, attrs) {
-        const camelCaseToDashes = input => input.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-        const nsToDirectiveTagName = input => camelCaseToDashes(input).replace(/\./g, '_');
+    component.link = {
+        pre: component.link ? component.link.pre : undefined,
+        post: function (scope, element, attrs) {
+            const camelCaseToDashes = input => input.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+            const nsToDirectiveTagName = input => camelCaseToDashes(input).replace(/\./g, '_');
 
-        const tagName = nsToDirectiveTagName(ns);
+            const tagName = nsToDirectiveTagName(ns);
 
-        element.attr(`_c_${tagName}`, '');
+            element.attr(`_c_${tagName}`, '');
 
-        if (link) {
-            link.apply(this, arguments);
+            if (link && typeof link === 'function') {
+                link.apply(this, arguments);
+            }
+
+            if (link && link.post) {
+                link.post.apply(this, arguments);
+            }
         }
     };
+
+    component.ns = ns;
 
     return component;
 });;
 
-// CONCATENATED MODULE: C:/Users/marmi/Documents/GitHub/forms/node_modules/happenize/utils/themeable.js
+// CONCATENATED MODULE: /Users/marekmicek/Documents/GitHub/forms/node_modules/happenize/utils/themeable.js
 /* harmony default export */ var themeable = (function (component, ns) {
 
     if (component.template) {
@@ -4795,7 +3688,7 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
     return component;
 });
 
-// CONCATENATED MODULE: C:/Users/marmi/Documents/GitHub/forms/node_modules/happenize/utils/registerPartials.js
+// CONCATENATED MODULE: /Users/marekmicek/Documents/GitHub/forms/node_modules/happenize/utils/registerPartials.js
 
 
 
@@ -4830,7 +3723,7 @@ function registerPartials(components, ns, isThemeable = false) {
 }
 
 // EXTERNAL MODULE: ./assets/styles/style.less
-var styles_style = __webpack_require__(57);
+var styles_style = __webpack_require__(53);
 
 // EXTERNAL MODULE: ./shared/i18n/en.i18n.json
 var i18n_en_i18n = __webpack_require__(51);
@@ -4854,7 +3747,7 @@ var shared_i18n_pl_i18n = __webpack_require__(52);
 
 
 
-var Config = {
+const Config = {
   api: {
     endpoint: 'http://localhost:8011/api/v1'
   }
@@ -4882,9 +3775,8 @@ module_App.config(["$translateProvider", "$translatePartialLoaderProvider", func
   $translateProvider.useSanitizeValueStrategy('escape');
   $translateProvider.preferredLanguage('en');
 }]);
-module_App.service('Config', function () {
-  return Config;
-});
+module_App.service('Config', () => Config);
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=forms.js.map
