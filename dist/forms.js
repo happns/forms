@@ -2556,7 +2556,7 @@ class FormValidationError extends Error {
 }
 
 /* harmony default export */ var controller = (function ($scope, $resource, FormResource, Config) {
-  const endpoint = Config.forms.api.endpoint;
+  const endpoint = Config.api.endpoint;
 
   $scope.loadForm = async ({
     type
@@ -3530,7 +3530,7 @@ var validator_default = /*#__PURE__*/__webpack_require__.n(validator);
 });
 // CONCATENATED MODULE: ./shared/services/FormResource.js
 /* harmony default export */ var FormResource = (function ($resource, $parse, Config) {
-  const endpoint = Config.forms.api.endpoint;
+  const endpoint = Config.api.endpoint;
   const resource = $resource(`${endpoint}/resources`);
 
   resource.fromForm = form => {
@@ -3752,6 +3752,10 @@ const Config = {
     endpoint: 'http://localhost:8011/api/v1'
   }
 };
+const hpFormsConfigProvider = {
+  Config,
+  $get: () => hpFormsConfigProvider.Config
+};
 
 if (false) {}
 
@@ -3759,6 +3763,7 @@ var dependencies = ['ngMaterial', 'ngAnimate', 'ngMessages', 'ngSanitize', 'as.s
 var module_App = angular.module('hpForms', dependencies);
 registerNamespace.bind(module_App)(directives, 'directive');
 registerNamespace.bind(module_App)(services, 'service');
+module_App.provider('hpFormsConfig', hpFormsConfigProvider);
 module_App.config(["$compileProvider", function ($compileProvider) {
   module_App.Config = Config;
   module_App.ViewState = {};
@@ -3775,7 +3780,9 @@ module_App.config(["$translateProvider", "$translatePartialLoaderProvider", func
   $translateProvider.useSanitizeValueStrategy('escape');
   $translateProvider.preferredLanguage('en');
 }]);
-module_App.service('Config', () => Config);
+module_App.service('Config', ["hpFormsConfig", function (hpFormsConfig) {
+  return hpFormsConfig;
+}]);
 
 /***/ })
 /******/ ]);

@@ -10,7 +10,7 @@ class FormValidationError extends Error {
 }
 
 export default function ($scope, $resource, FormResource, Config) {
-    const endpoint = Config.forms.api.endpoint;
+    const endpoint = Config.api.endpoint;
 
     $scope.loadForm = async ({ type }) => {
         let form = await $resource(`${endpoint}/forms/request?@type=${encodeURIComponent(type)}`)

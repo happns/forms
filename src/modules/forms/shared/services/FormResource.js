@@ -1,5 +1,5 @@
 export default function($resource, $parse, Config) {
-    const endpoint = Config.forms.api.endpoint;
+    const endpoint = Config.api.endpoint;
     const resource = $resource(`${endpoint}/resources`);
 
     resource.fromForm = form => {

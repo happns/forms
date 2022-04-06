@@ -13,7 +13,12 @@ const Config = {
     api: {
         endpoint: 'http://localhost:8011/api/v1'
     }
-};
+}
+
+const hpFormsConfigProvider = {
+    Config,
+    $get: () => hpFormsConfigProvider.Config
+}
 
 if (CONF_STANDALONE) {
     require('marekmicek-material/angular-material.css');
@@ -41,6 +46,8 @@ var App = angular.module('hpForms', dependencies);
 registerNamespace.bind(App)(Directives, 'directive');
 registerNamespace.bind(App)(Services, 'service');
 
+App.provider('hpFormsConfig', hpFormsConfigProvider)
+
 App.config(function($compileProvider) {
     App.Config = Config;
     App.ViewState = {};
@@ -63,4 +70,6 @@ App.config(function($translateProvider, $translatePartialLoaderProvider) {
     $translateProvider.preferredLanguage('en');
 });
 
-App.service('Config', () => Config);
+App.service('Config', function (hpFormsConfig) {
+    return hpFormsConfig;
+});
