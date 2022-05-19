@@ -1,6 +1,6 @@
 {
   "name": "forms",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "src/forms.js",
   "scripts": {
     "build": "node node_modules/webpack/bin/webpack.js",
